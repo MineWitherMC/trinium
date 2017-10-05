@@ -1,0 +1,344 @@
+local research = trinium.res
+local S = trinium.S
+
+local function get_table_formspec(mode, pn, real_research)
+	if mode == 1 then
+		return ([=[
+			size[11.5,8.5]
+			bgcolor[#080808BB;true]
+			background[5,5;1,1;gui_formbg.png;true]
+			list[context;aspect_panel;0,1.5;4,7;]
+			%s
+			list[context;research_notes;0,0.25;1,1;]
+			list[context;lens;1,0.25;1,1;]
+			list[context;trash;10.25,0.25;1,1;]
+			label[2,0;%s]
+			tabheader[0,0;research_table~change_fs;%s,%s;1;true;false]
+		]=]):format(real_research and "list[context;map;4.5,1.5;7,7;]" or "",
+			S("Ink: @1\nPaper: @2\nWarp: @3", research.player_stuff[pn].data.ink, research.player_stuff[pn].data.paper, research.player_stuff[pn].data.warp),
+			S"Map", S"Inventory")
+	elseif mode == 2 then
+		return ([=[
+			size[12.5,7]
+			bgcolor[#080808BB;true]
+			background[5,5;1,1;gui_formbg.png;true]
+			list[context;aspect_panel;0,0;4,7;]
+			list[context;aspect_inputs;5,0;1,1;]
+			button[6,0;1,1;research_table~add_aspects;+]
+			list[context;aspect_inputs;7,0;1,1;1]
+			list[context;r2m;9,0;1,1;]
+			list[context;research_notes;4.5,1.5;1,1;]
+			list[context;lens;11.5,1.5;1,1;]
+			label[4.5,2.5;%s]
+			label[11.5,2.5;%s]
+			list[current_player;main;4.5,3;8,4;]
+			tabheader[0,0;research_table~change_fs;%s,%s;2;true;false]
+		]=]):format(S"Research Notes", S"Lens", S"Map", S"Inventory")
+	end
+end
+
+local function is_correct_research(inv)
+	local research_notes, lens = inv:get_stack("research_notes", 1), inv:get_stack("lens", 1)
+	if research_notes:is_empty() or research_notes:get_name():split("___")[1] == "discovery" then return false end
+	local lens_req = research.researches[research_notes:get_name():split("___")[2]:gsub("__", ".")].requires_lens
+	if lens:is_empty() and lens_req.requirement then return false end
+	if not lens_req.requirement then return true end
+	lens = lens:get_meta()
+	return  (lens:get_string("shape") == lens_req.band_shape or not lens_req.band_shape) and
+			(lens:get_int("tier") >= lens_req.band_tier or not lens_req.band_tier) and
+			(lens:get_string("gem") == lens_req.core or not lens_req.core) and
+			(lens:get_string("metal") == lens_req.band_material or not lens_req.band_material)
+end
+
+local function recalc_aspects(pn, inv)
+	for i = 1, #research.sorted_aspect_ids do
+		local gs = inv:get_stack("aspect_panel", i)
+		local cur_ammount, name
+		if gs:is_empty() then
+			cur_ammount, name = 0, "trinium:aspect___"..research.sorted_aspect_ids[i]
+		else
+			cur_ammount, name = gs:get_count(), gs:get_name()
+		end
+		local nonitem = name:sub(18)
+		local asp = research.player_stuff[pn].data.aspects[nonitem]
+		if asp then
+			local new_ammount = math.min(64, asp + cur_ammount)
+			local add_ammount = new_ammount - cur_ammount
+			research.player_stuff[pn].data.aspects[nonitem] = asp - add_ammount
+			inv:set_stack("aspect_panel", i, ("%s %s"):format(name, new_ammount))
+		end
+	end
+end
+
+local function can_connect(inv, index1, index2)
+	if index1 < 1 or index1 > 49 or index2 < 1 or index2 > 49 then return false end
+	local an1 = inv:get_stack("map", index1):get_name():sub(18)
+	local an2 = inv:get_stack("map", index2):get_name():sub(18)
+	if an1 == "" or an2 == "" or not an1 or not an2 then return end
+	local ad1 = research.known_aspects[an1]
+	local ad2 = research.known_aspects[an2]
+	return ad1.req1 == an2 or ad1.req2 == an2 or ad2.req1 == an1 or ad2.req2 == an1
+end
+
+local function add_light(inv, index)
+	if index < 1 or index > 49 then return false end
+	local s1 = inv:get_stack("research_notes", 1)
+	if s1:is_empty() then return false end
+	local m1 = s1:get_meta()
+	local mstr = minetest.deserialize(m1:get_string("map_l"))
+	if table.exists(mstr, function(x) return x == index end) then return false end -- already enlightened
+
+	if (can_connect(inv, index, index - 7) and table.exists(mstr, function(x) return x == index - 7 end)) or
+		(can_connect(inv, index, index - 1) and table.exists(mstr, function(x) return x == index - 1 end)) or
+		(can_connect(inv, index, index + 1) and table.exists(mstr, function(x) return x == index + 1 end)) or
+		(can_connect(inv, index, index + 7) and table.exists(mstr, function(x) return x == index + 7 end)) then
+			table.insert(mstr, index)
+	else
+		return false
+	end
+
+	local r = research.researches[s1:get_name():split("___")[2]].map
+	if table.every(r, function(x) return table.exists(mstr, function(y) return x.x + (x.y - 1) * 7 == y end) end) then -- all aspects in map enlightened
+		return true
+	end
+	m1:set_string("map_l", minetest.serialize(mstr))
+	inv:set_stack("research_notes", 1, s1)
+	return add_light(inv, index - 7) or add_light(inv, index - 1) or add_light(inv, index + 1) or add_light(inv, index + 7)
+end
+
+local function delete_light(inv, index)
+	local s1 = inv:get_stack("research_notes", 1)
+	if s1:is_empty() then return end
+	local m1 = s1:get_meta()
+	local mstr = minetest.deserialize(m1:get_string("map_l"))
+	local fnd = table.exists(mstr, function(x) return x == index end)
+	if fnd then
+		table.remove(mstr, fnd)
+	end
+	m1:set_string("map_l", minetest.serialize(mstr))
+	inv:set_stack("research_notes", 1, s1)
+end
+
+minetest.register_node("trinium:research_table", {
+	tiles = {"research_chassis.png"},
+	description = S"Research Table",
+	groups = {harvested_by_pickaxe = 2},
+	paramtype2 = "facedir",
+	drawtype = "nodebox",
+	node_box = {
+		["type"] = "fixed",
+		fixed = {
+			{-0.45, -0.5, -0.45, 0.45, -0.4, 0.45}, -- platform
+			{-0.1, -0.4, 0.2, 0.1, 0.455, 0.4}, -- tube
+			{-0.075, 0.45, -0.1, 0.075, 0.455, 0.2}, -- connector
+			{-0.15, 0.38, -0.4, 0.15, 0.455, -0.1}, -- lens
+			{-0.075, 0.34, -0.325, 0.075, 0.38, -0.175}, -- lens bottom
+		}
+	},
+
+	after_place_node = function(pos, player)
+		local meta = minetest.get_meta(pos)
+		local inv = meta:get_inventory()
+		local pn = player:get_player_name()
+		trinium.initialize_inventory(inv, {map = 49, aspect_panel = #research.aspect_ids, research_notes = 1, lens = 1, trash = 1, aspect_inputs = 2, r2m = 1})
+		meta:set_string("infotext", "Multiblock is not assembled!")
+		meta:set_string("current_mode", 2)
+		meta:set_string("owner", pn)
+
+		recalc_aspects(pn, inv)
+	end,
+
+	allow_metadata_inventory_move = function(pos, list1, index1, list2, index2, stacksize, player)
+		local meta = minetest.get_meta(pos)
+		local inv = meta:get_inventory()
+		if (list1 == "map" and list2 == "trash") then
+			local x, y = trinium.modulate(index1, 7), math.floor(index1 / 7) + 1
+			local res = research.researches[inv:get_stack("research_notes", 1):get_name():split("___")[2]:gsub("__", ".")]
+			return table.every(res.map, function(z) return z.x ~= x or z.y ~= y end) and 1 or 0
+		end
+		if list2 == "r2m" then return stacksize end
+		if not (list1 == "aspect_panel" and (list2 == "map" or list2 == "aspect_inputs")) then return 0 end
+		return inv:get_stack(list2, index2):get_count() > 0 and 0 or 1
+	end,
+
+	allow_metadata_inventory_put = function(pos, list, index, stack, player)
+		local name,size = stack:get_name(), stack:get_count()
+		return ((list == "research_notes" and name:split("___")[1] == "trinium:research_notes") or (list == "lens" and name == "trinium:research_lens")) and 1 or 0
+	end,
+
+	allow_metadata_inventory_take = function(pos, list, index, stack, player)
+		local name,size = stack:get_name(), stack:get_count()
+		return (list == "research_notes" or list == "lens") and size or 0
+	end,
+
+	on_receive_fields = function(pos, formname, fields, player)
+		if fields.quit then return end
+		local pn = player:get_player_name()
+		local meta = minetest.get_meta(pos)
+		local inv = meta:get_inventory()
+		for k,v in pairs(fields) do
+			local ksplit = k:split"~"
+			if ksplit[1] == "research_table" then
+				local a = ksplit[2]
+				if a == "change_fs" then
+					local tnb = tonumber(v)
+					meta:set_string("formspec", get_table_formspec(tnb, pn, is_correct_research(inv)))
+					meta:set_string("current_mode", tnb)
+				elseif a == "add_aspects" then
+					local a1, a2 = inv:get_stack("aspect_inputs", 1):get_name():sub(18), inv:get_stack("aspect_inputs", 2):get_name():sub(18)
+					if not a1 or a1 == "" or not a2 or a2 == "" then return end
+
+					local a,b 
+					a = table.exists(research.sorted_aspect_ids, function(v,k) return v == a1 end)
+					b = table.exists(research.sorted_aspect_ids, function(v,k) return v == a2 end)
+					local s = inv:get_stack("aspect_panel", a)
+					s:take_item()
+					inv:set_stack("aspect_panel", a, s)
+					s = inv:get_stack("aspect_panel", b)
+					s:take_item()
+					inv:set_stack("aspect_panel", b, s)
+
+					if inv:get_stack("aspect_panel", a):is_empty() then
+						inv:set_stack("aspect_inputs", 1, "")
+					end
+					if inv:get_stack("aspect_panel", b):is_empty() then
+						inv:set_stack("aspect_inputs", 2, "")
+					end
+
+					local newaspect
+					newaspect = table.exists(research.known_aspects, function(v) return (v.req1 == a1 and v.req2 == a2) or (v.req2 == a1 and v.req1 == a2) end)
+					if newaspect then
+						newaspect = table.exists(research.sorted_aspect_ids, function(v) return v == newaspect end)
+						s = inv:get_stack("aspect_panel", newaspect):get_name():sub(18)
+						research.player_stuff[pn].data.aspects[s] = research.player_stuff[pn].data.aspects[s] + 1
+						minetest.sound_play("experience", {
+							to_player = pn,
+							gain = 4.0
+						})
+					end
+
+					recalc_aspects(pn, inv)
+				end
+			end
+		end
+	end,
+
+	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
+		if minetest.get_meta(pos):get_int("assembled") == -1 then
+			cmsg.push_message_player(player, "Multiblock is not assembled!")
+		else
+			recalc_aspects(player:get_player_name(), minetest.get_meta(pos):get_inventory())
+		end
+	end,
+
+	after_dig_node = function(pos, oldnode, oldmetadata, digger)
+		local oldinv = oldmetadata.inventory.aspect_panel
+		local pn = digger:get_player_name()
+		for i = 1, #research.sorted_aspect_ids do
+			local st = oldinv[i]
+			if not st:is_empty() then
+				local ct = st:get_count()
+				research.player_stuff[pn].data.aspects[research.sorted_aspect_ids[i]] = research.player_stuff[pn].data.aspects[research.sorted_aspect_ids[i]] + ct
+			end
+		end
+
+		local sh, l = oldmetadata.inventory.research_notes[1], oldmetadata.inventory.lens[1]
+		if not sh:is_empty() then
+			minetest.item_drop(sh, digger, pos)
+		end
+		if not l:is_empty() then
+			minetest.item_drop(l, digger, pos)
+		end
+	end,
+
+	can_dig = function(pos, player)
+		return minetest.get_meta(pos):get_string("owner") == player:get_player_name()
+	end,
+
+	on_metadata_inventory_move = function(pos, list1, index1, list2, index2, stacksize, player)
+		local meta = minetest.get_meta(pos)
+		local inv = meta:get_inventory()
+		local pn = player:get_player_name()
+		if list2 == "trash" then
+			inv:set_stack("trash", 1, "")
+			local s1 = inv:get_stack("research_notes", 1)
+			local m1 = s1:get_meta()
+			local mstr = minetest.deserialize(m1:get_string("map2")) or {}
+			local fnd = table.exists(mstr, function(x) return x.num == index1 end)
+			if fnd then
+				table.remove(mstr, fnd)
+			end
+			m1:set_string("map2", minetest.serialize(mstr))
+			inv:set_stack("research_notes", 1, s1)
+			delete_light(inv, index1)
+		elseif list2 == "r2m" then
+			local a = inv:get_stack("r2m", 1):get_name():sub(18)
+			research.player_stuff[pn].data.aspects[a] = research.player_stuff[pn].data.aspects[a] + inv:get_stack("r2m", 1):get_count()
+			inv:set_stack("r2m", 1, "")
+		elseif list2 == "map" then
+			local s1 = inv:get_stack("research_notes", 1)
+			local m1 = s1:get_meta()
+			local mstr = minetest.deserialize(m1:get_string("map2")) or {}
+			table.insert(mstr, {num = index2, aspect = inv:get_stack(list2, index2):get_name()})
+			m1:set_string("map2", minetest.serialize(mstr))
+			inv:set_stack("research_notes", 1, s1)
+			if add_light(inv, index2) then
+				inv:set_stack("research_notes", 1, "trinium:discovery___"..s1:get_name():split("___")[2])
+				meta:set_string("formspec", get_table_formspec(1, pn, false))
+			end
+		end
+
+		recalc_aspects(pn, inv)
+	end,
+
+	on_metadata_inventory_take = function(pos, listname, index, stack, player)
+		local meta = minetest.get_meta(pos)
+		local inv = meta:get_inventory()
+		if listname == "research_notes" then
+			for i = 1, 49 do
+				inv:set_stack("map", i, "")
+			end
+		end
+	end,
+
+	on_metadata_inventory_put = function(pos, listname, index, stack, player)
+		local meta = minetest.get_meta(pos)
+		local inv = meta:get_inventory()
+		if listname == "research_notes" then
+			local resname = research.researches[stack:get_name():split("___")[2]]
+			for i = 1, #resname.map do
+				inv:set_stack("map", resname.map[i].x + (resname.map[i].y - 1) * 7, "trinium:aspect___"..resname.map[i].aspect) 
+			end
+			local map2 = minetest.deserialize(stack:get_meta():get_string("map2"))
+			if map2 then
+				for i = 1, #map2 do
+					inv:set_stack("map", map2[i].num, map2[i].aspect)
+				end
+			end
+
+			local meta1 = stack:get_meta()
+			if meta1:get_string("map_l") == "" then
+				meta1:set_string("map_l", minetest.serialize({resname.map[1].x + (resname.map[1].y - 1) * 7}))
+				inv:set_stack("research_notes", 1, stack)
+			end
+		end
+	end,
+})
+
+trinium.register_multiblock("research table", {
+	width = 0,
+	height_d = 2,
+	height_u = 0,
+	depth_b = 0,
+	depth_f = 1,
+	controller = "trinium:research_table",
+	activator = function(rg)
+		local ctrl = table.exists(rg.region, function(x) return x.x == 0 and x.y == -2 and x.z == -1 and x.name == "trinium:research_node" end)
+		return ctrl and minetest.get_meta(rg.region[ctrl].actual_pos):get_int("assembled") == 1
+	end,
+	after_construct = function(pos, is_constructed)
+		local meta = minetest.get_meta(pos)
+		meta:set_string("formspec", is_constructed and get_table_formspec(2) or "")
+		meta:set_string("infotext", is_constructed and "" or "Multiblock is not assembled!")
+	end,
+})
