@@ -5,6 +5,7 @@ res.researches_by_chapter = {}
 res.known_aspects = {}
 res.aspect_ids = {}
 res.sorted_aspect_ids = {}
+res.bound_to_maps = {}
 res.lens_forms = {
 	shapes = {},
 	shapes_by_mintier = {},
@@ -37,6 +38,15 @@ function res.register_chapter(name, def)
 	local function1 = tbl.tiles and minetest.register_node or minetest.register_craftitem
 	function1(("trinium:researchicon___%s___%s"):format(texture, i), tbl)
 	res.chapters[name].number = i
+
+	if def.create_map then
+		minetest.register_craftitem("trinium:chapter_map___"..name:gsub("%.", "__"), {
+			description = S("Chapter Map - @1", def.name),
+			groups = {chapter_map = 1, hidden_from_irp = 1},
+			stack_max = 1,
+			inventory_image = "research_chapter_map.png",
+		})
+	end
 end
 
 function res.register_research(name, def)
@@ -188,4 +198,11 @@ function res.random_aspects(pn, amount, possible_aspects)
 		to_player = pn,
 		gain = 4.0
 	})
+end
+
+function res.bind_to_map(mapname, def)
+	if not res.bound_to_maps[mapname] then
+		res.bound_to_maps[mapname] = {}
+	end
+	table.insert(res.bound_to_maps[mapname], def)
 end

@@ -21,10 +21,10 @@ minetest.register_node("trinium:research_node", {
 		else
 			local item = itemstack:get_name()
 			if item == "trinium:sheet_paper" then
-				res_data[pn].data.paper = res_data[pn].data.paper + itemstack:get_count() * 8
+				res_data[pn].data.paper = res_data[pn].data.paper + itemstack:get_count() * 2
 				itemstack:take_item(99)
 			elseif item == "trinium:cell_ink" then
-				res_data[pn].data.ink = res_data[pn].data.ink + 200
+				res_data[pn].data.ink = res_data[pn].data.ink + 100
 				itemstack:take_item(1)
 			elseif item == "trinium:knowledge_charm" then
 				trinium.res.random_aspects(pn, 30)

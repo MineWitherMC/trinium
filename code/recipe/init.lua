@@ -1,4 +1,4 @@
 local path = ...
 
-dofile(path.."/recipemethods.lua")
+dofile(path.."/recipe_methods.lua")
 dofile(path.."/recipes.lua")

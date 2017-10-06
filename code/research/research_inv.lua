@@ -37,12 +37,15 @@ end
 
 local function get_book_chapter_fs(chapterid, pn)
 	local buttons, texture = "button[7,8;1,1;research~book;"..S("Back").."]"
+	if res.chapters[chapterid].create_map then
+		buttons = ("%sbutton[5,8;2,1;research~get_map;%s]tooltip[research~get_map;%s]"):format(buttons, S"Get Chapter Map", S"This chapter uses Chapter Map instead of normal research notes acquiring")
+	end
 	if not res.researches_by_chapter[chapterid] then return end
 	for k,v in pairs(res.researches_by_chapter[chapterid]) do
 		if res.player_stuff[pn].researches[k] or v.pre_unlock then
 			texture = v.texture:gsub(":", "__")
 			buttons = ("%sitem_image_button[%s,%s;1,1;trinium:researchicon___%s___%s;research~research_open~%s;]"):format(buttons, v.x, v.y, texture, v.number, k)
-		elseif table.every(v.requirements, function(a) return res.player_stuff[pn].researches[a] end) then
+		elseif table.every(v.requirements, function(a) return res.player_stuff[pn].researches[a] end) and not v.hidden then
 			texture = v.texture:gsub(":", "__")
 			buttons = ("%simage[%s,%s;1,1;research_glowing_underlay.png]item_image_button[%s,%s;1,1;trinium:researchicon___%s___%s;research~get_sheet~%s;]")
 				:format(buttons, v.x, v.y, v.x, v.y, texture, v.number, k)
@@ -154,6 +157,21 @@ function book:on_player_receive_fields(player, context, fields)
 				res.player_stuff[pn].data.ink = res.player_stuff[pn].data.ink - 3
 				res.player_stuff[pn].data.paper = res.player_stuff[pn].data.paper - 3
 				inv:add_item("main", "trinium:research_notes___"..ksplit[3])
+			elseif a == "get_map" then
+				if res.player_stuff[pn].data.ink < 500 then
+					cmsg.push_message_player(player, S("Insufficient Ink!"))
+					return
+				end
+
+				local inv = player:get_inventory()
+				if not inv:contains_item("main", "trinium:dust_diamond 16") then
+					cmsg.push_message_player(player, S("Insufficient Diamond Dust!"))
+					return
+				end
+
+				inv:remove_item("main", "trinium:dust_diamond 16")
+				res.player_stuff[pn].data.ink = res.player_stuff[pn].data.ink - 500
+				inv:add_item("main", "trinium:chapter_map___"..context.book:split("~")[2])
 			end
 		end
 	end
