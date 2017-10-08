@@ -15,7 +15,7 @@ local enlightener_formspec = ([=[
 	button[4.5,1.5;2,1;trinium~enlightener~infuse;%s]
 ]=]):format(S"Sheet Enlightener", S"Infuse")
 
-minetest.register_node("trinium:sheet_enlightener", {
+minetest.register_node("trinium:machine_sheet_enlightener", {
 	tiles = {"research_table_wall.png"},
 	description = S"Sheet Enlightener",
 	groups = {harvested_by_pickaxe = 1},
@@ -47,9 +47,10 @@ minetest.register_node("trinium:sheet_enlightener", {
 	end,
 	allow_metadata_inventory_put = function(pos, list, index, stack, player)
 		local name,size = stack:get_name(), stack:get_count()
-		return ((list == "parchment" and name == "trinium:sheet_parchment") or (list == "chapter_core" and minetest.get_item_group(name, "chapter_map") > 0) or
-			(list == "lens" and name == "trinium:research_lens") or (list == "catalysts" and ((index == 1 and name == "trinium:dust_stardust") or (index == 2 and name == "trinium:dust_pyrocatalyst") or
-			(index == 3 and name == "trinium:dust_bifrost") or (index == 4 and name == "trinium:dust_experience") or (index == 5 and name == "trinium:dust_imbued_forcirium")))) and size or 0
+		return ((list == "parchment" and name == "trinium:material_sheet_parchment") or (list == "chapter_core" and minetest.get_item_group(name, "chapter_map") > 0) or
+			(list == "lens" and name == "trinium:research_lens") or (list == "catalysts" and ((index == 1 and name == "trinium:material_dust_stardust") or
+			(index == 2 and name == "trinium:material_dust_pyrocatalyst") or (index == 3 and name == "trinium:material_dust_bifrost") or (index == 4 and name == "trinium:material_dust_experience") or 
+			(index == 5 and name == "trinium:material_dust_imbued_forcirium")))) and size or 0
 	end,
 
 	on_receive_fields = function(pos, formname, fields, player)
@@ -89,10 +90,6 @@ minetest.register_node("trinium:sheet_enlightener", {
 			inv:set_stack("catalysts", i, s)
 		end
 
-		local s = inv:get_stack("parchment", 1)
-		s:take_item(2)
-		inv:set_stack("parchment", 1, s)
-
 		local lens = inv:get_stack("lens", 1)
 		local lmeta = lens:get_meta()
 		local map_res = table.exists(map_data, function(x)
@@ -106,6 +103,9 @@ minetest.register_node("trinium:sheet_enlightener", {
 			return
 		end
 
+		local s = inv:get_stack("parchment", 1)
+		s:take_item(2)
+		inv:set_stack("parchment", 1, s)
 		local res = map_data[map_res].apply
 		inv:set_stack("output", 1, "trinium:research_notes___"..res)
 	end,
@@ -117,7 +117,7 @@ local enlightener_mb = {
 	height_u = 3,
 	depth_b = 3,
 	depth_f = 0,
-	controller = "trinium:sheet_enlightener",
+	controller = "trinium:machine_sheet_enlightener",
 	map = {
 		{x = 0, y = -1, z = 3, name = "trinium:research_casing"},
 		{x = 0, y = 0, z = 3, name = "trinium:research_casing"},
@@ -149,9 +149,9 @@ local enlightener_mb = {
 		{x = 0, y = 2, z = 2, name = "trinium:research_casing"},
 		{x = 0, y = 3, z = 2, name = "trinium:research_casing"},
 
-		{x = 0, y = -1, z = 1, name = "trinium:reflector_glass"},
-		{x = 0, y = 0, z = 1, name = "trinium:forcirium_lamp"},
-		{x = 0, y = 1, z = 1, name = "trinium:reflector_glass"},
+		{x = 0, y = -1, z = 1, name = "trinium:block_reflector_glass"},
+		{x = 0, y = 0, z = 1, name = "trinium:block_forcirium_lamp"},
+		{x = 0, y = 1, z = 1, name = "trinium:block_reflector_glass"},
 		{x = 1, y = -1, z = 1, name = "trinium:research_chassis"},
 		{x = 1, y = 0, z = 1, name = "trinium:research_chassis"},
 		{x = 1, y = 1, z = 1, name = "trinium:research_chassis"},
@@ -168,7 +168,7 @@ local enlightener_mb = {
 		{x = -2, y = -1, z = 1, name = "trinium:research_casing"},
 		{x = -2, y = 0, z = 1, name = "trinium:research_casing"},
 		{x = -2, y = 1, z = 1, name = "trinium:research_casing"},
-		{x = 0, y = 3, z = 1, name = "trinium:reflector_glass"},
+		{x = 0, y = 3, z = 1, name = "trinium:block_reflector_glass"},
 
 		{x = 0, y = -1, z = 0, name = "trinium:research_casing"},
 		{x = 0, y = 1, z = 0, name = "trinium:research_chassis"},

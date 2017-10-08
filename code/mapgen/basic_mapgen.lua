@@ -84,16 +84,16 @@ minetest.register_node("trinium:block_gravel", {
 minetest.register_alias("mapgen_gravel", "trinium:block_gravel")
 
 -- Water
-trinium.register_fluid("trinium:water_source", "trinium:water_flowing", S("Water Source"), S("Flowing Water"), "0000DC", {
+trinium.register_fluid("trinium:block_water_source", "trinium:block_water_flowing", S("Water Source"), S("Flowing Water"), "0000DC", {
 	alpha = 160,
 	liquid_viscosity = 1,
 })
-minetest.register_alias("mapgen_water_source", "trinium:water_source")
+minetest.register_alias("mapgen_water_source", "trinium:block_water_source")
 
 -- River Water
-trinium.register_fluid("trinium:river_water_source", "trinium:river_water_flowing", S("River Water Source"), S("Flowing River Water"), "3399EC", {
+trinium.register_fluid("trinium:block_river_water_source", "trinium:block_river_water_flowing", S("River Water Source"), S("Flowing River Water"), "3399EC", {
 	alpha = 160,
 	liquid_viscosity = 1,
 	liquid_range = 2,
 })
-minetest.register_alias("mapgen_river_water_source", "trinium:river_water_source")
+minetest.register_alias("mapgen_river_water_source", "trinium:block_river_water_source")

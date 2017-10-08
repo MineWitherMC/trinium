@@ -1,5 +1,5 @@
-local path = ...
+local path, default = ...
 
 dofile(path.."/api.lua")
 dofile(path.."/material_types.lua")
-dofile(path.."/materials.lua")
+assert(loadfile(path.."/materials.lua"))(default)

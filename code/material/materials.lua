@@ -1,4 +1,5 @@
 local materials = trinium.materials
+local default = ...
 
 materials.register_material("carton", {
 	name = S"Carton",
@@ -38,12 +39,6 @@ materials.register_material("forcirium", {
 	data = {melting_point = 2963, water_mix_velocity = 750},
 	formula = "FeXCs2F",
 })
-materials.register_material("diamond", {
-	name = S"Diamond",
-	color = {200, 255, 255},
-	types = {"gem", "dust"},
-	formula = "C60",
-})
 materials.register_material("imbued_forcirium", {
 	name = S"Imbued Forcirium",
 	color = {220, 155, 0},
@@ -82,3 +77,49 @@ materials.register_material("experience", {
 	types = {"dust"},
 	formula = "X(PO4)2",
 })
+materials.register_material("antracite", {
+	name = S"Antracite",
+	color = {9, 9, 9},
+	types = {"gem", "dust", "ore"},
+	formula = "C4",
+})
+materials.register_material("graphite", {
+	name = S"Graphite",
+	color = {50, 50, 50},
+	types = {"dust", "ore"},
+	formula = "C6",
+})
+
+if not default then
+	materials.register_material("diamond", {
+		name = S"Diamond",
+		color = {200, 255, 255},
+		types = {"gem", "dust", "ore"},
+		formula = "C60",
+	})
+
+	materials.register_material("coal", {
+		name = S"Coal",
+		color = {34, 34, 34},
+		types = {"gem", "dust", "ore"},
+		formula = "C2",
+	})
+else
+	materials.register_material("diamond", {
+		name = S"Diamond",
+		color = {200, 255, 255},
+		types = {"dust"},
+		formula = "C60",
+	})
+	minetest.register_alias("trinium:gem_diamond", "default:diamond")
+	minetest.register_alias("trinium:ore_diamond", "default:stone_with_diamond")
+
+	materials.register_material("coal", {
+		name = S"Coal",
+		color = {21, 21, 21},
+		types = {"dust"},
+		formula = "C2",
+	})
+	minetest.register_alias("trinium:gem_coal", "default:coal_lump")
+	minetest.register_alias("trinium:ore_coal", "default:stone_with_coal")
+end

@@ -14,7 +14,7 @@ local compressor_formspec = ([=[
 	button[0,4;2,1;trinium~research~assemble_lens;%s]
 ]=]):format(S"Assemble")
 
-minetest.register_node("trinium:lens_curver", {
+minetest.register_node("trinium:machine_lens_curver", {
 	tiles = {"research_chassis.png"},
 	description = S"Lens Curver",
 	groups = {harvested_by_pickaxe = 2},
@@ -61,7 +61,7 @@ minetest.register_node("trinium:lens_curver", {
 			end
 			return stack:get_count()
 		elseif list == "press" then
-			return stack:get_name() == "trinium:lens_band_press" and 1 or 0
+			return stack:get_name() == "trinium:research_lens_band_press" and 1 or 0
 		elseif list == "upgrade" then
 			return minetest.get_item_group(stack:get_name(), "lens_upgrade") ~= 0 and 1 or 0
 		end
@@ -150,7 +150,7 @@ local lens_curver_mb = {
 	height_u = 1,
 	depth_b = 6,
 	depth_f = 0,
-	controller = "trinium:lens_curver",
+	controller = "trinium:machine_lens_curver",
 	map = {
 		{x = -1, z = 1, y = -1, name = "trinium:research_casing"},
 		{x = -1, z = 0, y = -1, name = "trinium:research_casing"},
@@ -172,7 +172,7 @@ local lens_curver_mb = {
 		{x = 0, z = 1, y = 1, name = "trinium:research_chassis"},
 		{x = 0, z = 0, y = 1, name = "trinium:research_chassis"},
 
-		{x = 0, z = 6, y = 0, name = "trinium:research_node"},
+		{x = 0, z = 6, y = 0, name = "trinium:machine_research_node"},
 	},
 	after_construct = function(pos, is_constructed)
 		local meta = minetest.get_meta(pos)

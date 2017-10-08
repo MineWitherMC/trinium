@@ -1,5 +1,5 @@
 -- Reflector Glass
-minetest.register_node("trinium:reflector_glass", {
+minetest.register_node("trinium:block_reflector_glass", {
 	tiles = {"reflector_glass.png"},
 	description = S("Reflector Glass"),
 	drawtype = "glasslike",
@@ -10,7 +10,7 @@ minetest.register_node("trinium:reflector_glass", {
 })
 
 -- Lamp Frame
-minetest.register_node("trinium:lamp_frame", {
+minetest.register_node("trinium:block_lamp_frame", {
 	tiles = {"lamp_frame_32.png"},
 	description = S("Lamp Frame"),
 	drawtype = "glasslike",
@@ -18,7 +18,7 @@ minetest.register_node("trinium:lamp_frame", {
 })
 
 -- Forcirium Lamp
-minetest.register_node("trinium:forcirium_lamp", {
+minetest.register_node("trinium:block_forcirium_lamp", {
 	tiles = {
 		{
 			name = "(lamp_core.png^[colorize:#DCEF04C0)^lamp_frame.png",

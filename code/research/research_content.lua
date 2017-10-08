@@ -187,10 +187,12 @@ research.register_lens_shape("cycloid", 3)
 research.register_lens_shape("heptagon", 3)
 research.register_lens_shape("reuleaux-triangle", 3)
 
-research.register_lens_material("core", "FORCIRIUM", "trinium:gem_forcirium")
+research.register_lens_material("core", "Forcirium", "trinium:material_gem_forcirium")
+research.register_lens_material("core", "Forcirium2", "trinium:material_gem_imbued_forcirium")
+research.register_lens_material("core", "Diamond", "trinium:material_gem_diamond")
 
-research.register_lens_material("band_material", "FORCIRIUM", "trinium:ingot_forcirium")
-research.register_lens_material("band_material", "TITANIUM-RHENIUM", "trinium:ingot_titanium_rhenium")
+research.register_lens_material("band_material", "Forcirium", "trinium:material_ingot_forcirium")
+research.register_lens_material("band_material", "TiRe", "trinium:material_ingot_titanium_rhenium")
 
 research.lens_forms.min_gem = 4
 research.lens_forms.max_gem = 32
@@ -200,7 +202,7 @@ research.lens_forms.max_tier = 5
 
 --[[ Chapters ]]--
 research.register_chapter("SystemInfo", {
-	texture = "trinium:block_dirt",
+	texture = "trinium:machine_research_table",
 	x = 0,
 	y = 0,
 	name = S("Research System"),

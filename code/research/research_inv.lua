@@ -64,14 +64,14 @@ local function get_book_research_fs(researchid, pn, page, update)
 			local w, h = math.max(v[2], 8), math.max(v[3], 8.6)
 			res.player_stuff[pn].research_array[1][k] = {
 				text = ("label[0,%s;%s]button[%s,0.25;1,0.5;research~research_turn~%s;<]button[%s,0.25;1,0.5;research~research_turn~%s;>]%sbutton[%s,%s;1,1;research~chapter_open~%s;%s]")
-				:format(h - 0.4, S("Research @1 - page @2", research.name, k), w - 2, k - 1, w - 1, k + 1, v[1], w - 1, h - 0.6, research.chapter, S("Back")),
+				:format(h - 0.4, S("@1 - page @2", research.name, k), w - 2, k - 1, w - 1, k + 1, v[1], w - 1, h - 0.6, research.chapter, S("Back")),
 				size = ("size[%s,%s]"):format(w, h),
 			}
 			if v[5] and not res.player_stuff[pn].researches[researchid.."__"..k] then
 				res.player_stuff[pn].research_array[2][k] = {
 					text = ("label[0,%s;%s]button[%s,0.25;1,0.5;research~research_turn~%s;<]button[%s,0.25;1,0.5;research~research_turn~%s;>]button[0,0;%s,1;research~unlock~%s;%s]"..
 					"button[%s,%s;1,1;research~chapter_open~%s;%s]")
-					:format(h - 0.4, S("Research @1 - page @2", research.name, k), w - 2, k - 1, w - 1, k + 1, w, k, S("Unlock"), w - 1, h - 0.6, research.chapter, S("Back")),
+					:format(h - 0.4, S("@1 - page @2", research.name, k), w - 2, k - 1, w - 1, k + 1, w, k, S("Unlock"), w - 1, h - 0.6, research.chapter, S("Back")),
 					size = ("size[%s,%s]"):format(w, h),
 					reqs = {},
 				}
@@ -164,12 +164,12 @@ function book:on_player_receive_fields(player, context, fields)
 				end
 
 				local inv = player:get_inventory()
-				if not inv:contains_item("main", "trinium:dust_diamond 16") then
+				if not inv:contains_item("main", "trinium:material_dust_diamond 16") then
 					cmsg.push_message_player(player, S("Insufficient Diamond Dust!"))
 					return
 				end
 
-				inv:remove_item("main", "trinium:dust_diamond 16")
+				inv:remove_item("main", "trinium:material_dust_diamond 16")
 				res.player_stuff[pn].data.ink = res.player_stuff[pn].data.ink - 500
 				inv:add_item("main", "trinium:chapter_map___"..context.book:split("~")[2])
 			end

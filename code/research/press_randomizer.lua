@@ -13,7 +13,7 @@ local randomizer_formspec = ([=[
 ]=]):format(S"Assemble")
 local tire_amount = 16
 
-minetest.register_node("trinium:press_randomizer", {
+minetest.register_node("trinium:machine_press_randomizer", {
 	tiles = {"research_chassis.png"},
 	description = S"Press Randomizer",
 	groups = {harvested_by_pickaxe = 2},
@@ -47,7 +47,7 @@ minetest.register_node("trinium:press_randomizer", {
 	end,
 	allow_metadata_inventory_put = function(pos, list, index, stack, player)
 		local name,size = stack:get_name(), stack:get_count()
-		return ((list == "rhenium-titanium" and name == "trinium:ingot_titanium_rhenium") or (list == "upgrade" and minetest.get_item_group(name, "lens_upgrade") ~= 0)) and size or 0
+		return ((list == "rhenium-titanium" and name == "trinium:material_ingot_titanium_rhenium") or (list == "upgrade" and minetest.get_item_group(name, "lens_upgrade") ~= 0)) and size or 0
 	end,
 	on_receive_fields = function(pos, formname, fields, player)
 		if not fields["trinium~research~assemble_press"] then return end
@@ -64,7 +64,7 @@ minetest.register_node("trinium:press_randomizer", {
 			return
 		end
 
-		local press = ItemStack("trinium:lens_band_press")
+		local press = ItemStack("trinium:research_lens_band_press")
 		local pressmeta = press:get_meta()
 		local upg = minetest.get_item_group(upgrade:get_name(), "lens_upgrade") + 1
 		local shape = table.remap(table.filter(research.lens_forms.shapes, function(x) return research.lens_forms.shapes_by_mintier[x] <= upg end))
@@ -95,9 +95,9 @@ trinium.register_multiblock("press randomizer", {
 	height_u = 1,
 	depth_b = 1,
 	depth_f = 0,
-	controller = "trinium:press_randomizer",
+	controller = "trinium:machine_press_randomizer",
 	activator = function(rg)
-		local ctrl = table.exists(rg.region, function(x) return x.x == 0 and x.y == 1 and x.z == 1 and x.name == "trinium:research_node" end)
+		local ctrl = table.exists(rg.region, function(x) return x.x == 0 and x.y == 1 and x.z == 1 and x.name == "trinium:machine_research_node" end)
 		return ctrl and minetest.get_meta(rg.region[ctrl].actual_pos):get_int("assembled") == 1
 	end,
 	after_construct = function(pos, is_constructed)

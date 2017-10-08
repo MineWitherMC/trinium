@@ -102,41 +102,13 @@ function trinium.adequate_text(str)
 	return str:sub(1,1):upper()..str:sub(2):lower()
 end
 
--- Config system
-function trinium.open_config(file)
-	local cfg = {}
-	mkdir(minetest.get_modpath(minetest.get_current_modname()).."config")
-	cfg.file = io.open(cfg.filename, "a+")
-	if not cfg.file then
-		cfg.file = assert(io.open(cfg.filename, "w"))
+function trinium.setting_get(name, default)
+	local s = minetest.settings:get(name)
+	if not s then
+		minetest.settings:set(name, default)
+		s = default
 	end
-	cfg.strings = assert(minetest.deserialize("local p = {\n"..cfg.file:read("*all").."\n}\nreturn p"))
-	cfg.groups = {}
-	cfg.group_amount = 0
-	function cfg:get(group, name, default_val, type)
-		if not cfg.groups[group] then
-			cfg.groups[group] = 1
-			if cfg.group_amount ~= 0 then
-				self.file:write("},\n")
-			end
-			cfg.group_amount = cfg.group_amount + 1
-			self.file:write("['"..group.."'] = {\n")
-		end
-
-		if self.strings[group][name] == nil then
-			self.strings[group][name] = default_val
-			self.file:write("['"..name.."'] = "..minetest.serialize(default_val):sub(8)..",\n")
-		end
-
-		assert(type(self.strings[group][name]) == type, "Attempt to get "..type.." variable (a "..type(self.strings[group][name]).." value)")
-		return self.strings[group][name]
-	end
-
-	function cfg:finish()
-		self.file:close()
-	end
-
-	return cfg
+	return s
 end
 
 -- Data

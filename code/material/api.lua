@@ -16,6 +16,7 @@ function mat.register_material(name, def)
 		color = color,
 		formula = def1.formula and "\n"..def1.formula or "",
 		data = def1.data or {},
+		types = def,
 	}
 	assert(#def >= 1)
 	for i = 1, #def do

@@ -10,7 +10,7 @@ local trashcan_formspec = [=[
 	listring[]
 ]=]
 
-minetest.register_node("trinium:trash_can", {
+minetest.register_node("trinium:machine_trash_can", {
 	description = S"Trash Can",
 	tiles = {"research_casing.png"},
 	groups = {harvested_by_pickaxe = 3},

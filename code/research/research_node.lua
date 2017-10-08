@@ -1,6 +1,6 @@
 local res_data = trinium.res.player_stuff
 
-minetest.register_node("trinium:research_node", {
+minetest.register_node("trinium:machine_research_node", {
 	tiles = {"node_controller.png"},
 	description = S("Research Node Controller"),
 	groups = {harvested_by_pickaxe = 1},
@@ -20,24 +20,24 @@ minetest.register_node("trinium:research_node", {
 			cmsg.push_message_player(player, ("Paper available: %d; Ink available: %d"):format(res_data[pn].data.paper, res_data[pn].data.ink))
 		else
 			local item = itemstack:get_name()
-			if item == "trinium:sheet_paper" then
+			if item == "trinium:material_sheet_paper" then
 				res_data[pn].data.paper = res_data[pn].data.paper + itemstack:get_count() * 2
 				itemstack:take_item(99)
-			elseif item == "trinium:cell_ink" then
+			elseif item == "trinium:material_cell_ink" then
 				res_data[pn].data.ink = res_data[pn].data.ink + 100
 				itemstack:take_item(1)
-			elseif item == "trinium:knowledge_charm" then
+			elseif item == "trinium:research_knowledge_charm" then
 				trinium.res.random_aspects(pn, 30)
 				itemstack:take_item(1)
-			elseif item == "trinium:aspected_charm" then
+			elseif item == "trinium:research_aspected_charm" then
 				trinium.res.random_aspects(pn, 100)
 				itemstack:take_item(1)
-			elseif item == "trinium:focused_charm" then
+			elseif item == "trinium:research_focused_charm" then
 				if itemstack:get_meta():get_string("focus") ~= "" then
 					trinium.res.random_aspects(pn, 150, {itemstack:get_meta():get_string("focus")})
 					itemstack:take_item(1)
 				end
-			elseif item == "trinium:abacus" then
+			elseif item == "trinium:research_abacus" then
 				local label = ""
 				for i = 1, #trinium.res.aspect_ids do
 					local an = trinium.res.aspect_ids[i]
@@ -55,7 +55,7 @@ local node_mb = {
 	height_u = 1,
 	depth_b = 4,
 	depth_f = 0,
-	controller = "trinium:research_node",
+	controller = "trinium:machine_research_node",
 	map = {
 		{x = 0, y = -1, z = 0, name = "trinium:research_casing"},
 		{x = 0, y = -1, z = 2, name = "trinium:research_casing"},

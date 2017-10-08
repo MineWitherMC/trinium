@@ -13,19 +13,19 @@ minetest.register_node("trinium:research_chassis", {
 })
 
 -- Knowledge Charms
-minetest.register_craftitem("trinium:knowledge_charm", {
+minetest.register_craftitem("trinium:research_knowledge_charm", {
 	inventory_image = "knowledge_charm.png",
 	description = S("Knowledge Charm"),
 	groups = {kcharm = 1},
 	stack_max = 16,
 })
-minetest.register_craftitem("trinium:aspected_charm", {
+minetest.register_craftitem("trinium:research_aspected_charm", {
 	inventory_image = "aspected_charm.png",
 	description = S("Aspected Charm"),
 	groups = {kcharm = 2},
 	stack_max = 16,
 })
-minetest.register_craftitem("trinium:focused_charm", {
+minetest.register_craftitem("trinium:research_focused_charm", {
 	inventory_image = "focused_charm.png",
 	description = S("Focused Charm"),
 	groups = {kcharm = 3},
@@ -33,7 +33,7 @@ minetest.register_craftitem("trinium:focused_charm", {
 })
 
 -- Abacus
-minetest.register_craftitem("trinium:abacus", {
+minetest.register_craftitem("trinium:research_abacus", {
 	inventory_image = "abacus.png",
 	description = S("Abacus"),
 })
@@ -44,19 +44,19 @@ minetest.register_craftitem("trinium:research_lens", {
 	description = S("Research Lens"),
 	stack_max = 1,
 })
-minetest.register_craftitem("trinium:lensupgrade_1", {
+minetest.register_craftitem("trinium:research_lensupgrade_1", {
 	inventory_image = "lens_upgrade_1.png",
 	description = S("Lens Upgrade"),
 	groups = {lens_upgrade = 1},
 	stack_max = 1,
 })
-minetest.register_craftitem("trinium:lensupgrade_2", {
+minetest.register_craftitem("trinium:research_lensupgrade_2", {
 	inventory_image = "lens_upgrade_2.png",
 	description = S("Improved Lens Upgrade"),
 	groups = {lens_upgrade = 2},
 	stack_max = 1,
 })
-minetest.register_craftitem("trinium:lens_band_press", {
+minetest.register_craftitem("trinium:research_lens_band_press", {
 	inventory_image = "lens_band_press.png",
 	description = S("Band Press"),
 	stack_max = 1,

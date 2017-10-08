@@ -119,7 +119,7 @@ local function delete_light(inv, index)
 	inv:set_stack("research_notes", 1, s1)
 end
 
-minetest.register_node("trinium:research_table", {
+minetest.register_node("trinium:machine_research_table", {
 	tiles = {"research_chassis.png"},
 	description = S"Research Table",
 	groups = {harvested_by_pickaxe = 2},
@@ -331,9 +331,9 @@ trinium.register_multiblock("research table", {
 	height_u = 0,
 	depth_b = 0,
 	depth_f = 1,
-	controller = "trinium:research_table",
+	controller = "trinium:machine_research_table",
 	activator = function(rg)
-		local ctrl = table.exists(rg.region, function(x) return x.x == 0 and x.y == -2 and x.z == -1 and x.name == "trinium:research_node" end)
+		local ctrl = table.exists(rg.region, function(x) return x.x == 0 and x.y == -2 and x.z == -1 and x.name == "trinium:machine_research_node" end)
 		return ctrl and minetest.get_meta(rg.region[ctrl].actual_pos):get_int("assembled") == 1
 	end,
 	after_construct = function(pos, is_constructed)
