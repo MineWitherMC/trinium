@@ -58,6 +58,10 @@ function table.remap(array)
 	return array2
 end
 
+function table.intersect_key_rev(arr1, arr2)
+	return table.filter(arr1, function(v, k) return not arr2[k] end)
+end
+
 -- Basic functions
 function trinium.sortByParam(param)
 	return function(a, b)
@@ -109,6 +113,15 @@ function trinium.setting_get(name, default)
 		s = default
 	end
 	return s
+end
+
+function vector.stringify(v)
+	return v.x..","..v.y..","..v.z
+end
+
+function vector.destringify(v)
+	local s = v:split(",")
+	return {x = s[1], y = s[2], z = s[3]}
 end
 
 -- Data

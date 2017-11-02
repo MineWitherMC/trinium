@@ -1,5 +1,9 @@
 local default = ...
 
+if trinium.disable_oregen then
+	minetest.clear_registered_ores()
+end
+
 local veins_by_breakpoints, vein_breakpoints_s, vein_breakpoint_w
 local vein_breakpoints, registered_veins = {}, {}
 
