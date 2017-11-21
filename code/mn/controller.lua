@@ -31,6 +31,32 @@ function trinium.get_mn_storage(ctrlpos, item)
 	return false -- Placeholder
 end
 
+function trinium.add_mn_storage(ctrlpos, priority, machinepos, registry, type_ammount, items)
+	local M = minetest.get_meta(ctrlpos)
+	local arr = minetest.deserialize(M:get_string("storage_cells")) or {}
+	arr[priority] = arr[priority] or {}
+	table.insert(arr[priority], {registry_name = vector.stringify(machinepos).."~"..registry, types = type_ammount, available_types = type_ammount - #items, items = items})
+	M:set_string("storage", minetest.serialize(arr))
+end
+
+function trinium.update_priority(ctrlpos, machinepos, registry, oldpriority, priority)
+	local M = minetest.get_meta(ctrlpos)
+	local regname = vector.stringify(machinepos).."~"..registry
+	local k = table.exists(arr[oldpriority], function(v) return v.registry_name == regname)
+	local v = arr[oldpriority][k]
+	table.remove(arr[oldpriority], k)
+	arr[priority] = arr[priority] or {}
+	table.insert(arr[priority], v)
+	M:set_string("storage", minetest.serialize(arr))
+end
+
+function trinium.remove_mn_storage(ctrlpos, priority, machinepos, registry)
+	local M = minetest.get_meta(ctrlpos)
+	local regname = vector.stringify(machinepos).."~"..registry
+	arr[priority] = table.remap(table.filter(arr[priority], function(v) return v.registry_name == regname end))
+	M:set_string("storage", minetest.serialize(arr))
+end
+
 function trinium.get_mn_items(ctrlpos)
 	return {} -- Placeholder
 end

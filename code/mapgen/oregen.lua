@@ -37,6 +37,7 @@ end
 
 local stone_cid = default and minetest.get_content_id("default:stone") or minetest.get_content_id("trinium:block_stone")
 minetest.register_on_generated(function(minp, maxp, seed)
+	local rand = PcgRandom(seed)
 	local vb, vbs, wb = veins_by_breakpoints, vein_breakpoints_s, vein_breakpoint_w
 	if not vb or not vbs or not wb then
 		local n
@@ -61,16 +62,16 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		vbs = n
 	end
 
-	if math.random() > trinium.config.vein_probability then return end
+	if rand:next(1, 1000000) / 1000000 > trinium.config.vein_probability then return end
 
-	local xs, ys, zs = math.random(trinium.config.min_vein_size, trinium.config.max_vein_size), 9, math.random(trinium.config.min_vein_size, trinium.config.max_vein_size)
-	local xc, yc, zc = minp.x + math.random(0, 80 - xs), minp.y + math.random(0, 80 - ys), minp.z + math.random(0, 80 - zs)
+	local xs, ys, zs = rand:next(trinium.config.min_vein_size, trinium.config.max_vein_size), 9, rand:next(trinium.config.min_vein_size, trinium.config.max_vein_size)
+	local xc, yc, zc = minp.x + rand:next(0, 80 - xs), minp.y + rand:next(0, 80 - ys), minp.z + rand:next(0, 80 - zs)
 	local j, veinname, weight, vein
 
 	for i = 2, #vbs do
 		j = 0
 		if yc >= vbs[i - 1] and yc <= vbs[i] then
-			weight = math.random(1, wb[vbs[i].."_"..vbs[i - 1]])
+			weight = rand:next(1, wb[vbs[i].."_"..vbs[i - 1]])
 			for y,w in pairs(vb[vbs[i].."_"..vbs[i - 1]]) do
 				j = j + w
 				if j >= weight then
@@ -90,9 +91,9 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local data, area, choice, x, y, w = vm:get_data(), VoxelArea:new{MinEdge=emin, MaxEdge=emax}
 
 	for i in area:iter(xc, yc, zc, xc + xs, yc + ys, zc + zs) do
-		if math.random(1, 50) <= v.density then
+		if rand:next(1, 50) <= v.density then
 			x, y, w = 0, 0, v.ore_chances_multiplier
-			choice = math.random(1, w)
+			choice = rand:next(1, w)
 			while x < choice and y < #v.ore_chances do
 				y = y + 1
 				x = x + v.ore_chances[y]
