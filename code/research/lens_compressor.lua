@@ -65,6 +65,8 @@ minetest.register_node("trinium:machine_lens_curver", {
 			return stack:get_name() == "trinium:research_lens_band_press" and 1 or 0
 		elseif list == "upgrade" then
 			return minetest.get_item_group(stack:get_name(), "lens_upgrade") ~= 0 and 1 or 0
+		else
+			return 0
 		end
 	end,
 	on_receive_fields = function(pos, formname, fields, player)

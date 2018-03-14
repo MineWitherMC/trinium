@@ -1,28 +1,33 @@
 local research = trinium.res
 local S = trinium.S
 
-local function get_table_formspec(mode, pn, real_research)
-	if mode == 1 then
+local function get_table_formspec(mode, pn, real_research, aspect_key)
+	aspect_key = aspect_key or 0
+	if mode == 1 or mode == "1" then
 		return ([=[
 			size[11.5,8.5]
 			bgcolor[#080808BB;true]
 			background[5,5;1,1;gui_formbg.png;true]
-			list[context;aspect_panel;0,1.5;4,7;]
+			list[context;aspect_panel;0,1.5;4,6;%s]
+			button[1,7.5;1,1;research_table~up;↑]
+			button[2,7.5;1,1;research_table~down;↓]
 			%s
 			list[context;research_notes;0,0.25;1,1;]
 			list[context;lens;1,0.25;1,1;]
 			list[context;trash;10.25,0.25;1,1;]
 			label[2,0;%s]
 			tabheader[0,0;research_table~change_fs;%s,%s;1;true;false]
-		]=]):format(real_research and "list[context;map;4.5,1.5;7,7;]" or "",
+		]=]):format(aspect_key, real_research and "list[context;map;4.5,1.5;7,7;]" or "",
 			S("Ink: @1\nPaper: @2\nWarp: @3", research.player_stuff[pn].data.ink, research.player_stuff[pn].data.paper, research.player_stuff[pn].data.warp),
 			S"Map", S"Inventory")
-	elseif mode == 2 then
+	elseif mode == 2 or mode == "2" then
 		return ([=[
 			size[12.5,7]
 			bgcolor[#080808BB;true]
 			background[5,5;1,1;gui_formbg.png;true]
-			list[context;aspect_panel;0,0;4,7;]
+			list[context;aspect_panel;0,0;4,6;%s]
+			button[1,6;1,1;research_table~up;↑]
+			button[2,6;1,1;research_table~down;↓]
 			list[context;aspect_inputs;5,0;1,1;]
 			button[6,0;1,1;research_table~add_aspects;+]
 			list[context;aspect_inputs;7,0;1,1;1]
@@ -33,7 +38,7 @@ local function get_table_formspec(mode, pn, real_research)
 			label[11.5,2.5;%s]
 			list[current_player;main;4.5,3;8,4;]
 			tabheader[0,0;research_table~change_fs;%s,%s;2;true;false]
-		]=]):format(S"Research Notes", S"Lens", S"Map", S"Inventory")
+		]=]):format(aspect_key, S"Research Notes", S"Lens", S"Map", S"Inventory")
 	end
 end
 
@@ -145,6 +150,7 @@ minetest.register_node("trinium:machine_research_table", {
 		meta:set_string("infotext", "Multiblock is not assembled!")
 		meta:set_string("current_mode", 2)
 		meta:set_string("owner", pn)
+		meta:set_int("aspect_key", 0)
 
 		recalc_aspects(pn, inv)
 	end,
@@ -183,8 +189,18 @@ minetest.register_node("trinium:machine_research_table", {
 				local a = ksplit[2]
 				if a == "change_fs" then
 					local tnb = tonumber(v)
-					meta:set_string("formspec", get_table_formspec(tnb, pn, is_correct_research(inv)))
+					meta:set_string("formspec", get_table_formspec(tnb, pn, is_correct_research(inv), meta:get_int("aspect_key")))
 					meta:set_string("current_mode", tnb)
+				elseif a == "down" then
+					local key = meta:get_int("aspect_key")
+					key = math.min(key + 4, #research.aspect_ids - 24)
+					meta:set_int("aspect_key", key)
+					meta:set_string("formspec", get_table_formspec(meta:get_string("current_mode"), pn, is_correct_research(inv), key))
+				elseif a == "up" then
+					local key = meta:get_int("aspect_key")
+					key = math.max(key - 4, 0)
+					meta:set_int("aspect_key", key)
+					meta:set_string("formspec", get_table_formspec(meta:get_string("current_mode"), pn, is_correct_research(inv), key))
 				elseif a == "add_aspects" then
 					local a1, a2 = inv:get_stack("aspect_inputs", 1):get_name():sub(18), inv:get_stack("aspect_inputs", 2):get_name():sub(18)
 					if not a1 or a1 == "" or not a2 or a2 == "" then return end
@@ -285,7 +301,7 @@ minetest.register_node("trinium:machine_research_table", {
 			inv:set_stack("research_notes", 1, s1)
 			if add_light(inv, index2) then
 				inv:set_stack("research_notes", 1, "trinium:discovery___"..s1:get_name():split("___")[2])
-				meta:set_string("formspec", get_table_formspec(1, pn, false))
+				meta:set_string("formspec", get_table_formspec(meta:get_string("current_mode"), pn, false, meta:get_int("aspect_key")))
 			end
 		end
 
@@ -339,7 +355,11 @@ trinium.register_multiblock("research table", {
 	end,
 	after_construct = function(pos, is_constructed)
 		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec", is_constructed and get_table_formspec(2) or "")
+		local r = meta:set_string("current_mode")
+		if r ~= "1" and r ~= "2" then
+			meta:set_string("current_mode", 2)
+		end
+		meta:set_string("formspec", is_constructed and get_table_formspec(meta:get_string("current_mode"), nil, nil, meta:get_int("aspect_key") or 0) or "")
 		meta:set_string("infotext", is_constructed and "" or "Multiblock is not assembled!")
 	end,
 })

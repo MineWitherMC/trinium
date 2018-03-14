@@ -41,7 +41,6 @@ minetest.register_node("trinium:machine_press_randomizer", {
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		trinium.initialize_inventory(inv, {["rhenium-titanium"] = 1, upgrade = 1, press = 1})
-		meta:set_string("infotext", is_constructed and "" or "Multiblock is not assembled!")
 	end,
 	allow_metadata_inventory_move = function(pos, list1, index1, list2, index2, stacksize, player)
 		return 0

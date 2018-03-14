@@ -90,6 +90,12 @@ research.register_aspect("SPECULUM", {
 })
 
 -- Tier 3
+research.register_aspect("HERBA", {
+	texture = "aspect_herba.png",
+	name = "Herba\n"..S("Plant, Grass"),
+	req1 = "POTENTIA",
+	req2 = "VITA"
+})
 research.register_aspect("PERMUTATIO", {
 	texture = "aspect_permutatio.png",
 	name = "Permutatio\n"..S("Exchange"),
@@ -134,6 +140,12 @@ research.register_aspect("FIRMITATEM", {
 	req1 = "VINCULUM",
 	req2 = "ALIENIS"
 })
+research.register_aspect("TEMPUS", {
+	texture = "aspect_tempus.png",
+	name = "Tempus\n"..S("Time, Moment, Temporality"),
+	req1 = "VINCULUM",
+	req2 = "CELERITAS"
+})
 research.register_aspect("SENTENTIA", {
 	texture = "aspect_sententia.png",
 	name = "Sententia\n"..S("Sense"),
@@ -171,6 +183,18 @@ research.register_aspect("DAMNUM", {
 	name = "Damnum\n"..S("Damage, Weapon, Attack"),
 	req1 = "PRAESIDIO",
 	req2 = "INTERITUM"
+})
+research.register_aspect("INVIDIA", {
+	texture = "aspect_invidia.png",
+	name = "Invidia\n"..S("Cheatyness, Envy, Overpoweredness"),
+	req1 = "FIRMITATEM",
+	req2 = "RATUS"
+})
+research.register_aspect("ARBOR", {
+	texture = "aspect_arbor.png",
+	name = "Arbor\n"..S("Wood, Tree"),
+	req1 = "HERBA",
+	req2 = "TEMPUS"
 })
 
 

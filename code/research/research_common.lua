@@ -44,6 +44,7 @@ minetest.register_craftitem("trinium:research_lens", {
 	inventory_image = "research_lens.png",
 	description = S("Research Lens"),
 	stack_max = 1,
+	groups = {hidden_from_irp = 1},
 })
 minetest.register_craftitem("trinium:research_lensupgrade_1", {
 	inventory_image = "lens_upgrade_1.png",
@@ -61,4 +62,5 @@ minetest.register_craftitem("trinium:research_lens_band_press", {
 	inventory_image = "lens_band_press.png",
 	description = S("Band Press"),
 	stack_max = 1,
+	groups = {hidden_from_irp = 1},
 })
