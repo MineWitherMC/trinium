@@ -28,7 +28,7 @@ minetest.register_craftitem("trinium:research_aspected_charm", {
 minetest.register_craftitem("trinium:research_focused_charm", {
 	inventory_image = "focused_charm.png",
 	description = S("Focused Charm"),
-	groups = {kcharm = 3},
+	groups = {kcharm = 3, hidden_from_irp = 1},
 	stack_max = 16,
 })
 
