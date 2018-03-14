@@ -34,6 +34,7 @@ minetest.register_craftitem("trinium:research_focused_charm", {
 
 -- Abacus
 minetest.register_craftitem("trinium:research_abacus", {
+	stack_max = 1,
 	inventory_image = "abacus.png",
 	description = S("Abacus"),
 })

@@ -15,6 +15,7 @@ local compressor_formspec = ([=[
 ]=]):format(S"Assemble")
 
 minetest.register_node("trinium:machine_lens_curver", {
+	stack_max = 1,
 	tiles = {"research_chassis.png"},
 	description = S"Lens Curver",
 	groups = {harvested_by_pickaxe = 2},

@@ -456,7 +456,14 @@ local mt_register_item_old = minetest.register_item
 function minetest.register_item(name, def, ...)
 	def.stack_max = def.stack_max or 64
 	if def.drop and def.drop ~= "" then
-		trinium.register_recipe("trinium:drop", {name}, type(def.drop) == "table" and def.drop.items or {def.drop}, {max_items = type(def.drop) == "table" and def.drop.max_items or 1})
+		trinium.register_recipe("trinium:drop", {name},
+			type(def.drop) == "table" and def.drop.items or {def.drop}, 
+			{max_items = type(def.drop) == "table" and def.drop.max_items or 1}
+		)
+	end
+	if def.max_stack and def.stack_max == 64 then
+		def.stack_max = def.max_stack
+		def.max_stack = nil
 	end
 	return mt_register_item_old(name, def, ...)
 end

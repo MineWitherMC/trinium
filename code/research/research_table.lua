@@ -120,6 +120,7 @@ local function delete_light(inv, index)
 end
 
 minetest.register_node("trinium:machine_research_table", {
+	stack_max = 1,
 	tiles = {"research_chassis.png"},
 	description = S"Research Table",
 	groups = {harvested_by_pickaxe = 2},

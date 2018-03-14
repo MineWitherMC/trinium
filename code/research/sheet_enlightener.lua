@@ -16,6 +16,7 @@ local enlightener_formspec = ([=[
 ]=]):format(S"Sheet Enlightener", S"Infuse")
 
 minetest.register_node("trinium:machine_sheet_enlightener", {
+	stack_max = 1,
 	tiles = {"research_table_wall.png"},
 	description = S"Sheet Enlightener",
 	groups = {harvested_by_pickaxe = 1},

@@ -14,6 +14,7 @@ local randomizer_formspec = ([=[
 local tire_amount = 16
 
 minetest.register_node("trinium:machine_press_randomizer", {
+	stack_max = 1,
 	tiles = {"research_chassis.png"},
 	description = S"Press Randomizer",
 	groups = {harvested_by_pickaxe = 2},

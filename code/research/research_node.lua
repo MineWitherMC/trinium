@@ -1,6 +1,7 @@
 local res_data = trinium.res.player_stuff
 
 minetest.register_node("trinium:machine_research_node", {
+	max_stack = 1,
 	tiles = {"node_controller.png"},
 	description = S("Research Node Controller"),
 	groups = {harvested_by_pickaxe = 1},
@@ -21,7 +22,13 @@ minetest.register_node("trinium:machine_research_node", {
 		else
 			local item = itemstack:get_name()
 			if item == "trinium:material_sheet_paper" then
-				res_data[pn].data.paper = res_data[pn].data.paper + itemstack:get_count() * 2
+				res_data[pn].data.paper = res_data[pn].data.paper + itemstack:get_count()
+				itemstack:take_item(99)
+			elseif item == "trinium:material_sheet_carton" then
+				res_data[pn].data.paper = res_data[pn].data.paper + itemstack:get_count() * 4
+				itemstack:take_item(99)
+			elseif item == "trinium:material_sheet_parchment" then
+				res_data[pn].data.paper = res_data[pn].data.paper + itemstack:get_count() * 16
 				itemstack:take_item(99)
 			elseif item == "trinium:material_cell_ink" then
 				res_data[pn].data.ink = res_data[pn].data.ink + 100
