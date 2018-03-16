@@ -123,3 +123,188 @@ else
 	minetest.register_alias("trinium:gem_coal", "default:coal_lump")
 	minetest.register_alias("trinium:ore_coal", "default:stone_with_coal")
 end
+
+
+materials.register_material("abs_plastic", {
+	name = S"ABS Plastic",
+	color = {100, 100, 100},
+	types = {"ingot", "pulp", "cell"},
+	data = {},
+	formula = "((C8H8)8(C4H6)3(C3H3N)5)n",
+})
+
+materials.register_material("abs_plastic_compound", {
+	name = S"ABS Plastic Compound",
+	color = {250, 230, 210},
+	types = {"cell"},
+	data = {},
+	formula = "(C8H8)8(C4H6)3(C3H3N)5",
+})
+
+materials.register_material("styrene", {
+	name = S"Styrene",
+	color = {250, 230, 210},
+	types = {"cell"},
+	data = {},
+	formula = "C8H8",
+})
+
+materials.register_material("butadiene", {
+	name = S"Butadiene",
+	color = {50, 40, 40},
+	types = {"cell"},
+	data = {},
+	formula = "C4H6",
+})
+
+materials.register_material("acrylonitrile", {
+	name = S"Acrylonitrile",
+	color = {240, 240, 225},
+	types = {"cell"},
+	data = {},
+	formula = "C3H3N",
+})
+
+materials.register_material("ethylbenzene", {
+	name = S"Ethylbenzene",
+	color = {240, 240, 240},
+	types = {"cell"},
+	data = {},
+	formula = "C8H10",
+})
+
+materials.register_material("chloroethane", {
+	name = S"Chloroethane",
+	color = {190, 235, 230},
+	types = {"cell"},
+	data = {},
+	formula = "C2H5Cl",
+})
+
+materials.register_material("ethylene", {
+	name = S"Ethylene",
+	color = {190, 175, 235},
+	types = {"cell"},
+	data = {},
+	formula = "C2H4",
+})
+
+materials.register_material("hydrochloride", {
+	name = S"Hydrogen Chloride",
+	color = {190, 190, 190},
+	types = {"cell"},
+	data = {},
+	formula = "HCl",
+})
+
+materials.register_material("benzene", {
+	name = S"Benzene",
+	color = {40, 40, 50},
+	types = {"cell"},
+	data = {},
+	formula = "C6H6",
+})
+
+materials.register_material("aluminiumchloride", {
+	name = S"Aluminium Chloride",
+	color = {245, 245, 245},
+	types = {"dust", "catalyst", "brick"},
+	data = {},
+	formula = "AlCl3",
+})
+
+materials.register_material("aluminiumoxide", {
+	name = S"Aluminium Trioxide",
+	color = {160, 160, 100},
+	types = {"dust", "catalyst", "brick"},
+	data = {},
+	formula = "Al2O3",
+})
+
+materials.register_material("chromiumoxide", {
+	name = S"Chromium Trioxide",
+	color = {160, 100, 100},
+	types = {"dust", "catalyst", "brick"},
+	data = {},
+	formula = "Cr2O3",
+})
+
+materials.register_material("potassiumoxide", {
+	name = S"Potassium Oxide",
+	color = {250, 250, 235},
+	types = {"dust", "catalyst", "brick"},
+	data = {},
+	formula = "K2O",
+})
+
+materials.register_material("iron", {
+	name = S"Iron",
+	color = {200, 200, 200},
+	types = {"dust", "catalyst", "ingot"},
+	data = {melting_point = 1811},
+	formula = "Fe",
+})
+
+materials.register_material("butane", {
+	name = S"Butane",
+	color = {160, 90, 0},
+	types = {"cell"},
+	data = {},
+	formula = "C4H10",
+})
+
+materials.register_material("acetylene", {
+	name = S"Acetylene",
+	color = {240, 240, 240},
+	types = {"cell"},
+	data = {},
+	formula = "C2H2",
+})
+
+materials.register_material("methane", {
+	name = S"Methane",
+	color = {240, 90, 240},
+	types = {"cell"},
+	data = {},
+	formula = "CH4",
+})
+
+materials.register_material("oxygen", {
+	name = S"Oxygen",
+	color = {185, 185, 240},
+	types = {"cell"},
+	data = {},
+	formula = "O2",
+})
+
+materials.register_material("ammonia", {
+	name = S"Ammonia",
+	color = {200, 145, 200},
+	types = {"cell"},
+	data = {},
+	formula = "NH3",
+})
+
+materials.register_material("nitrogen", {
+	name = S"Nitrogen",
+	color = {185, 240, 240},
+	types = {"cell"},
+	data = {},
+	formula = "N2",
+})
+
+materials.register_material("hydrogen", {
+	name = S"Hydrogen",
+	color = {0, 0, 150},
+	types = {"cell"},
+	data = {},
+	formula = "H2",
+})
+
+materials.register_material("ammoniacatalyst", {
+	name = S"Ammonia Catalyst",
+	color = {205, 210, 180},
+	types = {"ingot", "catalyst"},
+	data = {},
+	formula = "Fe7(K2O)(Al2O3)",
+})

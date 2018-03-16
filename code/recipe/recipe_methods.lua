@@ -101,7 +101,7 @@ trinium.register_recipe_handler("trinium:metal_former", {
 	formspec_height = 3,
 	formspec_name = S("Metal Former"),
 	formspec_begin = function(data)
-		return "label[0,2;"..S("@1 Method", S(data.method)).."]"
+		return "label[0,2;"..S("Method: @1", S(trinium.adequate_text(data.type))).."]"
 	end,
 })
 
@@ -142,5 +142,23 @@ trinium.register_recipe_handler("trinium:molecular_reconstructor", {
 	formspec_name = S("Molecular Reconstructor"),
 	formspec_begin = function(data)
 		return "label[0,2;"..S("Type: @1\nBase Stargates per Tick: @2\nTier: @3", S(data.type), data.base_sg_per_tick, data.tier).."]"
+	end,
+})
+
+-- Chemical Reactor
+trinium.register_recipe_handler("trinium:chemical_reactor", {
+	input_amount = 4,
+	output_amount = 4,
+	get_input_coords = function(n)
+		return get_bf_coords(0, 0, n)
+	end,
+	get_output_coords = function(n)
+		return get_bf_coords(3, 0, n)
+	end,
+	formspec_width = 7,
+	formspec_height = 5,
+	formspec_name = S("Chemical Reactor"),
+	formspec_begin = function(data)
+		return ("label[2,3.5;%s]"):format(S("Catalyst - @1\nTime - @2", data.catalyst or S"None", data.time or "???"))
 	end,
 })

@@ -76,14 +76,14 @@ materials.register_interaction("dust_implosion", {
 
 materials.register_mattype("water_cell", function(def)
 	minetest.register_craftitem(("trinium:material_cell_%s"):format(def.id), {
-		description = S("@1 Cell", def.name)..def.formula,
+		description = S("Water-Mixed @1", def.name)..def.formula,
 		inventory_image = "(materials_cell.png^[colorize:#"..def.color..")^materials_cell_overlay.png",
 	})
 end)
 materials.register_interaction("water_mixing", {
 	requirements = {"dust", "water_cell"},
 	apply = function(name, data)
-		trinium.register_recipe("trinium:mixer", {"trinium:material_dust_"..name, "trinium:material_cell_empty", [7] = "trinium:material_water_source 1000"}, {"trinium:material_cell_"..name}, {velocity = data.water_mix_velocity})
+		trinium.register_recipe("trinium:mixer", {"trinium:material_dust_"..name, "trinium:material_cell_empty", [7] = "trinium:block_water_source"}, {"trinium:material_cell_"..name}, {velocity = data.water_mix_velocity})
 	end,
 })
 
@@ -132,6 +132,7 @@ materials.register_interaction("brick_compression", {
 	requirements = {"dust", "brick"},
 	apply = function(name, data)
 		trinium.register_recipe("trinium:metal_former", {"trinium:material_dust_"..name}, {"trinium:material_brick_"..name}, {["type"] = "compressing"})
+		trinium.register_recipe("trinium:grinder", {"trinium:material_brick_"..name}, {"trinium:material_dust_"..name}, {})
 	end,
 })
 
@@ -157,3 +158,20 @@ materials.register_interaction("ore_grinding", {
 		end
 	end,
 })
+
+
+materials.register_mattype("pulp", function(def)
+	minetest.register_craftitem(("trinium:material_pulp_%s"):format(def.id), {
+		description = S("@1 Pulp", def.name)..def.formula,
+		inventory_image = "(materials_dust.png^[colorize:#"..def.color..")^materials_dust_overlay.png",
+	})
+end)
+
+
+materials.register_mattype("catalyst", function(def)
+	minetest.register_craftitem(("trinium:material_catalyst_%s"):format(def.id), {
+		description = S("@1 Catalyst", def.name)..def.formula,
+		inventory_image = "materials_catalyst.png^[colorize:#"..def.color,
+		groups = {catalyst = 1},
+	})
+end)

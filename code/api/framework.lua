@@ -405,7 +405,7 @@ function trinium.register_multiblock(name, def)
 			local is_active = def.activator(rg)
 			meta:set_int("assembled", is_active and 1 or 0)
 			if def.after_construct then
-				def.after_construct(pos, is_active)
+				def.after_construct(pos, is_active, rg)
 			end
 		end,
 	})

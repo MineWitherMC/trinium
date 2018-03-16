@@ -1,3 +1,5 @@
+local S = trinium.S
+
 -- Research Casing
 minetest.register_node("trinium:research_casing", {
 	tiles = {"research_casing.png"},
@@ -63,4 +65,20 @@ minetest.register_craftitem("trinium:research_lens_band_press", {
 	description = S("Band Press"),
 	stack_max = 1,
 	groups = {hidden_from_irp = 1},
+})
+
+-- Knowledge Crystal
+minetest.register_craftitem("trinium:knowledge_crystal", {
+	inventory_image = "knowledge_crystal.png",
+	description = S("Knowledge Crystal"),
+	stack_max = 1,
+	on_place = function(item, player, pointed_thing)
+		local item = ItemStack(item)
+		local meta = item:get_meta()
+		local pn = player:get_player_name()
+		meta:set_string("player", pn)
+		meta:set_string("description", S("Knowledge Crystal").."\n"..S("Bound to @1", pn))
+		cmsg.push_message_player(player, "Successfully bound to "..pn)
+		return item
+	end,
 })
