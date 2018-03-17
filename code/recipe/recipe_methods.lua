@@ -1,4 +1,5 @@
 local S = trinium.S
+local SS = trinium.materials.S
 
 -- Furnace
 trinium.register_recipe_handler("trinium:furnace", {
@@ -159,6 +160,12 @@ trinium.register_recipe_handler("trinium:chemical_reactor", {
 	formspec_height = 5,
 	formspec_name = S("Chemical Reactor"),
 	formspec_begin = function(data)
-		return ("label[2,3.5;%s]"):format(S("Catalyst - @1\nTime - @2", data.catalyst or S"None", data.time or "???"))
+		return ("label[2,3.5;%s]"):format(S("Catalyst - @1\nTime - @2 seconds", SS(data.catalyst) or S"None", data.time or "???"))
+	end,
+	can_perform = function(player_encoded, recipe_data)
+		local x = recipe_data.research
+		local pn = player_encoded:get_meta():get_string("player")
+		local y = trinium.res.player_stuff[pn]
+		return not x or y.researches[x]
 	end,
 })

@@ -221,6 +221,22 @@ materials.register_material("aluminiumoxide", {
 	formula = "Al2O3",
 })
 
+materials.register_material("aluminiumchloride", {
+	name = S"Aluminium Trichloride",
+	color = {100, 160, 160},
+	types = {"dust", "catalyst", "brick"},
+	data = {},
+	formula = "AlCl3",
+})
+
+materials.register_material("irontrioxide", {
+	name = S"Iron Trioxide",
+	color = {100, 100, 155},
+	types = {"dust", "catalyst", "brick"},
+	data = {},
+	formula = "Fe2O3",
+})
+
 materials.register_material("chromiumoxide", {
 	name = S"Chromium Trioxide",
 	color = {160, 100, 100},
@@ -307,4 +323,36 @@ materials.register_material("ammoniacatalyst", {
 	types = {"ingot", "catalyst"},
 	data = {},
 	formula = "Fe7(K2O)(Al2O3)",
+})
+
+materials.register_material("platinum", {
+	name = S"Platinum",
+	color = {255, 255, 200},
+	types = {"ingot", "catalyst", "dust"},
+	data = {melting_point = 2041},
+	formula = "Pt",
+})
+
+materials.register_material("hydrogencyanide", {
+	name = S"Hydrogen Cyanide",
+	color = {255, 100, 255},
+	types = {"cell"},
+	data = {},
+	formula = "HCN",
+})
+
+materials.register_material("chromiumaluminiumoxide", {
+	name = S"Chromium-Aluminium Oxide",
+	color = {230, 225, 195},
+	types = {"catalyst", "ingot"},
+	data = {},
+	formula = "CrAlO3",
+})
+
+materials.register_material("chromiumironoxide", {
+	name = S"Chromium-Iron Oxide",
+	color = {230, 205, 195},
+	types = {"catalyst", "ingot"},
+	data = {},
+	formula = "CrFeO3",
 })

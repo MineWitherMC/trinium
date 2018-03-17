@@ -117,13 +117,13 @@ end
 function res.grant(pn, research)
 	for _,k in pairs(res.researches[research].requirements) do
 		if not res.player_stuff[pn].research[k] then
-			minetest.chat_send_player(pn, S("research.unknown"))
+			minetest.chat_send_player(pn, S("Unknown research requirement!"))
 			return
 		end
 	end
 	for k in pairs(res.chapters[res.researches[research].chapter].requirements) do
 		if not res.player_stuff[pn].research[k] then
-			minetest.chat_send_player(pn, S("Unknown research requirement!"))
+			minetest.chat_send_player(pn, S("Unknown research chapter requirement!"))
 			return
 		end
 	end

@@ -172,6 +172,7 @@ materials.register_mattype("catalyst", function(def)
 	minetest.register_craftitem(("trinium:material_catalyst_%s"):format(def.id), {
 		description = S("@1 Catalyst", def.name)..def.formula,
 		inventory_image = "materials_catalyst.png^[colorize:#"..def.color,
-		groups = {catalyst = 1},
+		groups = {chemical_reactor_catalyst = 1},
+		max_stack = 1,
 	})
 end)

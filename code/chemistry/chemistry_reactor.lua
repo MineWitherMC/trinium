@@ -1,10 +1,13 @@
 local research = trinium.res
 local S = trinium.S
+local T = function(timer)
+	if not timer:is_started() then timer:start(15) end
+end
 
 local chemical_reactor_formspec = ([=[
 	size[8,6.5]
 	bgcolor[#080808BB;true]
-	label[2.5,0;%s]
+	label[3,0;%s]
 	background[5,5;1,1;gui_formbg.png;true]
 	list[context;knowledge_encoded;3,0.5;1,1;]
 	list[context;recipe_encoded;4,0.5;1,1;]
@@ -29,7 +32,7 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 
 	allow_metadata_inventory_move = function() return 0 end,
 	allow_metadata_inventory_put = function(pos, list, index, stack, player)
-		return ((list == "knowledge_encoded" and stack:get_name == "trinium:knowledge_crystal") or (list == "recipe_encoded" and stack:get_name == "trinium:recipe_pattern_encoded")) and 1 or 0
+		return ((list == "knowledge_encoded" and stack:get_name() == "trinium:knowledge_crystal") or (list == "recipe_encoded" and stack:get_name() == "trinium:recipe_pattern_encoded")) and 1 or 0
 	end,
 
 	allow_metadata_inventory_take = function(pos, list, index, stack, player)
@@ -49,28 +52,53 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		local activity = meta:get_int("active")
+		local timer = minetest.get_node_timer(pos)
 		if activity == 1 then
-			local item = meta:get_string("output")
+			local items = meta:get_string("output"):split(";")
 			local output = vector.destringify(meta:get_string("output_crd"))
 			local output_inv = minetest.get_meta(output):get_inventory()
-			if output_inv:has_room_for_item("output", item) then
-				output_inv:add_item("output", item)
-			else
-				meta:set_int("active", -1)
-			end
+			table.walk(items, function(item)
+				if output_inv:room_for_item("output", item) then
+					output_inv:add_item("output", item)
+				else
+					meta:set_int("active", -1)
+					timer:stop()
+					timer:start(15)
+				end
+			end)
 		end
 		if activity ~= -1 then
 			local recipe = inv:get_stack("recipe_encoded", 1)
-			if recipe:is_empty() then return end
+			if recipe:is_empty() then
+				T(timer)
+				return
+			end
+			local catalyst = vector.destringify(meta:get_string("catalyst_crd"))
+			-- local catalyst_inv = minetest.get_meta(catalyst):get_inventory()
+			local rec = trinium.valid_recipe(recipe, "trinium:chemical_reactor", {catalyst = catalyst}) -- done
+			if not rec then
+				trinium.dump("invalid")
+				T(timer)
+				return
+			end
 			local player = inv:get_stack("knowledge_encoded", 1)
-			if player:is_empty() or not trinium.can_perform(player, recipe) then return end -- code "trinium.can_perform"
+			if player:is_empty() or not trinium.can_perform(player, rec, "trinium:chemical_reactor") then
+				T(timer)
+				return
+			end -- done
 			local input = vector.destringify(meta:get_string("input_crd"))
 			local input_inv = minetest.get_meta(input):get_inventory()
-			if not trinium.has_inputs_for_recipe(recipe, input_inv, "input", 12) then return end -- code this function
-			local recipe_output = trinium.draw_inputs_for_recipe(recipe, input_inv, "input", 12) -- code this function
+			if not trinium.has_inputs_for_recipe(recipe, input_inv, "input") then
+				T(timer)
+				return
+			end -- done
+			local recipe_output = trinium.draw_inputs_for_recipe(recipe, input_inv, "input", rec) -- done
 			meta:set_string("output", recipe_output)
 			meta:set_int("active", 1)
+			timer:stop()
+			timer:start(trinium.recipes.recipe_registry[rec].data.time)
 		end
+		T(timer)
 	end,
 })
 
@@ -88,15 +116,15 @@ trinium.register_multiblock("chemical reactor", {
 		
 		{x = 1, y = 0, z = 0, name = "trinium:chemical_casing"},
 		{x = -1, y = 0, z = 0, name = "trinium:chemical_casing"},
-		{x = 1, y = 0, z = 1, name = "trinium:output_hatch"},
+		{x = 1, y = 0, z = 1, name = "trinium:machine_output_hatch"},
 		-- {x = 0, y = 0, z = 1, name = "air"},
-		{x = -1, y = 0, z = 1, name = "trinium:input_hatch"},
+		{x = -1, y = 0, z = 1, name = "trinium:machine_input_hatch"},
 		{x = 1, y = 0, z = 2, name = "trinium:chemical_casing"},
 		{x = 0, y = 0, z = 2, name = "trinium:chemical_casing"},
 		{x = -1, y = 0, z = 2, name = "trinium:chemical_casing"},
 		
 		{x = 1, y = 1, z = 0, name = "trinium:chemical_casing"},
-		{x = 0, y = 1, z = 0, name = "trinium:catalyst_hatch"},
+		{x = 0, y = 1, z = 0, name = "trinium:machine_catalyst_hatch"},
 		{x = -1, y = 1, z = 0, name = "trinium:chemical_casing"},
 		{x = 1, y = 1, z = 1, name = "trinium:chemical_casing"},
 		{x = 0, y = 1, z = 1, name = "trinium:chemical_casing"},
@@ -112,17 +140,19 @@ trinium.register_multiblock("chemical reactor", {
 	depth_f = 0,
 	controller = "trinium:machine_chemical_reactor",
 	after_construct = function(pos, is_constructed, rg)
+		local meta = minetest.get_meta(pos)
 		if not is_constructed then
 			meta:set_string("formspec", "")
 			return
 		end
-		local meta = minetest.get_meta(pos)
 		local region = rg.region
 		
-		local input, output = region.exists(function(r) return r.name == "trinium:input_hatch" end), region.exists(function(r) return r.name == "trinium:output_hatch" end)
+		local input, output, catalyst = table.exists(region, function(r) return r.name == "trinium:machine_input_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_output_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_catalyst_hatch" end)
 		meta:set_string("input_crd", vector.stringify(region[input].actual_pos))
 		meta:set_string("output_crd", vector.stringify(region[output].actual_pos))
-		meta:set_string("catalyst_crd", vector.stringify(vector.add({x = 0, y = 1, z = 0}, pos)))
+		meta:set_string("catalyst_crd", vector.stringify(region[catalyst].actual_pos))
 		meta:set_string("formspec", chemical_reactor_formspec)
+		
+		T(minetest.get_node_timer(pos))
 	end,
 })

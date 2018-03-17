@@ -62,6 +62,12 @@ function table.intersect_key_rev(arr1, arr2)
 	return table.filter(arr1, function(v, k) return not arr2[k] end)
 end
 
+function table.keys(t)
+	local keys = {}
+	for k in pairs(t) do table.insert(keys, k) end
+	return keys
+end
+
 -- Basic functions
 function trinium.sortByParam(param)
 	return function(a, b)
@@ -311,7 +317,54 @@ function trinium.register_recipe_handler(method, table)
 	trinium.recipes.craft_methods[method].callback_on_user = trinium.recipes.craft_methods[method].callback_on_user or function(user, recipe) return true end
 	trinium.recipes.craft_methods[method].process_data = trinium.recipes.craft_methods[method].process_data or function(data) return data end
 	trinium.recipes.craft_methods[method].formspec_begin = trinium.recipes.craft_methods[method].formspec_begin or function(data) return "" end
+	trinium.recipes.craft_methods[method].test = trinium.recipes.craft_methods[method].test or function(recipe_data, actual_data) return true end
+	trinium.recipes.craft_methods[method].can_perform = trinium.recipes.craft_methods[method].test or function(pcrystal, recipe_data) return true end
 	trinium.recipes.recipes_by_method[method] = {}
+end
+
+function trinium.can_perform(player_encoded, recipe_id, recipe_method)
+	local rec = trinium.recipes.recipe_registry[recipe_id]
+	local method = trinium.recipes.craft_methods[recipe_method]
+	return method.can_perform(player_encoded, rec.data)
+end
+
+function trinium.valid_recipe(pattern, recipe_method, data)
+	local method, recipelist = trinium.recipes.craft_methods[recipe_method], table.copy(trinium.recipes.recipes_by_method[recipe_method])
+	local rev = {}
+	table.walk(recipelist, function(v, k)
+		recipelist[k] = trinium.recipes.recipe_registry[v]
+		rev[recipelist[k]] = v
+	end)
+	local pattern_inputs = minetest.deserialize(pattern:get_meta():get_string("inputs"))
+	pattern_inputs = table.filter(pattern_inputs, function(k) return k ~= "" end)
+	local recipe = table.exists(recipelist, function(v, k)
+		return table.every(v.inputs, function(r)
+			return table.exists(pattern_inputs, function(p)
+				return p == r or p.." 1" == r or p == r.." 1"
+			end)
+		end) and table.every(pattern_inputs, function(p)
+			return table.exists(v.inputs, function(r)
+				return p == r or p.." 1" == r or p == r.." 1"
+			end)
+		end)
+	end)
+
+	if not recipe then return end
+	recipe = recipelist[recipe]
+	if not recipe then return end
+	if not method.test(recipe.data, data) then return end
+	return rev[recipe] or false
+end
+
+function trinium.has_inputs_for_recipe(recipe, inv, list)
+	local inputs = minetest.deserialize(recipe:get_meta():get_string("inputs"))
+	return table.every(inputs, function(r) return inv:contains_item(list, r) end)
+end
+
+function trinium.draw_inputs_for_recipe(recipe, inv, list, id)
+	local inputs = minetest.deserialize(recipe:get_meta():get_string("inputs"))
+	table.walk(inputs, function(r) inv:remove_item(list, r) end)
+	return table.concat(trinium.recipes.recipe_registry[id].outputs, ";")
 end
 
 -- Multiblock API
@@ -473,4 +526,10 @@ function trinium.initialize_inventory(inv, def)
 	for k,v in pairs(def) do
 		inv:set_size(k,v)
 	end
+end
+
+-- Materials & Recipes crutch
+trinium.materials = {}
+function trinium.materials.S(id)
+	return (trinium.materials.m[id] or {}).name or ""
 end

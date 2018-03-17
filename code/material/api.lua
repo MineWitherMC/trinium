@@ -1,4 +1,4 @@
-trinium.materials = {}
+trinium.materials.m = {}
 trinium.materials.material_types = {}
 trinium.materials.material_interactions = {}
 local mat = trinium.materials
@@ -18,6 +18,7 @@ function mat.register_material(name, def)
 		data = def1.data or {},
 		types = def,
 	}
+	mat.m[def2.id] = def2
 	assert(#def >= 1)
 	for i = 1, #def do
 		assert(mat.material_types[def[i]], "No such material type: "..def[i])
@@ -39,4 +40,9 @@ function mat.register_interaction(name, def)
 	assert(not mat.material_interactions[name], "Material interaction "..name.." already registered!")
 	assert(trinium.validate(def, {requirements = "table", apply = "function"}))
 	mat.material_interactions[name] = def
+end
+
+function mat.get_material(name)
+	local a = select(3, unpack(name:split("_")))
+	return table.concat({a}, "_")
 end
