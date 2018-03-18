@@ -69,4 +69,4 @@ You think that oil is not strong until it is separated into components, which is
 		{x = 3, y = 4, aspect = "AQUA"},
 	},
 })
-res.set_research_requirements("OilDistillation", {"OilDesulf"})
+research.set_research_requirements("OilDistillation", {"OilDesulf"})
