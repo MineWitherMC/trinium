@@ -73,6 +73,24 @@ trinium.register_recipe_handler("trinium:blast_furnace", {
 	end,
 })
 
+-- Alloysmelting Tower
+trinium.register_recipe_handler("trinium:alloysmelting_tower", {
+	input_amount = 12,
+	output_amount = 4,
+	get_input_coords = function(n)
+		return trinium.modulate(n, 3), math.ceil(n / 3)
+	end,
+	get_output_coords = function(n)
+		return get_bf_coords(4, 1, n)
+	end,
+	formspec_width = 8,
+	formspec_height = 7,
+	formspec_name = S("Alloysmelting Tower"),
+	formspec_begin = function(data)
+		return ("label[2,5.5;%s]"):format(S("Temperature - @1 K", data.temperature or "???"))
+	end,
+})
+
 -- Implosion
 trinium.register_recipe_handler("trinium:implosion", {
 	input_amount = 2,
@@ -160,7 +178,7 @@ trinium.register_recipe_handler("trinium:chemical_reactor", {
 	formspec_height = 5,
 	formspec_name = S("Chemical Reactor"),
 	formspec_begin = function(data)
-		return ("label[2,3.5;%s]"):format(S("Catalyst - @1\nTime - @2 seconds", SS(data.catalyst) or S"None", data.time or "???"))
+		return ("label[2,3.5;%s]"):format(S("Catalyst - @1 \nTime (seconds): @2", (SS(data.catalyst) == "" and S"None" or SS(data.catalyst)), data.time))
 	end,
 	can_perform = function(player_encoded, recipe_data)
 		local x = recipe_data.research

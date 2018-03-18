@@ -53,6 +53,7 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 		local inv = meta:get_inventory()
 		local activity = meta:get_int("active")
 		local timer = minetest.get_node_timer(pos)
+		local status = vector.destringify(meta:get_string("status_crd"))
 		if activity == 1 then
 			local items = meta:get_string("output"):split(";")
 			local output = vector.destringify(meta:get_string("output_crd"))
@@ -61,6 +62,7 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 				if output_inv:room_for_item("output", item) then
 					output_inv:add_item("output", item)
 				else
+					trinium.recolor_facedir(status, 0)
 					meta:set_int("active", -1)
 					timer:stop()
 					timer:start(15)
@@ -70,6 +72,9 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 		if activity ~= -1 then
 			local recipe = inv:get_stack("recipe_encoded", 1)
 			if recipe:is_empty() then
+				meta:set_int("active", 0)
+				meta:set_string("output", "")
+				trinium.recolor_facedir(status, 2)
 				T(timer)
 				return
 			end
@@ -77,26 +82,39 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 			-- local catalyst_inv = minetest.get_meta(catalyst):get_inventory()
 			local rec = trinium.valid_recipe(recipe, "trinium:chemical_reactor", {catalyst = catalyst}) -- done
 			if not rec then
-				trinium.dump("invalid")
+				meta:set_int("active", 0)
+				meta:set_string("output", "")
+				trinium.recolor_facedir(status, 2)
 				T(timer)
 				return
 			end
 			local player = inv:get_stack("knowledge_encoded", 1)
 			if player:is_empty() or not trinium.can_perform(player, rec, "trinium:chemical_reactor") then
+				meta:set_int("active", 0)
+				meta:set_string("output", "")
+				trinium.recolor_facedir(status, 2)
 				T(timer)
 				return
 			end -- done
 			local input = vector.destringify(meta:get_string("input_crd"))
 			local input_inv = minetest.get_meta(input):get_inventory()
 			if not trinium.has_inputs_for_recipe(recipe, input_inv, "input") then
+				meta:set_int("active", 0)
+				meta:set_string("output", "")
+				trinium.recolor_facedir(status, 2)
 				T(timer)
 				return
 			end -- done
 			local recipe_output = trinium.draw_inputs_for_recipe(recipe, input_inv, "input", rec) -- done
 			meta:set_string("output", recipe_output)
 			meta:set_int("active", 1)
+			trinium.recolor_facedir(status, 1)
 			timer:stop()
 			timer:start(trinium.recipes.recipe_registry[rec].data.time)
+		else
+			meta:set_int("active", 0)
+			trinium.recolor_facedir(status, 2)
+			meta:set_string("output", "")
 		end
 		T(timer)
 	end,
@@ -132,25 +150,32 @@ trinium.register_multiblock("chemical reactor", {
 		{x = 1, y = 1, z = 2, name = "trinium:chemical_casing"},
 		{x = 0, y = 1, z = 2, name = "trinium:chemical_casing"},
 		{x = -1, y = 1, z = 2, name = "trinium:chemical_casing"},
+		
+		{x = 0, y = -1, z = -1, name = "trinium:machine_status_panel"},
 	},
 	width = 1,
 	height_d = 1,
 	height_u = 1,
 	depth_b = 2,
-	depth_f = 0,
+	depth_f = 1,
 	controller = "trinium:machine_chemical_reactor",
 	after_construct = function(pos, is_constructed, rg)
 		local meta = minetest.get_meta(pos)
 		if not is_constructed then
+			trinium.dump("not constructed")
 			meta:set_string("formspec", "")
 			return
 		end
 		local region = rg.region
 		
-		local input, output, catalyst = table.exists(region, function(r) return r.name == "trinium:machine_input_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_output_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_catalyst_hatch" end)
+		local input, output, catalyst, status = table.exists(region, function(r) return r.name == "trinium:machine_input_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_output_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_catalyst_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_status_panel" end)
 		meta:set_string("input_crd", vector.stringify(region[input].actual_pos))
 		meta:set_string("output_crd", vector.stringify(region[output].actual_pos))
 		meta:set_string("catalyst_crd", vector.stringify(region[catalyst].actual_pos))
+		meta:set_string("status_crd", vector.stringify(region[status].actual_pos))
+		if trinium.get_color_facedir(region[status].actual_pos) == 3 then
+			trinium.recolor_facedir(region[status].actual_pos, 4)
+		end
 		meta:set_string("formspec", chemical_reactor_formspec)
 		
 		T(minetest.get_node_timer(pos))

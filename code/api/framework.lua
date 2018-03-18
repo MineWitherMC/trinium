@@ -533,3 +533,14 @@ trinium.materials = {}
 function trinium.materials.S(id)
 	return (trinium.materials.m[id] or {}).name or ""
 end
+
+-- Palettes
+function trinium.recolor_facedir(pos, n) -- n from 0 to 7
+	local node = minetest.get_node(pos)
+	node.param2 = (node.param2 % 32) + (n * 32)
+	minetest.set_node(pos, node)
+end
+function trinium.get_color_facedir(pos) -- n from 0 to 7
+	local node = minetest.get_node(pos)
+	return math.floor(node.param2 / 32)
+end

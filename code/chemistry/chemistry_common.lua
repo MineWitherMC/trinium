@@ -81,3 +81,24 @@ minetest.register_node("trinium:machine_output_hatch", {
 	end,
 	allow_metadata_inventory_put = function() return 0 end,
 })
+
+-- Status Panel
+minetest.register_node("trinium:machine_status_panel", {
+	description = S"Status Panel",
+	tiles = {"fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png", "research_table_wall.png"},
+	groups = {harvested_by_pickaxe = 2},
+	paramtype = "light",
+	paramtype2 = "colorfacedir",
+	drop = "trinium:machine_status_panel",
+	palette = "palette_status_panel.png",
+	drawtype = "nodebox",
+	node_box = {
+		["type"] = "fixed",
+		fixed = {{-0.3, -0.3, 0.5, 0.3, 0.3, 0.35}},
+	},
+	after_place_node = function(pos)
+		local node = minetest.get_node(pos)
+		node.param2 = node.param2 + 96
+		minetest.set_node(pos, node)
+	end,
+})

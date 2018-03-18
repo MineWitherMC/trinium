@@ -71,7 +71,7 @@ minetest.register_craftitem("trinium:research_lens_band_press", {
 minetest.register_craftitem("trinium:knowledge_crystal", {
 	inventory_image = "knowledge_crystal.png",
 	description = S("Knowledge Crystal"),
-	stack_max = 1,
+	stack_max = 16,
 	on_place = function(item, player, pointed_thing)
 		local item = ItemStack(item)
 		local meta = item:get_meta()

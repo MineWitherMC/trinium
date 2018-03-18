@@ -61,13 +61,15 @@ local function get_book_research_fs(researchid, pn, page, update)
 		res.player_stuff[pn].research_array[1], res.player_stuff[pn].research_array[2] = {}, {}
 		for k,v in ipairs(text) do
 			if type(v) == "string" then v = res.label_escape(v) end
+			if #v == 1 then v = {v[1], 8, 8, nil, nil} end
 			local w, h = math.max(v[2], 8), math.max(v[3], 8.6)
 			res.player_stuff[pn].research_array[1][k] = {
 				text = ("label[0,%s;%s]button[%s,0.25;1,0.5;research~research_turn~%s;<]button[%s,0.25;1,0.5;research~research_turn~%s;>]%sbutton[%s,%s;1,1;research~chapter_open~%s;%s]")
 				:format(h - 0.4, S("@1 - page @2", research.name, k), w - 2, k - 1, w - 1, k + 1, v[1], w - 1, h - 0.6, research.chapter, S("Back")),
 				size = ("size[%s,%s]"):format(w, h),
 			}
-			if v[5] and not res.player_stuff[pn].researches[researchid.."__"..k] then
+			if v[5] and v[5] ~= 0 and not res.player_stuff[pn].researches[researchid.."__"..k] then
+				trinium.dump(k, v[5])
 				res.player_stuff[pn].research_array[2][k] = {
 					text = ("label[0,%s;%s]button[%s,0.25;1,0.5;research~research_turn~%s;<]button[%s,0.25;1,0.5;research~research_turn~%s;>]button[0,0;%s,1;research~unlock~%s;%s]"..
 					"button[%s,%s;1,1;research~chapter_open~%s;%s]")

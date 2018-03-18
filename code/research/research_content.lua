@@ -217,6 +217,7 @@ research.register_lens_material("core", "Diamond", "trinium:material_gem_diamond
 
 research.register_lens_material("band_material", "Forcirium", "trinium:material_ingot_forcirium")
 research.register_lens_material("band_material", "TiRe", "trinium:material_ingot_titanium_rhenium")
+research.register_lens_material("band_material", "Platinum", "trinium:material_ingot_platinum")
 
 research.lens_forms.min_gem = 4
 research.lens_forms.max_gem = 32

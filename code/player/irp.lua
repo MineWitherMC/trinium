@@ -11,7 +11,7 @@ local function get_formspec_array(searchstring, mode)
 	local ss, items = searchstring:lower()
 	local formspec, lengthPerPage, i, j = {}, 56, 0, 1
 	items = table.filter(minetest.registered_items, function(v)
-		return v.mod_origin ~= "*builtin*" and not (v.groups or {}).hidden_from_irp and ((v.description and v.description:lower():find(ss)) or v.name:lower():find(ss))
+		return (v.mod_origin ~= "*builtin*" and not (v.groups or {}).hidden_from_irp and ((v.description and v.description:lower():find(ss)) or v.name:lower():find(ss))) --or v.name == "air"
 	end)
 	local x, y
 	local page_amount = math.max(math.ceil(table.count(items) / lengthPerPage), 1)
@@ -73,13 +73,7 @@ function itempanel:get(player, context)
 	return sfinv.make_formspec(player, context, irp.player_stuff[pn].formspecs_array[irp.player_stuff[pn].page], false)
 end
 
-function trinium.draw_recipe(item, player, rec_id, tbl1, rec_method, tbl)
-	local recipes = tbl1[item]
-	if not recipes then return "", 0, 0, 0 end
-	recipes = table.remap(table.filter(recipes, function(v1)
-		local v = trinium.recipes.recipe_registry[v1]
-		return v.type == (rec_method or v.type) and trinium.recipes.craft_methods[v.type].callback_on_user(player, v)
-	end))
+function trinium.absolute_draw_recipe(recipes, rec_id)
 	local max = #recipes
 	if max == 0 then return "", 0, 0, 0 end
 	local id = trinium.modulate(rec_id or 1, max)
@@ -112,6 +106,22 @@ function trinium.draw_recipe(item, player, rec_id, tbl1, rec_method, tbl)
 	end
 
 	return formspec, method.formspec_width, method.formspec_height, max, id
+end
+
+function trinium.draw_recipe(item, player, rec_id, tbl1, rec_method, tbl)
+	local recipes = tbl1[item]
+	if not recipes then return "", 0, 0, 0 end
+	recipes = table.remap(table.filter(recipes, function(v1)
+		local v = trinium.recipes.recipe_registry[v1]
+		return v.type == (rec_method or v.type) and trinium.recipes.craft_methods[v.type].callback_on_user(player, v)
+	end))
+	return trinium.absolute_draw_recipe(recipes, rec_id)
+end
+
+local R = trinium.recipes.recipes
+function trinium.draw_research_recipe(item)
+	local x = {trinium.absolute_draw_recipe(R[item], 1)}
+	return x[1]
 end
 
 local function get_formspec(player, id, item, mode)

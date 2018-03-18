@@ -189,7 +189,7 @@ materials.register_material("ethylene", {
 	formula = "C2H4",
 })
 
-materials.register_material("hydrochloride", {
+materials.register_material("hydrogen_chloride", {
 	name = S"Hydrogen Chloride",
 	color = {190, 190, 190},
 	types = {"cell"},
@@ -205,7 +205,7 @@ materials.register_material("benzene", {
 	formula = "C6H6",
 })
 
-materials.register_material("aluminiumchloride", {
+materials.register_material("aluminium_chloride", {
 	name = S"Aluminium Chloride",
 	color = {245, 245, 245},
 	types = {"dust", "catalyst", "brick"},
@@ -213,7 +213,7 @@ materials.register_material("aluminiumchloride", {
 	formula = "AlCl3",
 })
 
-materials.register_material("aluminiumoxide", {
+materials.register_material("aluminium_oxide", {
 	name = S"Aluminium Trioxide",
 	color = {160, 160, 100},
 	types = {"dust", "catalyst", "brick"},
@@ -221,7 +221,7 @@ materials.register_material("aluminiumoxide", {
 	formula = "Al2O3",
 })
 
-materials.register_material("aluminiumchloride", {
+materials.register_material("aluminium_chloride", {
 	name = S"Aluminium Trichloride",
 	color = {100, 160, 160},
 	types = {"dust", "catalyst", "brick"},
@@ -229,7 +229,7 @@ materials.register_material("aluminiumchloride", {
 	formula = "AlCl3",
 })
 
-materials.register_material("irontrioxide", {
+materials.register_material("iron_trioxide", {
 	name = S"Iron Trioxide",
 	color = {100, 100, 155},
 	types = {"dust", "catalyst", "brick"},
@@ -237,7 +237,7 @@ materials.register_material("irontrioxide", {
 	formula = "Fe2O3",
 })
 
-materials.register_material("chromiumoxide", {
+materials.register_material("chromium_oxide", {
 	name = S"Chromium Trioxide",
 	color = {160, 100, 100},
 	types = {"dust", "catalyst", "brick"},
@@ -245,7 +245,7 @@ materials.register_material("chromiumoxide", {
 	formula = "Cr2O3",
 })
 
-materials.register_material("potassiumoxide", {
+materials.register_material("potassium_oxide", {
 	name = S"Potassium Oxide",
 	color = {250, 250, 235},
 	types = {"dust", "catalyst", "brick"},
@@ -317,7 +317,7 @@ materials.register_material("hydrogen", {
 	formula = "H2",
 })
 
-materials.register_material("ammoniacatalyst", {
+materials.register_material("ammonia_catalyst", {
 	name = S"Ammonia Catalyst",
 	color = {205, 210, 180},
 	types = {"ingot", "catalyst"},
@@ -333,15 +333,15 @@ materials.register_material("platinum", {
 	formula = "Pt",
 })
 
-materials.register_material("hydrogencyanide", {
+materials.register_material("hydrogen_cyanide", {
 	name = S"Hydrogen Cyanide",
-	color = {255, 100, 255},
+	color = {180, 100, 215},
 	types = {"cell"},
 	data = {},
 	formula = "HCN",
 })
 
-materials.register_material("chromiumaluminiumoxide", {
+materials.register_material("chromium_aluminium_oxide", {
 	name = S"Chromium-Aluminium Oxide",
 	color = {230, 225, 195},
 	types = {"catalyst", "ingot"},
@@ -349,10 +349,66 @@ materials.register_material("chromiumaluminiumoxide", {
 	formula = "CrAlO3",
 })
 
-materials.register_material("chromiumironoxide", {
+materials.register_material("chromium_iron_oxide", {
 	name = S"Chromium-Iron Oxide",
 	color = {230, 205, 195},
 	types = {"catalyst", "ingot"},
 	data = {},
 	formula = "CrFeO3",
+})
+
+materials.register_material("raw_oil", {
+	name = S"Raw Oil",
+	color = {24, 24, 12},
+	types = {"cell"},
+	data = {},
+	formula = "???",
+})
+
+materials.register_material("desulfurized_oil", {
+	name = S"Desulfurized Oil",
+	color = {12, 12, 12},
+	types = {"cell"},
+	data = {},
+	formula = "???",
+})
+
+materials.register_material("hydrogen_sulfide", {
+	name = S"Hydrogen Sulfide",
+	color = {180, 100, 0},
+	types = {"cell"},
+	data = {},
+	formula = "H2S",
+})
+
+materials.register_material("natural_gas", {
+	name = S"Natural Gas",
+	color = {240, 250, 250},
+	types = {"cell"},
+	data = {},
+	formula = "???",
+})
+
+materials.register_material("naphtha", {
+	name = S"Naphtha",
+	color = {250, 250, 80},
+	types = {"cell"},
+	data = {},
+	formula = "???",
+})
+
+materials.register_material("kerosene", {
+	name = S"Kerosene",
+	color = {250, 250, 140},
+	types = {"cell"},
+	data = {},
+	formula = "???",
+})
+
+materials.register_material("diesel", {
+	name = S"Diesel",
+	color = {128, 128, 64},
+	types = {"cell"},
+	data = {},
+	formula = "???",
 })

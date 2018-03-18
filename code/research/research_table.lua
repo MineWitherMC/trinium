@@ -49,10 +49,10 @@ local function is_correct_research(inv)
 	if lens:is_empty() and lens_req.requirement then return false end
 	if not lens_req.requirement then return true end
 	lens = lens:get_meta()
-	return  (lens:get_string("shape") == lens_req.band_shape or not lens_req.band_shape) and
-			(lens:get_int("tier") >= lens_req.band_tier or not lens_req.band_tier) and
-			(lens:get_string("gem") == lens_req.core or not lens_req.core) and
-			(lens:get_string("metal") == lens_req.band_material or not lens_req.band_material)
+	return  (not lens_req.band_shape or lens:get_string("shape") == lens_req.band_shape) and
+			(not lens_req.band_tier or lens:get_int("tier") >= lens_req.band_tier) and
+			(not lens_req.core or lens:get_string("gem") == lens_req.core) and
+			(not lens_req.band_material or lens:get_string("metal") == lens_req.band_material)
 end
 
 local function recalc_aspects(pn, inv)
@@ -355,11 +355,12 @@ trinium.register_multiblock("research table", {
 	end,
 	after_construct = function(pos, is_constructed)
 		local meta = minetest.get_meta(pos)
-		local r = meta:set_string("current_mode")
+		local inv = meta:get_inventory()
+		local r = meta:get_string("current_mode")
 		if r ~= "1" and r ~= "2" then
 			meta:set_string("current_mode", 2)
 		end
-		meta:set_string("formspec", is_constructed and get_table_formspec(meta:get_string("current_mode"), nil, nil, meta:get_int("aspect_key") or 0) or "")
+		meta:set_string("formspec", is_constructed and get_table_formspec(meta:get_string("current_mode"), meta:get_string("owner"), is_correct_research(inv), meta:get_int("aspect_key") or 0) or "")
 		meta:set_string("infotext", is_constructed and "" or "Multiblock is not assembled!")
 	end,
 })
