@@ -184,7 +184,7 @@ trinium.register_recipe_handler("trinium:chemical_reactor", {
 		local x = recipe_data.research
 		local pn = player_encoded:get_meta():get_string("player")
 		local y = trinium.res.player_stuff[pn]
-		return not x or y.researches[x]
+		return not x or (y and y.researches[x])
 	end,
 	test = function(recipe_data, actual_data)
 		if not recipe_data.catalyst then return true end
