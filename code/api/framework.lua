@@ -318,7 +318,7 @@ function trinium.register_recipe_handler(method, table)
 	trinium.recipes.craft_methods[method].process_data = trinium.recipes.craft_methods[method].process_data or function(data) return data end
 	trinium.recipes.craft_methods[method].formspec_begin = trinium.recipes.craft_methods[method].formspec_begin or function(data) return "" end
 	trinium.recipes.craft_methods[method].test = trinium.recipes.craft_methods[method].test or function(recipe_data, actual_data) return true end
-	trinium.recipes.craft_methods[method].can_perform = trinium.recipes.craft_methods[method].test or function(pcrystal, recipe_data) return true end
+	trinium.recipes.craft_methods[method].can_perform = trinium.recipes.craft_methods[method].can_perform or function(pcrystal, recipe_data) return true end
 	trinium.recipes.recipes_by_method[method] = {}
 end
 

@@ -5,6 +5,7 @@ local mat = trinium.materials
 
 function mat.register_material(name, def)
 	local def1 = assert(trinium.validate(def, {name = "string", color = "table", types = "table"}))
+	
 	local color = ("%xC0"):format(def1.color[1] * 256 * 256 + def1.color[2] * 256 + def1.color[3])
 	while #color < 8 do
 		color = "0"..color

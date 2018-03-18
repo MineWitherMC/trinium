@@ -48,6 +48,13 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 		meta:set_string("output", "")
 	end,
 	
+	on_destruct = function(pos)
+		local meta = minetest.get_meta(pos)
+		local status = vector.destringify(meta:get_string("status_crd"))
+		if not status.z then return end
+		trinium.recolor_facedir(status, 3)
+	end,
+	
 	on_timer = function(pos, elapsed)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
@@ -79,8 +86,8 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 				return
 			end
 			local catalyst = vector.destringify(meta:get_string("catalyst_crd"))
-			-- local catalyst_inv = minetest.get_meta(catalyst):get_inventory()
-			local rec = trinium.valid_recipe(recipe, "trinium:chemical_reactor", {catalyst = catalyst}) -- done
+			local catalyst_inv = minetest.get_meta(catalyst):get_inventory()
+			local rec = trinium.valid_recipe(recipe, "trinium:chemical_reactor", {catalyst_inv = catalyst_inv}) -- done
 			if not rec then
 				meta:set_int("active", 0)
 				meta:set_string("output", "")
@@ -122,34 +129,34 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 
 trinium.register_multiblock("chemical reactor", {
 	map = {
-		{x = 1, y = -1, z = 0, name = "trinium:chemical_casing"},
-		{x = 0, y = -1, z = 0, name = "trinium:chemical_casing"},
-		{x = -1, y = -1, z = 0, name = "trinium:chemical_casing"},
-		{x = 1, y = -1, z = 1, name = "trinium:chemical_casing"},
-		{x = 0, y = -1, z = 1, name = "trinium:chemical_casing"},
-		{x = -1, y = -1, z = 1, name = "trinium:chemical_casing"},
-		{x = 1, y = -1, z = 2, name = "trinium:chemical_casing"},
-		{x = 0, y = -1, z = 2, name = "trinium:chemical_casing"},
-		{x = -1, y = -1, z = 2, name = "trinium:chemical_casing"},
+		{x = 1, y = -1, z = 0, name = "trinium:casing_chemical"},
+		{x = 0, y = -1, z = 0, name = "trinium:casing_chemical"},
+		{x = -1, y = -1, z = 0, name = "trinium:casing_chemical"},
+		{x = 1, y = -1, z = 1, name = "trinium:casing_chemical"},
+		{x = 0, y = -1, z = 1, name = "trinium:casing_chemical"},
+		{x = -1, y = -1, z = 1, name = "trinium:casing_chemical"},
+		{x = 1, y = -1, z = 2, name = "trinium:casing_chemical"},
+		{x = 0, y = -1, z = 2, name = "trinium:casing_chemical"},
+		{x = -1, y = -1, z = 2, name = "trinium:casing_chemical"},
 		
-		{x = 1, y = 0, z = 0, name = "trinium:chemical_casing"},
-		{x = -1, y = 0, z = 0, name = "trinium:chemical_casing"},
+		{x = 1, y = 0, z = 0, name = "trinium:casing_chemical"},
+		{x = -1, y = 0, z = 0, name = "trinium:casing_chemical"},
 		{x = 1, y = 0, z = 1, name = "trinium:machine_output_hatch"},
 		-- {x = 0, y = 0, z = 1, name = "air"},
 		{x = -1, y = 0, z = 1, name = "trinium:machine_input_hatch"},
-		{x = 1, y = 0, z = 2, name = "trinium:chemical_casing"},
-		{x = 0, y = 0, z = 2, name = "trinium:chemical_casing"},
-		{x = -1, y = 0, z = 2, name = "trinium:chemical_casing"},
+		{x = 1, y = 0, z = 2, name = "trinium:casing_chemical"},
+		{x = 0, y = 0, z = 2, name = "trinium:casing_chemical"},
+		{x = -1, y = 0, z = 2, name = "trinium:casing_chemical"},
 		
-		{x = 1, y = 1, z = 0, name = "trinium:chemical_casing"},
+		{x = 1, y = 1, z = 0, name = "trinium:casing_chemical"},
 		{x = 0, y = 1, z = 0, name = "trinium:machine_catalyst_hatch"},
-		{x = -1, y = 1, z = 0, name = "trinium:chemical_casing"},
-		{x = 1, y = 1, z = 1, name = "trinium:chemical_casing"},
-		{x = 0, y = 1, z = 1, name = "trinium:chemical_casing"},
-		{x = -1, y = 1, z = 1, name = "trinium:chemical_casing"},
-		{x = 1, y = 1, z = 2, name = "trinium:chemical_casing"},
-		{x = 0, y = 1, z = 2, name = "trinium:chemical_casing"},
-		{x = -1, y = 1, z = 2, name = "trinium:chemical_casing"},
+		{x = -1, y = 1, z = 0, name = "trinium:casing_chemical"},
+		{x = 1, y = 1, z = 1, name = "trinium:casing_chemical"},
+		{x = 0, y = 1, z = 1, name = "trinium:casing_chemical"},
+		{x = -1, y = 1, z = 1, name = "trinium:casing_chemical"},
+		{x = 1, y = 1, z = 2, name = "trinium:casing_chemical"},
+		{x = 0, y = 1, z = 2, name = "trinium:casing_chemical"},
+		{x = -1, y = 1, z = 2, name = "trinium:casing_chemical"},
 		
 		{x = 0, y = -1, z = -1, name = "trinium:machine_status_panel"},
 	},
@@ -161,12 +168,15 @@ trinium.register_multiblock("chemical reactor", {
 	controller = "trinium:machine_chemical_reactor",
 	after_construct = function(pos, is_constructed, rg)
 		local meta = minetest.get_meta(pos)
+		local region = rg.region
 		if not is_constructed then
-			trinium.dump("not constructed")
+			local status = table.exists(region, function(r) return r.name == "trinium:machine_status_panel" end)
+			if status then
+				trinium.recolor_facedir(region[status].actual_pos, 3)
+			end
 			meta:set_string("formspec", "")
 			return
 		end
-		local region = rg.region
 		
 		local input, output, catalyst, status = table.exists(region, function(r) return r.name == "trinium:machine_input_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_output_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_catalyst_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_status_panel" end)
 		meta:set_string("input_crd", vector.stringify(region[input].actual_pos))

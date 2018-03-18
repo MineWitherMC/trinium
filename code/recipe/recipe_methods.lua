@@ -186,4 +186,25 @@ trinium.register_recipe_handler("trinium:chemical_reactor", {
 		local y = trinium.res.player_stuff[pn]
 		return not x or y.researches[x]
 	end,
+	test = function(recipe_data, actual_data)
+		if not recipe_data.catalyst then return true end
+		local inv = actual_data.catalyst_inv
+		local catalyst = "trinium:material_catalyst_"..recipe_data.catalyst
+		return inv:contains_item("catalysts", catalyst)
+	end,
+})
+
+-- Chemical Cracker
+trinium.register_recipe_handler("trinium:cracker", {
+	input_amount = 2,
+	output_amount = 12,
+	get_input_coords = function(n)
+		return 0, n + 1
+	end,
+	get_output_coords = function(n)
+		return trinium.modulate(n, 3) + 1, math.ceil(n / 3)
+	end,
+	formspec_width = 5,
+	formspec_height = 5,
+	formspec_name = S("Cracker"),
 })

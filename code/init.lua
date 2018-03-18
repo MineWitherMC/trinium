@@ -17,6 +17,7 @@ assert(loadfile(path.."/material/init.lua"))(path.."/material", has_default)
 assert(loadfile(path.."/mapgen/init.lua"))(path.."/mapgen", has_default)
 assert(loadfile(path.."/random/init.lua"))(path.."/random", has_default)
 assert(loadfile(path.."/research/init.lua"))(path.."/research", has_default)
+assert(loadfile(path.."/machines/init.lua"))(path.."/machines", has_default)
 assert(loadfile(path.."/chemistry/init.lua"))(path.."/chemistry", has_default)
 -- assert(loadfile(path.."/mn/init.lua"))(path.."/mn") -- I dont wanna
 S = nil

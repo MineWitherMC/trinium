@@ -52,7 +52,9 @@ research.register_research("OilDistillation", {
 	chapter = "Chemistry2",
 	text = {
 		[[The hydrogen you added to Raw Oil worked perfectly. But what next?
-You think that oil is not strong until it is separated into components, which is what Distillation Tower used for. It should give a lot of light fractions and some kerosene and diesel, which are heavier and thus rarer.]],
+You think that oil is not strong until it is separated into components, which is what Distillation
+Tower used for. It should give a lot of light fractions and some kerosene and diesel, which are
+heavier and thus rarer.]],
 		{trinium.draw_research_recipe("trinium:material_cell_naphtha")}
 	},
 	requires_lens = {

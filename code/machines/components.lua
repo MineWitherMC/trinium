@@ -1,10 +1,3 @@
--- Chemical Casing
-minetest.register_node("trinium:chemical_casing", {
-	tiles = {"chemical_casing.png"},
-	description = S("Chemical Casing"),
-	groups = {harvested_by_pickaxe = 2},
-})
-
 -- Catalyst Hatch
 local catalyst_hatch_formspec = [=[
 	size[8,8]
