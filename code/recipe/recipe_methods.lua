@@ -180,9 +180,8 @@ trinium.register_recipe_handler("trinium:chemical_reactor", {
 	formspec_begin = function(data)
 		return ("label[2,3.5;%s]"):format(S("Catalyst - @1 \nTime (seconds): @2", (SS(data.catalyst) == "" and S"None" or SS(data.catalyst)), data.time))
 	end,
-	can_perform = function(player_encoded, recipe_data)
+	can_perform = function(pn, recipe_data)
 		local x = recipe_data.research
-		local pn = player_encoded:get_meta():get_string("player")
 		local y = trinium.res.player_stuff[pn]
 		return not x or (y and y.researches[x])
 	end,
@@ -207,4 +206,19 @@ trinium.register_recipe_handler("trinium:cracker", {
 	formspec_width = 5,
 	formspec_height = 5,
 	formspec_name = S("Cracker"),
+})
+
+-- Polymerizer
+trinium.register_recipe_handler("trinium:polymerizer", {
+	input_amount = 2,
+	output_amount = 1,
+	get_input_coords = function(n)
+		return 0, n
+	end,
+	get_output_coords = function(n)
+		return 2, 1.5
+	end,
+	formspec_width = 3,
+	formspec_height = 3.5,
+	formspec_name = S("Polymerizer"),
 })

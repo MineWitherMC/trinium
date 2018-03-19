@@ -78,8 +78,10 @@ end
 function trinium.dump(...)
 	local string, add = ""
 	for _,x in pairs{...} do 
-		if x == nil then
+		if type(x) == type(nil) then
 			add = "nil"
+		elseif type(x) == "userdata" then
+			add = "{userdata}"
 		else
 			add = minetest.serialize(x)
 			if add:sub(1, 7) == "return " then
@@ -318,14 +320,14 @@ function trinium.register_recipe_handler(method, table)
 	trinium.recipes.craft_methods[method].process_data = trinium.recipes.craft_methods[method].process_data or function(data) return data end
 	trinium.recipes.craft_methods[method].formspec_begin = trinium.recipes.craft_methods[method].formspec_begin or function(data) return "" end
 	trinium.recipes.craft_methods[method].test = trinium.recipes.craft_methods[method].test or function(recipe_data, actual_data) return true end
-	trinium.recipes.craft_methods[method].can_perform = trinium.recipes.craft_methods[method].can_perform or function(pcrystal, recipe_data) return true end
+	trinium.recipes.craft_methods[method].can_perform = trinium.recipes.craft_methods[method].can_perform or function(pn, recipe_data) return true end
 	trinium.recipes.recipes_by_method[method] = {}
 end
 
 function trinium.can_perform(player_encoded, recipe_id, recipe_method)
 	local rec = trinium.recipes.recipe_registry[recipe_id]
 	local method = trinium.recipes.craft_methods[recipe_method]
-	return method.can_perform(player_encoded, rec.data)
+	return method.can_perform(player_encoded:get_meta():get_string("player"), rec.data)
 end
 
 function trinium.valid_recipe(pattern, recipe_method, data)

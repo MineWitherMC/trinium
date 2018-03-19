@@ -113,7 +113,7 @@ function trinium.draw_recipe(item, player, rec_id, tbl1, rec_method, tbl)
 	if not recipes then return "", 0, 0, 0 end
 	recipes = table.remap(table.filter(recipes, function(v1)
 		local v = trinium.recipes.recipe_registry[v1]
-		return v.type == (rec_method or v.type) and trinium.recipes.craft_methods[v.type].callback_on_user(player, v)
+		return v.type == (rec_method or v.type) and trinium.recipes.craft_methods[v.type].can_perform(player, v.data)
 	end))
 	return trinium.absolute_draw_recipe(recipes, rec_id)
 end

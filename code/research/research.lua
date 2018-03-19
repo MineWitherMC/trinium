@@ -57,6 +57,9 @@ function res.register_research(name, def)
 	if def.pre_unlock then
 		assert(trinium.validate(def, {texture = "string", x = "number", y = "number", name = "string", chapter = "string", text = "table", pre_unlock = "boolean"}))
 	else
+		if type(def.color) == "table" then
+			def.color = ("%x"):format(def.color[1] * 256 * 256 + def.color[2] * 256 + def.color[3])
+		end
 		assert(trinium.validate(def, {texture = "string", x = "number", y = "number", name = "string", chapter = "string", text = "table", requires_lens = "table", color = "string", map = "table"}))
 		for i = 1, #def.map do
 			assert(trinium.validate(def.map[i], {x = "number", y = "number", aspect = "string"}))
@@ -116,13 +119,13 @@ end
 
 function res.grant(pn, research)
 	for _,k in pairs(res.researches[research].requirements) do
-		if not res.player_stuff[pn].research[k] then
+		if not res.player_stuff[pn].researches[k] then
 			minetest.chat_send_player(pn, S("Unknown research requirement!"))
 			return
 		end
 	end
 	for k in pairs(res.chapters[res.researches[research].chapter].requirements) do
-		if not res.player_stuff[pn].research[k] then
+		if not res.player_stuff[pn].researches[k] then
 			minetest.chat_send_player(pn, S("Unknown research chapter requirement!"))
 			return
 		end
@@ -133,12 +136,12 @@ end
 
 function res.grant_force(pn, research, rn)
 	for _,k in pairs(res.researches[research].requirements) do
-		if not res.player_stuff[pn].research[k] then
+		if not res.player_stuff[pn].researches[k] then
 			res.grant_force(pn, k)
 		end
 	end
 	for k in pairs(res.chapters[res.researches[research].chapter].requirements) do
-		if not res.player_stuff[pn].research[k] then
+		if not res.player_stuff[pn].researches[k] then
 			res.grant_force(pn, k)
 		end
 	end
@@ -189,7 +192,8 @@ function res.register_lens_shape(id, tier)
 end
 
 function res.label_escape(text, x, y)
-	return {"label[0,1;"..minetest.formspec_escape(text).."]", 8, 8, x, y}
+	-- return {"label[0,1;"..minetest.formspec_escape(text).."]", 8, 8, x, y}
+	return {("textarea[0,1;8,7;;;%s]"):format(minetest.formspec_escape(text:gsub("\n", "\n\n"))), 8, 8, x, y}
 end
 
 function res.random_aspects(pn, amount, possible_aspects)

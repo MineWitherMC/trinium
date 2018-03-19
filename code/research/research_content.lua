@@ -88,6 +88,12 @@ research.register_aspect("SPECULUM", {
 	req1 = "TERRA",
 	req2 = "ORDINATIO"
 })
+research.register_aspect("VENENUM", {
+	texture = "aspect_venenum.png",
+	name = "Venenum\n"..S("Poison, Death"),
+	req1 = "VITA",
+	req2 = "INTERITUM"
+})
 
 -- Tier 3
 research.register_aspect("HERBA", {

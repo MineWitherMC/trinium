@@ -198,3 +198,4 @@ materials.register_material("abs_plastic", {
 	data = {},
 	formula = "((C8H8)8(C4H6)3(C3H3N)5)n",
 })
+trinium.register_recipe("trinium:polymerizer", {"trinium:material_cell_abs_plastic_compound", "trinium:material_catalyst_aluminium_chloride"}, {"trinium:material_cell_abs_plastic"}, {})

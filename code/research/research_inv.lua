@@ -69,7 +69,6 @@ local function get_book_research_fs(researchid, pn, page, update)
 				size = ("size[%s,%s]"):format(w, h),
 			}
 			if v[5] and v[5] ~= 0 and not res.player_stuff[pn].researches[researchid.."__"..k] then
-				trinium.dump(k, v[5])
 				res.player_stuff[pn].research_array[2][k] = {
 					text = ("label[0,%s;%s]button[%s,0.25;1,0.5;research~research_turn~%s;<]button[%s,0.25;1,0.5;research~research_turn~%s;>]button[0,0;%s,1;research~unlock~%s;%s]"..
 					"button[%s,%s;1,1;research~chapter_open~%s;%s]")
@@ -88,7 +87,8 @@ local function get_book_research_fs(researchid, pn, page, update)
 	end
 	local page = tonumber(page)
 	return (res.player_stuff[pn].research_array[2][page] or {}).text or res.player_stuff[pn].research_array[1][page].text, res.player_stuff[pn].research_array[1][page].size, 
-		("bgcolor[#080808BB;true]background[0,0;1,1;research_bg_tier_%s.png;true]"):format(res.chapters[res.researches[researchid].chapter].tier)
+		--("bgcolor[#080808BB;true]background[0,0;1,1;research_bg_tier_%s.png;true]"):format(res.chapters[res.researches[researchid].chapter].tier)
+		"bgcolor[#080808BB;true]background[0,0;1,1;research_bg_tier_1.png;true]"
 end
 
 local function get_book_bg(pn)
