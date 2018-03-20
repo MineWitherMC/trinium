@@ -63,7 +63,7 @@ materials.register_material("hydrogen_cyanide", {
 	data = {},
 	formula = "HCN",
 })
-trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_ammonia 2", "trinium:material_cell_methane 2", "trinium:material_cell_empty", "trinium:material_cell_oxygen 3"}, {"trinium:material_cell_hydrogen_cyanide 2", "trinium:material_cell_water 6"}, {catalyst = "platinum", time = 35})
+trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_ammonia 2", "trinium:material_cell_methane 2", "trinium:material_cell_empty", "trinium:material_cell_oxygen 3"}, {"trinium:material_cell_hydrogen_cyanide 2", "trinium:material_cell_water 6"}, {catalyst = "platinum", time = 35, research = "HydrogenCyanide"})
 
 -- Hydrogen Sulfide
 materials.register_material("hydrogen_sulfide", {

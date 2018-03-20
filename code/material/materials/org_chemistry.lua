@@ -126,7 +126,7 @@ materials.register_material("ethylbenzene", {
 	data = {},
 	formula = "C8H10",
 })
-trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_chloroethane", "trinium:material_cell_benzene"}, {"trinium:material_cell_ethylbenzene", "trinium:material_cell_hydrogen_chloride"}, {time = 37.5, catalyst = "aluminium_chloride"})
+trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_chloroethane", "trinium:material_cell_benzene"}, {"trinium:material_cell_ethylbenzene", "trinium:material_cell_hydrogen_chloride"}, {time = 37.5, catalyst = "aluminium_chloride", research = "HydrocarbonsExtraction"})
 
 -- Chloroethane - used for Styrene production. Obtained via chlorinating Ethane {TODO} or Ethylene.
 materials.register_material("chloroethane", {
@@ -136,7 +136,7 @@ materials.register_material("chloroethane", {
 	data = {},
 	formula = "C2H5Cl",
 })
-trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_hydrogen_chloride", "trinium:material_cell_ethylene"}, {"trinium:material_cell_chloroethane", "trinium:material_cell_empty"}, {time = 12})
+trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_hydrogen_chloride", "trinium:material_cell_ethylene"}, {"trinium:material_cell_chloroethane", "trinium:material_cell_empty"}, {time = 12, catalyst = "aluminium_oxide", research = "HydrocarbonsChlorination"})
 
 -- Acetylene - used in portable fires {TODO} and ABS production. Obtained from dehydrating Methane via Oxygen.
 materials.register_material("acetylene", {
@@ -146,7 +146,7 @@ materials.register_material("acetylene", {
 	data = {},
 	formula = "C2H2",
 })
-trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_methane 4", "trinium:material_cell_oxygen 3"}, {"trinium:material_cell_acetylene 2", "trinium:material_cell_water 3", "trinium:material_cell_empty 2"}, {time = 15}) -- remake for pyrolysis
+trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_methane 4", "trinium:material_cell_oxygen 3"}, {"trinium:material_cell_acetylene 2", "trinium:material_cell_water 3", "trinium:material_cell_empty 2"}, {time = 15, research = "HydrocarbonsCrack"}) -- remake for pyrolysis
 
 --[[ Advanced Products ]]--
 -- Styrene - used for ABS, Polystyrene, SBR. Obtained from dehydration of Ethylbenzene.
@@ -157,7 +157,7 @@ materials.register_material("styrene", {
 	data = {},
 	formula = "C8H8",
 })
-trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_ethylbenzene", "trinium:material_cell_empty"}, {"trinium:material_cell_styrene", "trinium:material_cell_hydrogen"}, {time = 85, catalyst = "chromium_iron_oxide"})
+trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_ethylbenzene", "trinium:material_cell_empty"}, {"trinium:material_cell_styrene", "trinium:material_cell_hydrogen"}, {time = 85, catalyst = "chromium_iron_oxide", research = "HydrocarbonsCrack__4"})
 
 -- Butadiene - used for ABS and SBR. Obtained from dehydration of Butane.
 materials.register_material("butadiene", {
@@ -167,7 +167,7 @@ materials.register_material("butadiene", {
 	data = {},
 	formula = "C4H6",
 })
-trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_butane", "trinium:material_cell_empty 2"}, {"trinium:material_cell_butadiene", "trinium:material_cell_hydrogen 2"}, {catalyst = "chromium_aluminium_oxide", time = 40})
+trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_butane", "trinium:material_cell_empty 2"}, {"trinium:material_cell_butadiene", "trinium:material_cell_hydrogen 2"}, {catalyst = "chromium_aluminium_oxide", time = 40, research = "HydrocarbonsCrack"})
 
 -- Acrylonitrile - used for ABS. Obtained from chemical process.
 materials.register_material("acrylonitrile", {
@@ -177,7 +177,7 @@ materials.register_material("acrylonitrile", {
 	data = {},
 	formula = "C3H3N",
 })
-trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_acetylene", "trinium:material_cell_hydrogen_cyanide"}, {"trinium:material_cell_acrylonitrile", "trinium:material_cell_empty"}, {time = 55})
+trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_acetylene", "trinium:material_cell_hydrogen_cyanide"}, {"trinium:material_cell_acrylonitrile", "trinium:material_cell_empty"}, {time = 55, research = "Acrylonitrile"})
 
 -- ABSPC - used for ABS, obtained from some organic chemicals.
 materials.register_material("abs_plastic_compound", {
@@ -187,7 +187,7 @@ materials.register_material("abs_plastic_compound", {
 	data = {},
 	formula = "(C8H8)8(C4H6)3(C3H3N)5",
 })
-trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_styrene 8", "trinium:material_cell_butadiene 4", "trinium:material_cell_acrylonitrile 5"}, {"trinium:material_cell_abs_plastic_compound 17"}, {time = 20})
+trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_styrene 8", "trinium:material_cell_butadiene 4", "trinium:material_cell_acrylonitrile 5"}, {"trinium:material_cell_abs_plastic_compound 17"}, {time = 20, research = "ABSPC"})
 
 --[[ Ready for usage ]]--
 -- ABS Plastic - useful middlegame material. Obtained via polymerizing ABSPC.

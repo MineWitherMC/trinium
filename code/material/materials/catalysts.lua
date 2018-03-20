@@ -1,13 +1,4 @@
 --[[ Catalyst Components ]]--
--- Aluminium Trioxide
-materials.register_material("aluminium_oxide", {
-	name = S"Aluminium Trioxide",
-	color = {160, 160, 100},
-	types = {"dust", "brick"},
-	data = {},
-	formula = "Al2O3",
-})
-
 -- Iron Trioxide
 materials.register_material("iron_trioxide", {
 	name = S"Iron Trioxide",
@@ -74,3 +65,12 @@ materials.register_material("ammonia_catalyst", {
 	formula = "Fe7(K2O)(Al2O3)",
 })
 trinium.register_recipe("trinium:alloysmelting_tower", {"trinium:material_ingot_iron 7", "trinium:material_brick_potassium_oxide", "trinium:material_brick_aluminium_oxide"}, {"trinium:material_ingot_ammonia_catalyst 9"}, {temperature = 2100})
+
+-- Aluminium Trioxide - used in production of Chloroethane
+materials.register_material("aluminium_oxide", {
+	name = S"Aluminium Trioxide",
+	color = {160, 160, 100},
+	types = {"dust", "brick", "catalyst"},
+	data = {},
+	formula = "Al2O3",
+})

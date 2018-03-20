@@ -156,3 +156,117 @@ You found an interesting thing. When Ammonia, Methane and Oxygen are combined wi
 	},
 })
 research.set_research_requirements("HydrogenCyanide", {"OilCrack"})
+
+research.register_research("Acrylonitrile", {
+	texture = "trinium:material_cell_acrylonitrile",
+	x = 4.5,
+	y = 5,
+	name = S("Acrylonitrile Synthesis"),
+	chapter = "Chemistry2",
+	text = {
+		[[Hydrogen Cyanide you obtained a while ago is useful not only as a poison.
+In fact, it has an ability to mix with organic chemicals which are mostly inert to create some new materials. You mixed the acid with Acetylene and got a white-ish compound, which is probably very durable even though it's a fluid.
+You called the compound 'acrylonitrile'.]],
+		{trinium.draw_research_recipe("trinium:material_cell_acrylonitrile")},
+	},
+	requires_lens = {
+		requirement = true,
+		band_material = "Platinum",
+		core = "Diamond",
+	},
+	color = {240, 240, 225},
+	map = {
+		{x = 2, y = 1, aspect = "PERMUTATIO"},
+		{x = 1, y = 7, aspect = "VENENUM"},
+		{x = 7, y = 2, aspect = "PRAESIDIO"},
+		{x = 5, y = 6, aspect = "VITA"},
+		{x = 3, y = 4, aspect = "VINCULUM"},
+	},
+})
+research.set_research_requirements("Acrylonitrile", {"HydrogenCyanide", "HydrocarbonsCrack"})
+
+research.register_research("HydrocarbonsChlorination", {
+	texture = "trinium:material_cell_chloroethane",
+	x = 5.5,
+	y = 3.5,
+	name = S("Chlorination II"),
+	chapter = "Chemistry2",
+	text = {
+		[[You were performing some chemical recipes with Chlorine on normal compounds. Now you have petrochemicals obtained from crack, and you think if it is possible to perform similar recipes on them?
+And after some deep research you were able to say yes! You found a way to chlorinate Ethylene with Hydrogen Chloride to obtain a somewhat poisonous fluid you've named Chloroethane. However, you needed a more complicated catalyst than you mostly use, but it did the trick.]],
+		{trinium.draw_research_recipe("trinium:material_cell_chloroethane")},
+	},
+	requires_lens = {
+		requirement = true,
+		band_material = "Platinum",
+		core = "Diamond",
+	},
+	color = {190, 235, 230},
+	map = {
+		{x = 2, y = 1, aspect = "PERMUTATIO"},
+		{x = 1, y = 7, aspect = "VINCULUM"},
+		{x = 7, y = 2, aspect = "VENENUM"},
+		{x = 5, y = 6, aspect = "DAMNUM"},
+		{x = 3, y = 4, aspect = "LUX"},
+	},
+})
+research.set_research_requirements("HydrocarbonsChlorination", {"HydrocarbonsCrack"})
+
+research.register_research("HydrocarbonsExtraction", {
+	texture = "trinium:material_cell_ethylbenzene",
+	x = 5.5,
+	y = 4.5,
+	name = S("Extraction"),
+	chapter = "Chemistry2",
+	text = {
+		[[You found some notes considering the Chloroethane and you thought they might be useful.
+
+"Yeah, that Chloroethane is, obviously, a very interesting fluid. But it doesn't work.
+Really. It is absolutely useless, I didn't find a purpose for it before now. Seems that combining Chloroethane with Benzene with presence of catalyst - Aluminium Chloride - yields surprising results. The Hydrogen Chloride is returned to me, and also I get a product called Ethylbenzene which must lead me to new plastic.
+In fact, these two recipes use Hydrogen Chloride as a catalyst, and isn't it possible to simply combine Ethylene and Benzene for performing the recipe?.."]],
+		{trinium.draw_research_recipe("trinium:material_cell_ethylbenzene")},
+	},
+	requires_lens = {
+		requirement = true,
+		band_material = "Platinum",
+		core = "Diamond",
+	},
+	color = {240, 240, 240},
+	map = {
+		{x = 2, y = 1, aspect = "PERMUTATIO"},
+		{x = 1, y = 7, aspect = "ORDINATIO"},
+		{x = 7, y = 2, aspect = "POTENTIA"},
+		{x = 5, y = 6, aspect = "VENENUM"},
+		{x = 3, y = 4, aspect = "SENTENTIA"},
+	},
+})
+research.set_research_requirements("HydrocarbonsExtraction", {"HydrocarbonsChlorination"})
+
+research.register_research("ABSPC", {
+	texture = "trinium:material_cell_abs_plastic_compound",
+	x = 5.5,
+	y = 5.5,
+	name = S("ABS Plastics"),
+	chapter = "Chemistry2",
+	text = {
+		[["I suddenly found the ideal proportions for this recipe... X of acrylonitrile, Y of butadiene and a lot of styrene..." - it is a page from old diary of chemist. Nothing more was saved from the destructive nature of world. Yeah, X and Y weren't saved, too.
+But it was enough for you, and after some trial and error you found these proportions, too.
+It is 8 parts of Styrene, 4 parts of Butadiene and 5 parts of Acrylonitrile.
+This compound will definitely be very useful in your further progressions.]],
+		{trinium.draw_research_recipe("trinium:material_cell_abs_plastic_compound")},
+	},
+	requires_lens = {
+		requirement = true,
+		band_material = "Platinum",
+		core = "Diamond",
+	},
+	color = {250, 230, 210},
+	map = {
+		{x = 2, y = 1, aspect = "METALLICUM"},
+		{x = 7, y = 2, aspect = "SPECULUM"},
+		{x = 6, y = 7, aspect = "SENTENTIA"},
+		{x = 1, y = 6, aspect = "RATUS"},
+		{x = 4, y = 4, aspect = "INVIDIA"},
+	},
+})
+research.set_research_requirements("ABSPC", {"HydrocarbonsExtraction", "Acrylonitrile", "HydrocarbonsCrack__4"})
