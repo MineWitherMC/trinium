@@ -216,8 +216,7 @@ research.register_research("Ethylbenzene", {
 	name = S("research.ethylbenzene"),
 	chapter = "Chemistry2",
 	text = {
-		[[You found some notes considering the Chloroethane and you thought they might be useful.
-
+		[[You had found some notes about the chloroethane and you thought they might be useful.
 "Yeah, that chloroethane is obviously a very interesting fluid. But it doesn't work.
 Really. It is absolutely useless, I didn't find a purpose for it before now. Seems that combining chloroethane with benzene with presence of catalyst - aluminium chloride - yields surprising results. The hydrogen chloride gets returned to me, and also I get a product called ethylbenzene which must lead me to new plastic.
 In fact, these two recipes use hydrogen chloride as a catalyst, and isn't it possible to simply combine ethylene and benzene for performing the recipe?.."]],
