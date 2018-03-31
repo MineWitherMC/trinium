@@ -108,3 +108,9 @@ gui.recipe_method.multiblock=Мультиблок
 gui.multiblock.height @1=Текущая высота: @1
 
 gui.info.time_set=Время успешно установлено!
+
+gui.basic_aspect @1=@1 - Базовый аспект
+gui.info.unknown_research=Неизвестное исследование!
+gui.info.unknown_chapter=Неизвестная глава!
+gui.info.granted @1@2=@2 выучил @1
+gui.info.force_granted @1@2=@2 выучил @1

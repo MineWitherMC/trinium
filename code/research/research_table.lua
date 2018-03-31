@@ -16,7 +16,7 @@ local function get_table_formspec(mode, pn, real_research, aspect_key)
 			list[context;lens;1,0.25;1,1;]
 			list[context;trash;10.5,0.25;1,1;]
 			image[9.5,0.25;1,1;gui_trash.png]
-			label[2,0;%s]
+			label[2,0.25;%s]
 			tabheader[0,0;research_table~change_fs;%s,%s;1;true;false]
 		]=]):format(aspect_key, real_research and "list[context;map;4.5,2;7,7;]" or "",
 			S("gui.research_table.player_data @1@2@3", research.player_stuff[pn].data.ink, 

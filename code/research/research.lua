@@ -45,7 +45,7 @@ function res.register_chapter(name, def)
 
 	if def.create_map then
 		minetest.register_craftitem("trinium:chapter_map___"..name:gsub("%.", "__"), {
-			description = S("Chapter Map - @1", def.name),
+			description = S("item.research_chapter_map @1", def.name),
 			groups = {chapter_map = 1, hidden_from_irp = 1},
 			stack_max = 1,
 			inventory_image = "research_chapter_map.png",
@@ -96,13 +96,13 @@ function res.register_research(name, def)
 
 	if not def.pre_unlock then
 		minetest.register_craftitem("trinium:research_notes___"..name:gsub("%.", "__"), {
-			description = S("Research Notes - @1", def.name),
+			description = S("item.research_notes @1", def.name),
 			inventory_image = "research_notes_overlay.png^(research_notes_colorer.png^[colorize:#"..def.color.."C0)",
 			groups = {hidden_from_irp = 1},
 			stack_max = 1
 		})
 		minetest.register_craftitem("trinium:discovery___"..name:gsub("%.", "__"), {
-			description = S("Discovery - @1", def.name),
+			description = S("item.research_discovery @1", def.name),
 			inventory_image = "discovery_overlay.png^(discovery_colorer.png^[colorize:#"..def.color.."C0)",
 			stack_max = 1,
 			groups = {hidden_from_irp = 1},
@@ -120,18 +120,18 @@ end
 function res.grant(pn, research)
 	for _,k in pairs(res.researches[research].requirements) do
 		if not res.player_stuff[pn].researches[k] then
-			minetest.chat_send_player(pn, S("Unknown research requirement!"))
+			minetest.chat_send_player(pn, S("gui.info.unknown_research"))
 			return
 		end
 	end
 	for k in pairs(res.chapters[res.researches[research].chapter].requirements) do
 		if not res.player_stuff[pn].researches[k] then
-			minetest.chat_send_player(pn, S("Unknown research chapter requirement!"))
+			minetest.chat_send_player(pn, S("gui.info.unknown_chapter"))
 			return
 		end
 	end
 	res.player_stuff[pn].researches[research] = 1
-	minetest.chat_send_player(pn, S("Granted @1 research to @2", res.researches[research].name, pn))
+	minetest.chat_send_player(pn, S("gui.info.granted @1@2", res.researches[research].name, pn))
 end
 
 function res.grant_force(pn, research, rn)
@@ -146,7 +146,7 @@ function res.grant_force(pn, research, rn)
 		end
 	end
 	res.player_stuff[pn].researches[research] = 1
-	minetest.chat_send_player(pn, S("Force-Granted @1 research to @2", res.researches[research].name, pn))
+	minetest.chat_send_player(pn, S("gui.info.force_granted @1@2", res.researches[research].name, pn))
 end
 
 function res.register_aspect(name, def)

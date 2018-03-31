@@ -104,7 +104,13 @@ gui.research_lens_shape.reuleauxtriangle=Reuleaux Triangle
 gui.knowledge_crystal_binding @1=Bound to @1
 gui.info.knowledge_crystal_bound @1=Successfully bound to @1!
 
-gui.recipe_method.multiblock=Мультиблок
-gui.multiblock.height @1=Текущая высота: @1
+gui.recipe_method.multiblock=Multiblock
+gui.multiblock.height @1=Current Height: @1
 
 gui.info.time_set=Time successfully changed!
+
+gui.basic_aspect @1=@1 - Basic Aspect
+gui.info.unknown_research=Unknown Research!
+gui.info.unknown_chapter=Unknown Chapter!
+gui.info.granted @1@2=Granted @1 research to @2
+gui.info.force_granted @1@2=Force-granted @1 research to @2

@@ -280,12 +280,12 @@ for i = 1, #research.aspect_ids do
 		research.researches["Aspect"].text[p] = {"", 8, 8}
 	end
 	if as_r1 ~= "NULL" then
-		research.researches["Aspect"].text[p][1] = ("%sitem_image_button[0,%s;1,1;trinium:aspect___%s;;]label[1,%s;%s = %s + %s\n%s]item_image_button[6,%s;1,1;trinium:aspect___%s;;]"..
-			"item_image_button[7,%s;1,1;trinium:aspect___%s;;]"):format(research.researches["Aspect"].text[p][1], h, as, h, trinium.adequate_text(as_n), trinium.adequate_text(as_r1),
-			trinium.adequate_text(as_r2), as_t.name:split("\n")[2], h, as_r1, h, as_r2)
+		research.researches["Aspect"].text[p][1] = ("%sitem_image_button[0,%s;1,1;trinium:aspect___%s;;]label[1,%s;%s = %s + %s\n%s]item_image_button[6,%s;1,1;trinium:aspect___%s;;]item_image_button[7,%s;1,1;trinium:aspect___%s;;]")
+		:format(research.researches["Aspect"].text[p][1], h, as, h, trinium.adequate_text(as_n),
+			trinium.adequate_text(as_r1), trinium.adequate_text(as_r2), as_t.name:split("\n")[2], h, as_r1, h, as_r2)
 	else
-		research.researches["Aspect"].text[p][1] = ("%sitem_image_button[0,%s;1,1;trinium:aspect___%s;;]label[1,%s;%s - Basic Aspect\n%s]")
-			:format(research.researches["Aspect"].text[p][1], h, as, h, trinium.adequate_text(as_n), as_t.name:split("\n")[2])
+		research.researches["Aspect"].text[p][1] = ("%sitem_image_button[0,%s;1,1;trinium:aspect___%s;;]label[1,%s;%s\n%s]")
+			:format(research.researches["Aspect"].text[p][1], h, as, h, S("gui.basic_aspect @1", trinium.adequate_text(as_n)), as_t.name:split("\n")[2])
 	end
 end
 
