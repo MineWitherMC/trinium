@@ -33,7 +33,7 @@ You found an interesting thing. When ammonia, methane and oxygen are combined wi
 research.text.acrylonitrile=Hydrogen cyanide you obtained a while ago is useful not only as a poison.@
 In fact, it has an ability to mix with organic chemicals, which are mostly inert, to create some new materials. You mixed the acid with acetylene and got a whitish compound, which is probably very durable even though it's a fluid.@
 You called the compound 'acrylonitrile'.
-research.text.hydrocarbonschlorination=You were performing some chemical reactions with chlorine on non-organic compounds. Now you have petrochemicals obtained from crack, and you think if it is possible to perform similar recipes on them.@
+research.text.hydrocarbonschlorination=You were performing some chemical reactions with chlorine on non-organic compounds. Now you have petrochemicals obtained from crack, and you think if it is possible to perform similar reactions on them.@
 And after some deep research you were able to say yes! You found a way to chlorinate ethylene with hydrogen chloride to obtain a somewhat poisonous fluid you've named chloroethane. However, you needed a more complicated catalyst than you mostly use, but it did the trick.
 research.text.ethylbenzene=You had found some notes about the chloroethane and you thought they might be useful.@
 "Yeah, that chloroethane is obviously a very interesting fluid. But it doesn't work. Really. It is absolutely useless, I can't find any purpose for it.@
