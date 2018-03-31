@@ -12,3 +12,34 @@ research.acrylonitrile=Акрилонитрил
 research.chlorination.advanced=Сложное хлорирование
 research.ethylbenzene=Этилбензол
 research.abs_plastic=ABS-пластик
+
+research.text.oildesulf.1=Давным-давно, вы обнаружили интересную темно-бурую жидкость. Сначала она выглядела так, как будто содержала много энергии, но жидкость была ядовита и вы не могли использовать энергию из-за этого.@
+Но вы нашли способ очистить её от бесполезной и опасной серы. Вы думаете, что можно очистить жидкость от неё, используя водород. Настолько активный газ должен объединиться с серой в сероводород, не так ли?..
+research.text.oildesulf.2=Вы думаете, что для исследований нефти будет полезна алмазная линза - ни один другой материал не имеет такой сложной углеродной структуры... Также, подойдёт платина. Очень инертный металл, возможно, хороший катализатор, определенно подходит для удержания активных веществ, вы понимаете, что она также вам понадобится.
+research.text.oildesulf.3=Дальнейшие исследования нефти
+research.text.oildistillation=Водород, добавленный к сырой нефти, замечательно сработал. Но что дальше?@
+Вы понимаете, что нефть недостаточно сильна, пока она не разделена на компоненты, для чего используется дистилляционная башня. Она должна давать большое количество лёгких фракций и немного керосина и дизеля, которые тяжелее и, соответственно, легче.
+research.text.oilcrack.1=Тяжелые фракции нефти: керосин и дизель - возможно являются хорошим топливом, которое можно использовать в турбинах мультивёрса. Но нафта и природный газ, легкие фракции, не настолько полезны - керосин содержит более чем в два раза больше энергии, чем нафта, а газ даже хуже триниума.@
+Вы поняли это и начали думать нестандартно. Вашей новой идеей было устройство, которое подогревает нафту и природный газ и разлагает их в углеводороды, куда более полезные, чем лёгкие фракции сами по себе. Топливо, пластик, химия и многое другое может быть исследовано о них!..
+research.text.oilcrack.2=Но устройство не построить так легко. Необходимы константановые катушки для того, чтобы нагревать нефть и газ, которые содержатся в трубе, построенной из химических корпусов. Also the device's controller is probably very hard to assemble.@
+But after closer look you finally got that this device not only cracks the oil compounds, but also ALMOST DOUBLES them!
+research.text.hydrocarbonscrack.1=Some of the hydrocarbons you obtained from cracking are useful, for instance, octane and toluene. They both can be used in creation of a very strong fuel, premium gasoline, even stronger than natural diesel. Furthermore, former probably can be used to create some kind of explosives.@
+But what can be done with, e.g., methane or butane, absolutely useless gases, main components of natural gas and naphtha respectively?..@
+You found an answer. These two can be dehydrated with usage of the new catalysts to form acetylene and butadiene respectively, which are definitely useful.
+research.text.hydrocarbonscrack.2=After some deeper research, you discovered that styrene can also be obtained with this mechanic by dehydrating ethylbenzene.
+research.text.hydrocarbonscrack.3=Styrene Production
+research.text.hydrogencyanide=Methane is not really useful, you thought. But you needed something dangerous.@
+You found an interesting thing. When ammonia, methane and oxygen are combined with presence of platinum and high temperature, they burn, leaving not carbon dioxide and nitrogen oxides, but a weak acid you called hydrogen cyanide. It is probably most poisonous compound you've ever seen, able to kill anyone in several seconds. But you're sure there is another usage for it...
+research.text.acrylonitrile=Hydrogen cyanide you obtained a while ago is useful not only as a poison.@
+In fact, it has an ability to mix with organic chemicals, which are mostly inert, to create some new materials. You mixed the acid with acetylene and got a whitish compound, which is probably very durable even though it's a fluid.@
+You called the compound 'acrylonitrile'.
+research.text.hydrocarbonschlorination=You were performing some chemical recipes with chlorine on normal compounds. Now you have petrochemicals obtained from crack, and you think if it is possible to perform similar recipes on them.@
+And after some deep research you were able to say yes! You found a way to chlorinate ethylene with hydrogen chloride to obtain a somewhat poisonous fluid you've named chloroethane. However, you needed a more complicated catalyst than you mostly use, but it did the trick.
+research.text.ethylbenzene=You had found some notes about the chloroethane and you thought they might be useful.@
+"Yeah, that chloroethane is obviously a very interesting fluid. But it doesn't work. Really. It is absolutely useless, I can't find any purpose for it.@
+I guess, I've just figured out something amazing. Seems that combining chloroethane with benzene with presence of catalyst - aluminium chloride - yields surprising results. The hydrogen chloride gets returned to me, and also I get a product called ethylbenzene which must lead me to new plastic.@
+In fact, these two recipes use hydrogen chloride as a catalyst, and isn't it possible to simply combine ethylene and benzene for performing the recipe?.."
+research.text.abspc="I've suddenly found the ideal proportions for this recipe... X of acrylonitrile, Y of butadiene and a lot of styrene..." - it is a page from an old diary of some chemist. Nothing more was saved from the destructive nature of world. Yeah, X and Y weren't saved, too.@
+But it was enough for you, and after some trial and error you found these proportions.@
+It is 8 parts of styrene, 4 parts of butadiene and 5 parts of acrylonitrile.@
+This compound will definitely be very useful in your further progressions.
