@@ -38,8 +38,8 @@ And after some deep research you were able to say yes! You found a way to chlori
 research.text.ethylbenzene=You had found some notes about the chloroethane and you thought they might be useful.@
 "Yeah, that chloroethane is obviously a very interesting fluid. But it doesn't work. Really. It is absolutely useless, I can't find any purpose for it.@
 I guess, I've just figured out something amazing. Seems that combining chloroethane with benzene with presence of catalyst - aluminium chloride - yields surprising results. The hydrogen chloride gets returned to me, and also I get a product called ethylbenzene which must lead me to new plastic.@
-In fact, these two recipes use hydrogen chloride as a catalyst, and isn't it possible to simply combine ethylene and benzene for performing the recipe?.."
-research.text.abspc="I've suddenly found the ideal proportions for this recipe... X of acrylonitrile, Y of butadiene and a lot of styrene..." - it is a page from an old diary of some chemist. Nothing more was saved from the destructive nature of world. Yeah, X and Y weren't saved, too.@
+In fact, these two reactions use hydrogen chloride as a catalyst, and isn't it possible to simply combine ethylene and benzene for performing the reaction?.."
+research.text.abspc="I've suddenly found the ideal proportions for this reaction... X of acrylonitrile, Y of butadiene and a lot of styrene..." - it is a page from an old diary of some chemist. Nothing more was saved from the destructive nature of world. Yeah, X and Y weren't saved, too.@
 But it was enough for you, and after some trial and error you found these proportions.@
 It is 8 parts of styrene, 4 parts of butadiene and 5 parts of acrylonitrile.@
 This compound will definitely be very useful in your further progressions.
