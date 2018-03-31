@@ -1,0 +1,14 @@
+# textdomain:trinium
+research.chapter.systeminfo=Система исследований
+research.chapter.chemistry.basic=Базовая химия
+research.chapter.chemistry.advanced=Продвинутая химия
+research.aspects=Аспекты
+research.oil_desulf=Десульфуризация
+research.oil_distillation=Дистилляция
+research.oil_cracking=Нефтекрекинг
+research.hydrocarbon_cracking=Крекинг углеводородов
+research.hcn=Циановодород
+research.acrylonitrile=Акрилонитрил
+research.chlorination.advanced=Сложное хлорирование
+research.ethylbenzene=Этилбензол
+research.abs_plastic=ABS-пластик

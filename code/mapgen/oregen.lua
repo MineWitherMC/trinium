@@ -25,7 +25,6 @@ function trinium.register_vein(name, params)
 	for i = 1, #params.ore_list do
 		params.ore_list[i] = minetest.get_content_id(params.ore_list[i])
 		assert(params.ore_list[i] ~= 127, "No such block exists!")
-		trinium.dump(params.ore_list[i])
 	end
 
 	vein_breakpoints[params.min_height] = vein_breakpoints[params.min_height] or 1

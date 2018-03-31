@@ -1,0 +1,43 @@
+# textdomain:trinium
+node.machine.chemreactor=Chemical Reactor Controller
+node.machine.chemcracker=Oil Cracker Controller
+node.machine.polymerizer=Polymerizer Controller
+node.casing.chemical=Chemically Inert Casing
+node.casing.corrosive=Corrosion Proof Casing
+node.casing.heating.cupronickel=Cupronickel Heating Ring
+node.casing.research1=Research Chassis
+node.casing.research2=Research Casing
+node.hatch.catalyst=Catalyst Hatch
+node.hatch.input=Input Hatch
+node.hatch.output=Output Hatch
+node.machine.status_panel=Status Panel
+
+node.cobble=Cobblestone
+node.stone=Stone
+node.sand=Sand
+node.gravel=Gravel
+node.snow=Snow
+node.snow_layer=Snow Layer
+node.dirt=Dirt
+node.dirt.grass=Dirt with Grass
+node.dirt.snow=Dirt with Snow
+node.dirt.podzol=Podzol
+node.dirt.savanna=Dirt with Dry Grass
+
+node.reflector_glass=Reflector Glass
+node.lamp.frame=Lamp Frame
+node.lamp.forcirium=Forcirium Lamp
+node.machine.trash=Trash Can
+
+node.machine.recipe_encoder=Recipe Encoder
+
+node.machine.lens_compressor=Lens Curver
+node.machine.press_randomizer=Press Randomizer
+node.machine.research_node=Research Node Controller
+node.machine.research_table=Research Table
+node.machine.enlightener=Sheet Enlightener
+
+node.fluid.water.source=Water Source
+node.fluid.water.flowing=Flowing Water
+node.fluid.river_water.source=River Water Source
+node.fluid.river_water.flowing=Flowing River Water

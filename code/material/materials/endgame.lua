@@ -1,56 +1,44 @@
--- Stardust - needed for Sheet Enlightener, generated from Supernova Dynamo on material mode {TODO}
-materials.register_material("stardust", {
-	name = S"Star",
-	color = {170, 210, 0},
+materials.new_material("pyrocatalyst", {
+	formula = {{"carbon", 2}, {"naquadah", 1}, {"extrium", 1}},
 	types = {"dust"},
-	formula = "He2X",
-})
-
--- Pyrolysis Catalyst - needed for SE, done by mixing {TODO}
-materials.register_material("pyrocatalyst", {
-	name = S"Pyrolysis Catalyst",
 	color = {255, 134, 0},
-	types = {"dust"},
-	formula = "(C2Nq)X",
+	description = S"material.catalyst.pyrolysis",
 })
 
--- Bifrost - needed for SE, generated in chemical reactor with Shimmering Catalyst via Extrium and Iodine Acid {TODO}
-materials.register_material("bifrost", {
-	name = S"Bifrost",
+materials.new_material("bifrost", {
+	formula = {{"extrium", 5}, {"iodine_acid_ion", 6}},
+	types = {"dust"},
 	color = {50, 0, 95},
-	types = {"dust"},
-	formula = "X5(IO6)6",
+	description = S"material.bifrost",
 })
 
--- Experience Catalyst - needed for SE, generated via cracking Liquid XP with Extrium {TODO}
-materials.register_material("experience", {
-	name = S"Experience Catalyst",
+materials.new_material("experience_catalyst", {
+	formula = {{"extrium", 1}, {"phosphoric_acid_ion", 2}},
+	types = {"dust"},
 	color = {70, 250, 85},
-	types = {"dust"},
-	formula = "X(PO4)2",
+	description = S"material.catalyst.xp",
 })
 
--- Imbued Forcirium - needed for SE and some lenses, obtained via Reverse Inducing Forcirium with usage of Rubidium and Naquadah {TODO}
-materials.register_material("imbued_forcirium", {
-	name = S"Imbued Forcirium",
-	color = {220, 155, 0},
-	types = {"ingot", "gem", "dust"},
-	data = {melting_point = 4107},
-	formula = "(FeXCs2Rb)4Nq",
-})
-
--- Parchment - needed for SE, obtained {TODO}
-materials.register_material("parchment", {
-	name = S"Parchment",
-	color = {226, 190, 190},
-	types = {"sheet"},
-})
-
--- Forcirium - obtained in Warp Tunnel {TODO}, used in lots of applications
-materials.register_material("forcirium", {
-	name = S"Forcirium",
-	color = {220, 239, 4},
+materials.new_material("forcirium", {
+	formula = {{"iron", 1}, {"extrium", 1}, {"caesium", 2}, {"fluorine", 1}},
 	types = {"ingot", "gem", "dust", "water_cell"},
+	color = {220, 239, 4},
+	description = S"material.forcirium",
 	data = {melting_point = 2963, water_mix_velocity = 750},
-	formula = "FeXCs2F",
-})
+}):generate_interactions()
+
+materials.new_material("imbued_forcirium", {
+	formula = {{"forcirium_induced_ion", 4}, {"naquadah", 1}},
+	types = {"ingot", "gem", "dust"},
+	color = {220, 155, 0},
+	description = S"material.forcirium.imbued",
+	data = {melting_point = 4107},
+}):generate_interactions()
+
+materials.new_material("endium", {
+	formula = {{"extrium", 4}, {"naquadah", 3}},
+	types = {"ingot", "dust"},
+	color = {0, 155, 220},
+	description = S"material.endium",
+	data = {melting_point = 2884},
+}):generate_interactions()

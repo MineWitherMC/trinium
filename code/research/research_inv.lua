@@ -36,9 +36,9 @@ local function get_book_fs(pn)
 end
 
 local function get_book_chapter_fs(chapterid, pn)
-	local buttons, texture = "button[7,8;1,1;research~book;"..S("Back").."]"
+	local buttons, texture = "button[7,8;1,1;research~book;"..S("gui.research_book.back").."]"
 	if res.chapters[chapterid].create_map then
-		buttons = ("%sbutton[5,8;2,1;research~get_map;%s]tooltip[research~get_map;%s]"):format(buttons, S"Get Chapter Map", S"This chapter uses Chapter Map instead of normal research notes acquiring")
+		buttons = ("%sbutton[5,8;2,1;research~get_map;%s]tooltip[research~get_map;%s]"):format(buttons, S"gui.get_chapter_map", S"gui.about_chapter_map")
 	end
 	if not res.researches_by_chapter[chapterid] then return end
 	for k,v in pairs(res.researches_by_chapter[chapterid]) do
@@ -65,20 +65,20 @@ local function get_book_research_fs(researchid, pn, page, update)
 			local w, h = math.max(v[2], 8), math.max(v[3], 8.6)
 			res.player_stuff[pn].research_array[1][k] = {
 				text = ("label[0,%s;%s]button[%s,0.25;1,0.5;research~research_turn~%s;<]button[%s,0.25;1,0.5;research~research_turn~%s;>]%sbutton[%s,%s;1,1;research~chapter_open~%s;%s]")
-				:format(h - 0.4, S("@1 - page @2", research.name, k), w - 2, k - 1, w - 1, k + 1, v[1], w - 1, h - 0.6, research.chapter, S("Back")),
+				:format(h - 0.4, S("gui.research_book.pagenum @1@2@3", research.name, k, #text), w - 2, k - 1, w - 1, k + 1, v[1], w - 1, h - 0.6, research.chapter, S("gui.research_book.back")),
 				size = ("size[%s,%s]"):format(w, h),
 			}
 			if v[5] and v[5] ~= 0 and not res.player_stuff[pn].researches[researchid.."__"..k] then
 				res.player_stuff[pn].research_array[2][k] = {
 					text = ("label[0,%s;%s]button[%s,0.25;1,0.5;research~research_turn~%s;<]button[%s,0.25;1,0.5;research~research_turn~%s;>]button[0,0;%s,1;research~unlock~%s;%s]"..
 					"button[%s,%s;1,1;research~chapter_open~%s;%s]")
-					:format(h - 0.4, S("@1 - page @2", research.name, k), w - 2, k - 1, w - 1, k + 1, w, k, S("Unlock"), w - 1, h - 0.6, research.chapter, S("Back")),
+					:format(h - 0.4, S("gui.research_book.pagenum @1@2@3", research.name, k, #text), w - 2, k - 1, w - 1, k + 1, w, k, S("Unlock"), w - 1, h - 0.6, research.chapter, S("Back")),
 					size = ("size[%s,%s]"):format(w, h),
 					reqs = {},
 				}
 				label = v[4]
 				for k2,v2 in pairs(v[5]) do
-					label = ("%s\n%s aspect (%s required, %s available)"):format(label, trinium.adequate_text(k2), v2, res.player_stuff[pn].data.aspects[k2] or 0)
+					label = label..S("gui.research_book.sub_research @1@2@3", trinium.adequate_text(k2), v2, res.player_stuff[pn].data.aspects[k2] or 0)
 					res.player_stuff[pn].research_array[2][k].reqs[k2] = v2
 				end
 				res.player_stuff[pn].research_array[2][k].text = res.player_stuff[pn].research_array[2][k].text.."label[0,1;"..label.."]"
@@ -93,7 +93,8 @@ end
 
 local function get_book_bg(pn)
 	local w = res.player_stuff[pn].researches._strings
-	return ("bgcolor[#080808BB;true]background[0,0;1,1;research_bg_tier_%s.png;true]"):format(w["CognFission"] and 4 or w["CognVoid"] and 3 or w["CognWarp"] and 2 or 1)
+	return ("bgcolor[#080808BB;true]background[0,0;1,1;research_bg_tier_%s.png;true]")
+		:format(w["CognFission"] and 4 or w["CognVoid"] and 3 or w["CognWarp"] and 2 or 1)
 end
 
 local function get_book_chapter_bg(chapterid)
@@ -101,7 +102,7 @@ local function get_book_chapter_bg(chapterid)
 	return ("bgcolor[#080808BB;true]background[0,0;1,1;research_bg_tier_%s.png;true]"):format(w.tier)
 end
 
-local book = {title = S("Research Book")}
+local book = {title = S("gui.inventory.research_book")}
 function book:get(player, context)
 	local pn = player:get_player_name()
 	context.book = context.book or "defaultbg"
@@ -137,7 +138,7 @@ function book:on_player_receive_fields(player, context, fields)
 			elseif a == "unlock" then
 				local k1 = tonumber(ksplit[3])
 				if not table.every(res.player_stuff[pn].research_array[2][k1].reqs, function(v, k) return res.player_stuff[pn].data.aspects[k] and res.player_stuff[pn].data.aspects[k] >= v end) then
-					cmsg.push_message_player(player, S("Insufficient aspects!"))
+					cmsg.push_message_player(player, S("gui.info.no_aspects"))
 					return
 				end
 				table.exists(res.player_stuff[pn].research_array[2][k1].reqs, function(v, k) res.player_stuff[pn].data.aspects[k] = res.player_stuff[pn].data.aspects[k] - v end)
@@ -147,27 +148,27 @@ function book:on_player_receive_fields(player, context, fields)
 			elseif a == "get_sheet" then
 				local inv = player:get_inventory()
 				if inv:contains_item("main", "trinium:research_notes___"..ksplit[3]) or inv:contains_item("main", "trinium:discovery___"..ksplit[3]) then
-					cmsg.push_message_player(player, S("You already have these research notes!"))
+					cmsg.push_message_player(player, S("gui.info.use_notes"))
 					return
 				elseif res.player_stuff[pn].data.ink < 3 then
-					cmsg.push_message_player(player, S("Insufficient Ink!"))
+					cmsg.push_message_player(player, S("gui.info.no_ink"))
 					return
 				elseif res.player_stuff[pn].data.paper < 1 then
-					cmsg.push_message_player(player, S("Insufficient Paper!"))
+					cmsg.push_message_player(player, S("gui.info.no_paper"))
 					return
 				end
 				res.player_stuff[pn].data.ink = res.player_stuff[pn].data.ink - 3
-				res.player_stuff[pn].data.paper = res.player_stuff[pn].data.paper - 3
+				res.player_stuff[pn].data.paper = res.player_stuff[pn].data.paper - 1
 				inv:add_item("main", "trinium:research_notes___"..ksplit[3])
 			elseif a == "get_map" then
 				if res.player_stuff[pn].data.ink < 500 then
-					cmsg.push_message_player(player, S("Insufficient Ink!"))
+					cmsg.push_message_player(player, S("gui.info.no_ink"))
 					return
 				end
 
 				local inv = player:get_inventory()
 				if not inv:contains_item("main", "trinium:material_dust_diamond 16") then
-					cmsg.push_message_player(player, S("Insufficient Diamond Dust!"))
+					cmsg.push_message_player(player, S("gui.info.no_diamond_dust"))
 					return
 				end
 

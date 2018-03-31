@@ -46,6 +46,14 @@ function table.walk(array, callable, cond)
 	end
 end
 
+function table.map(array, callable)
+	local array = table.copy(array)
+	for k,v in pairs(array) do
+		array[k] = callable(v,k)
+	end
+	return array
+end
+
 function table.every(array, callable)
 	return not table.exists(array, function(v,k) return not callable(v,k) end)
 end
@@ -68,11 +76,40 @@ function table.keys(t)
 	return keys
 end
 
+local function iterator(callback)
+	return function(max, current)
+		if max == current then return end
+		current = current + 1
+		return callback(current)
+	end
+end
+
+function table.asort(t, callable)
+	callable = callable or function(a, b) return a < b end
+	local k = table.keys(t)
+	table.sort(k, function(a, b) return callable(t[a], t[b]) end)
+	
+	return iterator(function(current) return current, k[current], t[k[current]] end), #k, 0
+end
+
+function table.sum(t)
+	local k = 0
+	table.walk(t, function(v) k = k + v end)
+	return k
+end
+
 -- Basic functions
 function trinium.sortByParam(param)
 	return function(a, b)
 		return a[param] < b[param]
 	end
+end
+
+-- {{amount1, weight1}, {amount2, weight2}, ...}
+function trinium.weighted_avg(t)
+	local t1 = table.map(t, function(v) return v[1] * v[2] end)
+	local t2 = table.map(t, function(v) return v[2] end)
+	return table.sum(t1) / table.sum(t2)
 end
 
 function trinium.dump(...)
@@ -112,6 +149,11 @@ end
 
 function trinium.adequate_text(str)
 	return str:sub(1,1):upper()..str:sub(2):lower()
+	--return string.gsub(" "..str, "%W%l", string.upper):sub(2)
+end
+
+function trinium.adequate_text2(str)
+	return trinium.adequate_text(str):gsub("_", " ")
 end
 
 function trinium.setting_get(name, default)
@@ -130,6 +172,21 @@ end
 function vector.destringify(v)
 	local s = v:split(",")
 	return {x = s[1], y = s[2], z = s[3]}
+end
+
+trinium.ln2 = math.log(2)
+function trinium.lograndom(a1, b1) -- more similar to normal
+	if b1 then
+		local lr, lr1 = 0, 0
+		local a, b = a1 - 1, b1 + 1
+		repeat
+			lr = (trinium.lograndom() + 1) / 5.7 -- this probably has values from 0...1
+			if lr < 0 then lr = 0 end; if lr > 1 then lr = 1 end
+			lr1 = math.floor(a + (b - a) * lr)
+		until lr1 > a and lr1 < b
+		return lr1
+	end
+	return 2 + 0.33 * math.log(1 / math.random() - 1) / trinium.ln2
 end
 
 -- Data
@@ -258,6 +315,14 @@ trinium.recipes = {
 	recipe_registry = {},
 }
 
+function trinium.recipe_stringify(size, inputs)
+	inputs = table.copy(inputs)
+	for i = 1, size do
+		inputs[i] = inputs[i] or ""
+	end
+	return table.concat(inputs, ":")
+end
+
 function trinium.register_recipe(method, inputs, outputs, data)
 	-- Assertions
 	local data = data or {}
@@ -283,6 +348,8 @@ function trinium.register_recipe(method, inputs, outputs, data)
 		redirects[method] = 1
 		method_table = assert(trinium.recipes.craft_methods[method], "Method "..method.." not found!")
 	end
+	
+	data.author_mod = minetest.get_current_modname() or "???"
 
 	-- Registering recipe
 	local new_amount = #trinium.recipes.recipe_registry + 1
@@ -291,6 +358,7 @@ function trinium.register_recipe(method, inputs, outputs, data)
 		inputs = inputs,
 		outputs = outputs,
 		data = data,
+		inputs_string = trinium.recipe_stringify(method_table.input_amount, inputs),
 	}
 
 	local k
@@ -383,9 +451,9 @@ for i = 3, 13, 2 do
 			end,
 			formspec_width = i + 2,
 			formspec_height = j + 2,
-			formspec_name = "Multiblock",
+			formspec_name = trinium.S"gui.recipe_method.multiblock",
 			formspec_begin = function(data)
-				return ("label[0,%s;Height %s]"):format(j + 1, data.h)
+				return ("label[0,%s;%s]"):format(j + 1, trinium.S("gui.multiblock.height @1", data.h))
 			end,
 		})
 	end
@@ -419,7 +487,7 @@ function trinium.register_multiblock(name, def)
 	minetest.register_abm({
 		label = def.label,
 		nodenames = def.controller,
-		interval = 15,
+		interval = 5,
 		chance = 1,
 		action = function(pos, node)
 			local dir = vector.multiply(minetest.facedir_to_dir(node.param2), -1)
@@ -466,45 +534,24 @@ function trinium.register_multiblock(name, def)
 	})
 end
 
--- Localization - very cool function, but implemented in vanilla MT
---[[local lang = minetest.settings:get("language")
-if not (lang and (lang ~= "")) then lang = os.getenv("LANG") end
-if not (lang and (lang ~= "")) then lang = "en" end
-
-function trinium.register_localization()
-	local modname = minetest.get_current_modname()
-	local path = minetest.get_modpath(modname).."/lang/"
-	mkdir(path)
-	local lang = string.sub(lang, 1, 2)
-
-	local fallback = io.open(path.."en.lang", "r")
-	local actual = io.open(path..lang..".lang", "r") or fallback
-	assert(fallback, "En.lang not found for "..modname.." mod.")
-
-	local fallback_table = assert(minetest.deserialize("return { \n"..fallback:read("*all").."\n }")) or {}
-	local actual_table = assert(minetest.deserialize("return {\n"..actual:read("*all").."\n}")) or {}
-	setmetatable(actual_table, {
-		__index = function(table, key)
-			if fallback_table[key] then return fallback_table[key] end
-			local key = key:split(".")
-			key = key[#key]
-			local ksplit = key:split("_")
-			local str = ""
-			for i = 1, #ksplit do
-				str = str..trinium.adequate_text(ksplit[i]).." "
-			end
-			return str:sub(1, -2)
-		end
-	})
-
-	local function translate(text, ...)
-		local params, interbase = {...}, actual_table[text]
-		if #params == 0 then return interbase end
-		return interbase:gsub("${(%d)}", function(a) return assert(params[tonumber(a)], "Parameter "..a.." not present in localization table!") end)
+function trinium.translate_requirements(tbl)
+	local tbl1 = {}
+	for c, k, v in table.asort(tbl, function(a, b) return a > b end) do
+		tbl1[#tbl1 + 1] = "\n"..minetest.colorize("#CCC", v.." "..((minetest.registered_nodes[k] or {}).description or "???"))
 	end
+	return table.concat(tbl1, "")
+end
 
-	return translate
-end]]--
+function trinium.mbcr(node, def)
+	local tbl = {}
+	table.walk(def, function(v)
+		if not tbl[v.name] then tbl[v.name] = 0 end
+		tbl[v.name] = tbl[v.name] + 1
+	end)
+	minetest.override_item(node, {
+		description = minetest.registered_nodes[node].description..trinium.translate_requirements(tbl)
+	})
+end
 
 -- Various hacks
 local mt_register_item_old = minetest.register_item
@@ -528,12 +575,6 @@ function trinium.initialize_inventory(inv, def)
 	for k,v in pairs(def) do
 		inv:set_size(k,v)
 	end
-end
-
--- Materials & Recipes crutch
-trinium.materials = {}
-function trinium.materials.S(id)
-	return (trinium.materials.m[id] or {}).name or ""
 end
 
 -- Palettes

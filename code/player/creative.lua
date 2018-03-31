@@ -1,4 +1,4 @@
-local speed = 50
+local speed = 100
 local caps = {times = {speed, speed, speed, speed}, uses = 0, maxlevel = 456}
 
 trinium.creative_mode = minetest.settings:get_bool("creative_mode")
@@ -33,6 +33,8 @@ else
 			max_drop_level = 0,
 			groupcaps = {
 				harvested_by_hand = {times = {3.50, 2.00, 0.70}, uses = 0},
+				harvested_by_shovel = {times = {[3] = 1}, uses = 0},
+				harvested_by_axe = {times = {[3] = 1.6}, uses = 0},
 			},
 			damage_groups = {fleshy=1},
 		}

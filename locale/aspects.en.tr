@@ -1,0 +1,48 @@
+# textdomain:trinium
+# tier 0
+aspect.aer=Air
+aspect.aqua=Water
+aspect.ignis=Fire
+aspect.terra=Earth
+
+# tier 1
+aspect.interitum=Destruction, Entropy
+aspect.lux=Light
+aspect.motus=Motion
+aspect.ordinatio=Order
+aspect.tempestas=Weather
+aspect.vita=Life
+
+# tier 2
+aspect.alienis=Alien, Strange
+aspect.celeritas=Speed, Flight
+aspect.instrumentum=Tool
+aspect.potentia=Power, Energy
+aspect.speculum=Crystal
+aspect.venenum=Poison
+
+# tier 3
+aspect.firmitatem=Fortress, Stability
+aspect.iter=Journey, Portal
+aspect.meridiem=Radiance
+aspect.permutatio=Transformation
+aspect.populus=Human
+aspect.vinculum=Trap
+
+# tier 4
+aspect.caelesta=Sky
+aspect.canaliculus=Machine
+aspect.consequat=Assembly
+aspect.damnum=Weapon, Damage
+aspect.herba=Plant
+aspect.metallicum=Metal
+aspect.sententia=Sense, Emotion
+aspect.tempus=Time
+
+# high tier
+aspect.arbor=Tree
+aspect.ratus=Cognition, Mind
+aspect.spiritus=Spirit, Soul
+aspect.stella=Star
+aspect.manifestatio=Detection, Vision
+aspect.origo=Animation, Robotics

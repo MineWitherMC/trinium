@@ -1,9 +1,6 @@
-local path, default = ...
+local path = ...
 
-if not default then
-	dofile(path.."/basic_mapgen.lua")
-	dofile(path.."/biomes.lua")
-end
-
-assert(loadfile(path.."/oregen.lua"))(default)
-assert(loadfile(path.."/ores.lua"))(default)
+dofile(path.."/basic_mapgen.lua")
+dofile(path.."/biomes.lua")
+dofile(path.."/oregen.lua")
+dofile(path.."/ores.lua")

@@ -4,19 +4,10 @@ cmsg.messages = {}
 cmsg.settings = {}
 cmsg.next_msgids = {}
 
-cmsg.settings.max_messages = 7
-local setting = minetest.setting_get("central_message_max")
-if type(tonumber(setting)) == "number" then
-	if tonumber(setting) == 0 then
-		-- Infinite messages
-		cmsg.settings.max_messages = nil
-	else
-		cmsg.settings.max_messages = tonumber(setting)
-	end
-end
+cmsg.settings.max_messages = tonumber(trinium.setting_get("central_message_max", 7)) or 7
 
 cmsg.settings.color = 0xFFFFFF
-setting = minetest.setting_get("central_message_color")
+setting = minetest.settings:get("central_message_color")
 if setting then
 	local r, g, b = string.match(setting, "%((%d+),(%d+),(%d+)%)")
 	r = tonumber(r)
@@ -30,15 +21,8 @@ if setting then
 	end
 end
 
-cmsg.settings.display_time = 5
-local setting = minetest.setting_get("central_message_time")
-if type(tonumber(setting)) == "number" then
-	if tonumber(setting) >= 1 then
-		cmsg.settings.display_time = tonumber(setting)
-	else
-		minetest.log("warning", "[central_message] Invalid value for central_message_time! Using default display time of 5 seconds.")
-	end
-end
+cmsg.settings.display_time = tonumber(trinium.setting_get("central_message_time", 5)) or 5
+if cmsg.settings.display_time < 1 then cmsg.settings.display_time = 5 end
 
 
 

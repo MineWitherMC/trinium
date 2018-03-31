@@ -1,7 +1,7 @@
 local materials = trinium.materials
 materials.register_mattype("plate", function(def)
 	minetest.register_craftitem(("trinium:material_plate_%s"):format(def.id), {
-		description = S("@1 Plate", def.name)..def.formula,
+		description = S("material.type.plate @1", def.name)..def.formula,
 		inventory_image = "(materials_plate.png^[colorize:#"..def.color..")^materials_plate_overlay.png",
 	})
 end)
@@ -9,7 +9,7 @@ end)
 
 materials.register_mattype("sheet", function(def)
 	minetest.register_craftitem(("trinium:material_sheet_%s"):format(def.id), {
-		description = S("@1 Sheet", def.name)..def.formula,
+		description = S("material.type.sheet @1", def.name)..def.formula,
 		inventory_image = "(materials_plate.png^[colorize:#"..def.color..")^materials_plate_overlay.png",
 	})
 end)
@@ -17,7 +17,7 @@ end)
 
 materials.register_mattype("cell", function(def)
 	minetest.register_craftitem(("trinium:material_cell_%s"):format(def.id), {
-		description = S("@1 Cell", def.name)..def.formula,
+		description = S("material.type.cell @1", def.name)..def.formula,
 		inventory_image = "(materials_cell.png^[colorize:#"..def.color..")^materials_cell_overlay.png",
 	})
 end)
@@ -25,7 +25,7 @@ end)
 
 materials.register_mattype("ingot", function(def)
 	minetest.register_craftitem(("trinium:material_ingot_%s"):format(def.id), {
-		description = S("@1 Ingot", def.name)..def.formula,
+		description = S("material.type.ingot @1", def.name)..def.formula,
 		inventory_image = "(materials_ingot.png^[colorize:#"..def.color..")^materials_ingot_overlay.png",
 	})
 end)
@@ -39,7 +39,7 @@ materials.register_interaction("ingot_bending", {
 
 materials.register_mattype("gem", function(def)
 	minetest.register_craftitem(("trinium:material_gem_%s"):format(def.id), {
-		description = def.name..def.formula,
+		description = S("material.type.crystal @1", def.name)..def.formula,
 		inventory_image = "materials_gem.png^[colorize:#"..def.color,
 	})
 end)
@@ -54,7 +54,7 @@ materials.register_interaction("gem_ingot_transform", {
 
 materials.register_mattype("dust", function(def)
 	minetest.register_craftitem(("trinium:material_dust_%s"):format(def.id), {
-		description = S("@1 Dust", def.name)..def.formula,
+		description = S("material.type.dust @1", def.name)..def.formula,
 		inventory_image = "(materials_dust.png^[colorize:#"..def.color..")^materials_dust_overlay.png",
 	})
 end)
@@ -76,7 +76,7 @@ materials.register_interaction("dust_implosion", {
 
 materials.register_mattype("water_cell", function(def)
 	minetest.register_craftitem(("trinium:material_cell_%s"):format(def.id), {
-		description = S("Water-Mixed @1", def.name)..def.formula,
+		description = S("material.type.water_mix @1", def.name)..def.formula,
 		inventory_image = "(materials_cell.png^[colorize:#"..def.color..")^materials_cell_overlay.png",
 	})
 end)
@@ -90,7 +90,7 @@ materials.register_interaction("water_mixing", {
 
 materials.register_mattype("rod", function(def)
 	minetest.register_craftitem(("trinium:material_rod_%s"):format(def.id), {
-		description = S("@1 Rod", def.name)..def.formula,
+		description = S("material.type.rod @1", def.name)..def.formula,
 		inventory_image = "(materials_rod.png^[colorize:#"..def.color..")^materials_rod_overlay.png",
 	})
 end)
@@ -110,7 +110,7 @@ materials.register_interaction("ingot_lathing", {
 
 materials.register_mattype("ring", function(def)
 	minetest.register_craftitem(("trinium:material_ring_%s"):format(def.id), {
-		description = S("@1 Ring", def.name)..def.formula,
+		description = S("material.type.ring @1", def.name)..def.formula,
 		inventory_image = "(materials_ring.png^[colorize:#"..def.color..")^materials_ring_overlay.png",
 	})
 end)
@@ -124,7 +124,7 @@ materials.register_interaction("rod_hammering", {
 
 materials.register_mattype("brick", function(def)
 	minetest.register_craftitem(("trinium:material_brick_%s"):format(def.id), {
-		description = S("@1 Brick", def.name)..def.formula,
+		description = S("material.type.brick @1", def.name)..def.formula,
 		inventory_image = "materials_ingot.png^[colorize:#"..def.color,
 	})
 end)
@@ -139,9 +139,9 @@ materials.register_interaction("brick_compression", {
 
 materials.register_mattype("ore", function(def)
 	local def1 = {
-		description = S("@1 Ore", def.name),
+		description = S("material.type.ore @1", def.name),
 		groups = {harvested_by_pickaxe = def.data.hardness or 4},
-		tiles = {"stone.png^(oreoverlay.png^[colorize:#"..def.color..")"},
+		tiles = {"stone.png^(materials_ore.png^[colorize:#"..def.color..")"},
 	}
 	if table.exists(def.types, function(x) return x == "gem" end) then
 		def1.drop = "trinium:material_gem_"..def.id
@@ -162,7 +162,7 @@ materials.register_interaction("ore_grinding", {
 
 materials.register_mattype("pulp", function(def)
 	minetest.register_craftitem(("trinium:material_pulp_%s"):format(def.id), {
-		description = S("@1 Pulp", def.name)..def.formula,
+		description = S("material.type.pulp @1", def.name)..def.formula,
 		inventory_image = "(materials_dust.png^[colorize:#"..def.color..")^materials_dust_overlay.png",
 	})
 end)
@@ -170,7 +170,7 @@ end)
 
 materials.register_mattype("catalyst", function(def)
 	minetest.register_craftitem(("trinium:material_catalyst_%s"):format(def.id), {
-		description = S("@1 Catalyst", def.name)..def.formula,
+		description = S("material.type.catalyst @1", def.name)..def.formula,
 		inventory_image = "materials_catalyst.png^[colorize:#"..def.color,
 		groups = {chemical_reactor_catalyst = 1},
 		max_stack = 1,

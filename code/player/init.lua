@@ -1,12 +1,10 @@
-local path, default = ...
+local path = ...
 
-if not default then
-	dofile(path.."/player.lua")
-	dofile(path.."/inventory.lua")
-end
-
-if not minetest.get_modpath("creative") then
-	dofile(path.."/creative.lua")
-end
-
+trinium.bound_inventories = {}
+dofile(path.."/utility.lua")
+dofile(path.."/player.lua")
+dofile(path.."/inventory.lua")
 dofile(path.."/irp.lua")
+
+dofile(path.."/witt.lua")
+dofile(path.."/creative.lua")

@@ -155,7 +155,7 @@ function res.register_aspect(name, def)
 	assert(trinium.validate(def, {req1 = "string", req2 = "string", texture = "string", name = "string"}))
 	assert(not res.known_aspects[name] and name ~= "NULL", "Aspect already registered!")
 	assert(res.known_aspects[def.req1] or def.req1 == "NULL", def.req1.." not registered!")
-	assert(res.known_aspects[def.req2] or def.req2 == "NULL", def.req1.." not registered!")
+	assert(res.known_aspects[def.req2] or def.req2 == "NULL", def.req2.." not registered!")
 	res.known_aspects[name] = def
 	res.known_aspects[name].id = name
 	res.aspect_ids[#res.aspect_ids + 1] = name

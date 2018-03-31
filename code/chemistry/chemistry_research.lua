@@ -5,7 +5,7 @@ research.register_chapter("Chemistry1", {
 	texture = "trinium:machine_chemical_reactor",
 	x = 0,
 	y = 1,
-	name = S("Basic Chemistry"),
+	name = S("research.chapter.chemistry.basic"),
 	tier = 1
 })
 
@@ -13,27 +13,24 @@ research.register_chapter("Chemistry2", {
 	texture = "trinium:material_ingot_abs_plastic",
 	x = 1,
 	y = 1,
-	name = S("Advanced Chemistry"),
+	name = S("research.chapter.chemistry.advanced"),
 	tier = 2
 })
 
 --[[ Researches ]]--
 research.register_research("OilDesulf", {
-	texture = "trinium:material_cell_raw_oil",
+	texture = "trinium:material_cell_oil_raw",
 	x = 3.5,
 	y = 3.5,
-	name = S("Oil Desulfurization"),
+	name = S("research.oil_desulf"),
 	chapter = "Chemistry2",
 	text = {
 		[[Some decent time ago, you found some interesting dark brown liquid. It seemed to contained a lot of power at first, but it was poisonous and power couldn't be used because of this.
 But now you've discovered a way to purify it from the useless and dangerous Sulfur. You think it is possible to capture it using hydrogen. Such an active gas should bind Sulfur into Hydrogen Sulfide, shouldn't it?..]],
-		{trinium.draw_research_recipe("trinium:material_cell_desulfurized_oil")}
+		{trinium.draw_research_recipe("trinium:material_cell_oil_desulfurized")},
+		research.label_escape([[You think that for oil researches Diamond lens will be useful - no one material has so complicated carbon structure... Also, platinum. Very inert metal, probably a good catalyst, definitely good for holding active materials, I think I'll need it too.]], "Further Oil Researching", {RATUS = 8, MANIFESTATIO = 11, CONSEQUAT = 5})
 	},
-	requires_lens = {
-		requirement = true,
-		band_material = "Platinum",
-		core = "Diamond",
-	},
+	requires_lens = {},
 	color = "101010",
 	map = {
 		{x = 2, y = 1, aspect = "INSTRUMENTUM"},
@@ -44,15 +41,15 @@ But now you've discovered a way to purify it from the useless and dangerous Sulf
 })
 
 research.register_research("OilDistillation", {
-	texture = "trinium:material_cell_diesel",
+	texture = "trinium:material_cell_fraction_diesel",
 	x = 3.5,
 	y = 2.5,
-	name = S("Distillation"),
+	name = S("research.oil_distillation"),
 	chapter = "Chemistry2",
 	text = {
 		[[The hydrogen you added to Raw Oil worked perfectly. But what next?
 You think that oil is not strong until it is separated into components, which is what Distillation Tower used for. It should give a lot of light fractions and some kerosene and diesel, which are heavier and thus rarer.]],
-		{trinium.draw_research_recipe("trinium:material_cell_naphtha")}
+		{trinium.draw_research_recipe("trinium:material_cell_fraction_naphtha")}
 	},
 	requires_lens = {
 		requirement = true,
@@ -74,7 +71,7 @@ research.register_research("OilCrack", {
 	texture = "trinium:machine_chemical_cracker",
 	x = 4.5,
 	y = 3,
-	name = S("Cracking"),
+	name = S("research.oil_cracking"),
 	chapter = "Chemistry2",
 	text = {
 		[[Heavier fractions of the oil, Kerosene and Diesel, probably are very good fuels that can be used in Multiverse Turbines. But Naphtha and Natural Gas, lighter fractions, are not that useful - Kerosene holds more than double Naphtha power, and Gas is really awful.
@@ -82,7 +79,7 @@ You thought that, and started to think outside of the box. And your new idea was
 		[[But device is not easy. It uses Cupronickel Coils to heat the Naphtha and Gas, which are contained in some kind of pipe made of Chemical Casings. Also the device's controller is probably very hard to assemble.
 But after closer look you finally got that this device not only cracks the oil compounds, but also ALMOST DOUBLES them!]],
 		{trinium.draw_research_recipe("trinium:material_cell_propene")},
-		{trinium.draw_research_recipe("trinium:material_cell_octane")}
+		{trinium.draw_research_recipe("trinium:material_cell_isooctane")}
 	},
 	requires_lens = {
 		requirement = true,
@@ -93,7 +90,7 @@ But after closer look you finally got that this device not only cracks the oil c
 	map = {
 		{x = 2, y = 1, aspect = "INTERITUM"},
 		{x = 1, y = 7, aspect = "POTENTIA"},
-		{x = 7, y = 2, aspect = "PRAESIDIO"},
+		{x = 7, y = 2, aspect = "FIRMITATEM"},
 		{x = 5, y = 6, aspect = "RATUS"},
 		{x = 3, y = 4, aspect = "AQUA"},
 	},
@@ -104,7 +101,7 @@ research.register_research("HydrocarbonsCrack", {
 	texture = "trinium:material_cell_butadiene",
 	x = 5.5,
 	y = 2.5,
-	name = S("Hydrocarbons Dehydration"),
+	name = S("research.hydrocarbon_cracking"),
 	chapter = "Chemistry2",
 	text = {
 		[[Some of the hydrocarbons you obtained from cracking are useful. For example, Octane and Toluene. They both can be used in creation of very strong fuel, Premium Gasoline, even stronger than natural Diesel. Furthermore, former probably can be used to create some kind of explosives.
@@ -134,7 +131,7 @@ research.register_research("HydrogenCyanide", {
 	texture = "trinium:material_cell_hydrogen_cyanide",
 	x = 4.5,
 	y = 4,
-	name = S("Hydrogen Cyanide"),
+	name = S("research.hcn"),
 	chapter = "Chemistry2",
 	text = {
 		[[Methane is not really useful, you thought. But you needed something dangerous.
@@ -161,7 +158,7 @@ research.register_research("Acrylonitrile", {
 	texture = "trinium:material_cell_acrylonitrile",
 	x = 4.5,
 	y = 5,
-	name = S("Acrylonitrile Synthesis"),
+	name = S("research.acrylonitrile"),
 	chapter = "Chemistry2",
 	text = {
 		[[Hydrogen Cyanide you obtained a while ago is useful not only as a poison.
@@ -178,7 +175,7 @@ You called the compound 'acrylonitrile'.]],
 	map = {
 		{x = 2, y = 1, aspect = "PERMUTATIO"},
 		{x = 1, y = 7, aspect = "VENENUM"},
-		{x = 7, y = 2, aspect = "PRAESIDIO"},
+		{x = 7, y = 2, aspect = "FIRMITATEM"},
 		{x = 5, y = 6, aspect = "VITA"},
 		{x = 3, y = 4, aspect = "VINCULUM"},
 	},
@@ -189,7 +186,7 @@ research.register_research("HydrocarbonsChlorination", {
 	texture = "trinium:material_cell_chloroethane",
 	x = 5.5,
 	y = 3.5,
-	name = S("Chlorination II"),
+	name = S("research.chlorination.advanced"),
 	chapter = "Chemistry2",
 	text = {
 		[[You were performing some chemical recipes with Chlorine on normal compounds. Now you have petrochemicals obtained from crack, and you think if it is possible to perform similar recipes on them?
@@ -212,11 +209,11 @@ And after some deep research you were able to say yes! You found a way to chlori
 })
 research.set_research_requirements("HydrocarbonsChlorination", {"HydrocarbonsCrack"})
 
-research.register_research("HydrocarbonsExtraction", {
+research.register_research("Ethylbenzene", {
 	texture = "trinium:material_cell_ethylbenzene",
 	x = 5.5,
 	y = 4.5,
-	name = S("Extraction"),
+	name = S("research.ethylbenzene"),
 	chapter = "Chemistry2",
 	text = {
 		[[You found some notes considering the Chloroethane and you thought they might be useful.
@@ -240,13 +237,13 @@ In fact, these two recipes use Hydrogen Chloride as a catalyst, and isn't it pos
 		{x = 3, y = 4, aspect = "SENTENTIA"},
 	},
 })
-research.set_research_requirements("HydrocarbonsExtraction", {"HydrocarbonsChlorination"})
+research.set_research_requirements("Ethylbenzene", {"HydrocarbonsChlorination"})
 
 research.register_research("ABSPC", {
 	texture = "trinium:material_cell_abs_plastic_compound",
 	x = 5.5,
 	y = 5.5,
-	name = S("ABS Plastics"),
+	name = S("research.abs_plastic"),
 	chapter = "Chemistry2",
 	text = {
 		[["I suddenly found the ideal proportions for this recipe... X of acrylonitrile, Y of butadiene and a lot of styrene..." - it is a page from old diary of chemist. Nothing more was saved from the destructive nature of world. Yeah, X and Y weren't saved, too.
@@ -266,7 +263,7 @@ This compound will definitely be very useful in your further progressions.]],
 		{x = 7, y = 2, aspect = "SPECULUM"},
 		{x = 6, y = 7, aspect = "SENTENTIA"},
 		{x = 1, y = 6, aspect = "RATUS"},
-		{x = 4, y = 4, aspect = "INVIDIA"},
+		{x = 4, y = 4, aspect = "FIRMITATEM"},
 	},
 })
-research.set_research_requirements("ABSPC", {"HydrocarbonsExtraction", "Acrylonitrile", "HydrocarbonsCrack__4"})
+research.set_research_requirements("ABSPC", {"Ethylbenzene", "Acrylonitrile", "HydrocarbonsCrack__4"})

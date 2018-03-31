@@ -1,9 +1,10 @@
 local res_data = trinium.res.player_stuff
+local S = trinium.S
 
 minetest.register_node("trinium:machine_research_node", {
 	max_stack = 1,
 	tiles = {"node_controller.png"},
-	description = S("Research Node Controller"),
+	description = S("node.machine.research_node"),
 	groups = {harvested_by_pickaxe = 1},
 	paramtype2 = "facedir",
 	on_construct = function(pos)
@@ -13,12 +14,12 @@ minetest.register_node("trinium:machine_research_node", {
 	on_rightclick = function(pos, node, player, itemstack, pt_th)
 		local meta = minetest.get_meta(pos)
 		if meta:get_int("assembled") == 0 then
-			cmsg.push_message_player(player, "Multiblock is not assembled!")
+			cmsg.push_message_player(player, S"gui.info.multiblock_not_assembled")
 			return
 		end
 		local pn = player:get_player_name()
 		if itemstack:is_empty() then
-			cmsg.push_message_player(player, ("Paper available: %d; Ink available: %d"):format(res_data[pn].data.paper, res_data[pn].data.ink))
+			cmsg.push_message_player(player, S("gui.info.research_node @1@2", res_data[pn].data.paper, res_data[pn].data.ink))
 		else
 			local item = itemstack:get_name()
 			if item == "trinium:material_sheet_paper" then
@@ -42,13 +43,13 @@ minetest.register_node("trinium:machine_research_node", {
 			elseif item == "trinium:research_focused_charm" then
 				if itemstack:get_meta():get_string("focus") ~= "" then
 					trinium.res.random_aspects(pn, 150, {itemstack:get_meta():get_string("focus")})
-					itemstack:take_item(1)
 				end
+				itemstack:take_item(1)
 			elseif item == "trinium:research_abacus" then
 				local label = ""
 				for i = 1, #trinium.res.aspect_ids do
 					local an = trinium.res.aspect_ids[i]
-					label = ("%s%s aspect: %s\n"):format(label, trinium.adequate_text(an), res_data[pn].data.aspects[an] or 0)
+					label = label..S("gui.info.abacus @1@2", trinium.adequate_text(an), res_data[pn].data.aspects[an] or 0)
 				end
 				cmsg.push_message_player(player, label)
 			end
@@ -96,3 +97,4 @@ local node_mb = {
 }
 
 trinium.register_multiblock("research node", node_mb)
+trinium.mbcr("trinium:machine_research_node", node_mb.map)

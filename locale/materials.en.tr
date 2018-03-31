@@ -1,0 +1,88 @@
+# textdomain:trinium
+material.type.plate @1=@1 Plate
+material.type.sheet @1=@1 Sheet
+material.type.cell @1=@1 Cell
+material.type.ingot @1=@1 Ingot
+material.type.crystal @1=@1
+material.type.dust @1=@1 Dust
+material.type.water_mix @1=Water-Mixed @1
+material.type.rod @1=@1 Rod
+material.type.ring @1=@1 Ring
+material.type.brick @1=@1 Brick
+material.type.ore @1=@1 Ore
+material.type.pulp @1=@1 Pulp
+material.type.catalyst @1=@1 Catalyst
+
+material.al2o3=Alumina
+material.fe2o3=Ferric Oxide
+material.cr2o3=Chromia
+material.k2o=Potassium Oxide
+material.alcl3=Aluminium Chloride
+material.cr2o3al2o3=Chromium-Aluminium Trioxide
+material.cr2o3fe2o3=Chromium-Iron Trioxide
+material.fe7k2oal2o3=IPA Compound
+
+material.water=Water
+material.hydrogen=Hydrogen
+material.nitrogen=Nitrogen
+material.oxygen=Oxygen
+material.chlorine=Chlorine
+material.hcl=Hydrochloric Acid
+material.ammonia=Ammonia
+material.hcn=Hydrogen Cyanide
+material.h2s=Hydrogen Sulfide
+
+material.methane=Methane
+material.ethene=Ethylene
+material.propene=Propane
+material.butane=Butane
+material.benzene=Benzene
+material.toluene=Toluene
+material.isooctane=Isooctane
+material.chloroethane=Chloroethane
+material.ethyne=Acetylene
+material.ethylbenzene=Ethylbenzene
+material.styrene=Styrene
+material.butadiene=Butadiene
+material.acrylonitrile=Acrylonitrile
+material.abs.compound=ABS Plastic Compound
+material.abs=ABS Plastic
+
+material.paper=Paper
+material.carton=Carton
+material.parchment=Parchment
+material.ink=Ink
+material.oil.raw=Raw Oil
+material.oil.desulf=Desulfurized Oil
+material.oil.gas=Refinery Gas
+material.oil.naphtha=Naphtha
+material.oil.kerosene=Kerosene
+material.oil.diesel=Diesel
+
+material.item.empty_cell=Empty Cell
+material.item.stardust=Stardust
+
+material.catalyst.pyrolysis=Pyrocatalyst
+material.catalyst.xp=Solidified Experience
+material.bifrost=Bifrost
+material.forcirium=Forcirium
+material.forcirium.imbued=Imbued Forcirium
+material.endium=Ender Alloy
+
+material.element.ti=Titanium
+material.element.fe=Iron
+material.element.ni=Nickel
+material.element.cu=Copper
+material.element.ag=Silver
+material.element.re=Rhenium
+material.element.pt=Platinum
+
+material.alloy.rhenium=Rhenium Alloy
+material.alloy.cupronickel=Cupronickel
+material.alloy.silver=Silver Alloy
+
+material.coal=Coal
+material.antracite=Antracite
+material.graphite=Graphite
+material.diamond=Diamond
+material.tennantite=Tennantite

@@ -5,21 +5,23 @@ local function get_table_formspec(mode, pn, real_research, aspect_key)
 	aspect_key = aspect_key or 0
 	if mode == 1 or mode == "1" then
 		return ([=[
-			size[11.5,8.5]
+			size[11.5,9]
 			bgcolor[#080808BB;true]
 			background[5,5;1,1;gui_formbg.png;true]
-			list[context;aspect_panel;0,1.5;4,6;%s]
-			button[1,7.5;1,1;research_table~up;↑]
-			button[2,7.5;1,1;research_table~down;↓]
+			list[context;aspect_panel;0,2;4,6;%s]
+			button[1,8;1,1;research_table~up;↑]
+			button[2,8;1,1;research_table~down;↓]
 			%s
 			list[context;research_notes;0,0.25;1,1;]
 			list[context;lens;1,0.25;1,1;]
-			list[context;trash;10.25,0.25;1,1;]
+			list[context;trash;10.5,0.25;1,1;]
+			image[9.5,0.25;1,1;gui_trash.png]
 			label[2,0;%s]
 			tabheader[0,0;research_table~change_fs;%s,%s;1;true;false]
-		]=]):format(aspect_key, real_research and "list[context;map;4.5,1.5;7,7;]" or "",
-			S("Ink: @1\nPaper: @2\nWarp: @3", research.player_stuff[pn].data.ink, research.player_stuff[pn].data.paper, research.player_stuff[pn].data.warp),
-			S"Map", S"Inventory")
+		]=]):format(aspect_key, real_research and "list[context;map;4.5,2;7,7;]" or "",
+			S("gui.research_table.player_data @1@2@3", research.player_stuff[pn].data.ink, 
+				research.player_stuff[pn].data.paper, research.player_stuff[pn].data.warp),
+			S"gui.research_table.tab.map", S"gui.research_table.tab.inventory")
 	elseif mode == 2 or mode == "2" then
 		return ([=[
 			size[12.5,7]
@@ -28,17 +30,17 @@ local function get_table_formspec(mode, pn, real_research, aspect_key)
 			list[context;aspect_panel;0,0;4,6;%s]
 			button[1,6;1,1;research_table~up;↑]
 			button[2,6;1,1;research_table~down;↓]
-			list[context;aspect_inputs;5,0;1,1;]
-			button[6,0;1,1;research_table~add_aspects;+]
-			list[context;aspect_inputs;7,0;1,1;1]
-			list[context;r2m;9,0;1,1;]
+			list[context;aspect_inputs;7,0.5;1,2;]
+			button[8,1;1,1;research_table~add_aspects;+]
+			list[context;r2m;10,1.5;1,1;]
+			image[10,0.4;1,1;gui_trash.png]
 			list[context;research_notes;4.5,1.5;1,1;]
-			list[context;lens;11.5,1.5;1,1;]
-			label[4.5,2.5;%s]
-			label[11.5,2.5;%s]
+			image[4.5,0.4;1,1;(research_notes_overlay.png^research_notes_colorer.png)^[brighten]
+			list[context;lens;5.5,1.5;1,1;]
+			image[5.5,0.4;1,1;research_lens.png^[brighten]
 			list[current_player;main;4.5,3;8,4;]
 			tabheader[0,0;research_table~change_fs;%s,%s;2;true;false]
-		]=]):format(aspect_key, S"Research Notes", S"Lens", S"Map", S"Inventory")
+		]=]):format(aspect_key, S"gui.research_table.tab.map", S"gui.research_table.tab.inventory")
 	end
 end
 
@@ -127,7 +129,7 @@ end
 minetest.register_node("trinium:machine_research_table", {
 	stack_max = 1,
 	tiles = {"research_chassis.png"},
-	description = S"Research Table",
+	description = S"node.machine.research_table",
 	groups = {harvested_by_pickaxe = 2},
 	paramtype2 = "facedir",
 	drawtype = "nodebox",
@@ -146,8 +148,8 @@ minetest.register_node("trinium:machine_research_table", {
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		local pn = player:get_player_name()
-		trinium.initialize_inventory(inv, {map = 49, aspect_panel = #research.aspect_ids, research_notes = 1, lens = 1, trash = 1, aspect_inputs = 2, r2m = 1})
-		meta:set_string("infotext", "Multiblock is not assembled!")
+		trinium.initialize_inventory(inv, {map = 49, aspect_panel = 4 * math.ceil(#research.aspect_ids / 4), research_notes = 1, lens = 1, trash = 1, aspect_inputs = 2, r2m = 1})
+		meta:set_string("infotext", S"gui.info.multiblock_not_assembled")
 		meta:set_string("current_mode", 2)
 		meta:set_string("owner", pn)
 		meta:set_int("aspect_key", 0)
@@ -193,7 +195,7 @@ minetest.register_node("trinium:machine_research_table", {
 					meta:set_string("current_mode", tnb)
 				elseif a == "down" then
 					local key = meta:get_int("aspect_key")
-					key = math.min(key + 4, #research.aspect_ids - 24)
+					key = math.min(key + 4, math.ceil(#research.aspect_ids / 4) * 4 - 24)
 					meta:set_int("aspect_key", key)
 					meta:set_string("formspec", get_table_formspec(meta:get_string("current_mode"), pn, is_correct_research(inv), key))
 				elseif a == "up" then
@@ -225,9 +227,7 @@ minetest.register_node("trinium:machine_research_table", {
 					local newaspect
 					newaspect = table.exists(research.known_aspects, function(v) return (v.req1 == a1 and v.req2 == a2) or (v.req2 == a1 and v.req1 == a2) end)
 					if newaspect then
-						newaspect = table.exists(research.sorted_aspect_ids, function(v) return v == newaspect end)
-						s = inv:get_stack("aspect_panel", newaspect):get_name():sub(18)
-						research.player_stuff[pn].data.aspects[s] = research.player_stuff[pn].data.aspects[s] + 1
+						research.player_stuff[pn].data.aspects[newaspect] = (research.player_stuff[pn].data.aspects[newaspect] or 0) + 1
 						minetest.sound_play("experience", {
 							to_player = pn,
 							gain = 4.0
@@ -242,7 +242,7 @@ minetest.register_node("trinium:machine_research_table", {
 
 	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
 		if minetest.get_meta(pos):get_int("assembled") == -1 then
-			cmsg.push_message_player(player, "Multiblock is not assembled!")
+			cmsg.push_message_player(player, S"gui.info.multiblock_not_assembled")
 		else
 			recalc_aspects(player:get_player_name(), minetest.get_meta(pos):get_inventory())
 		end
@@ -361,6 +361,6 @@ trinium.register_multiblock("research table", {
 			meta:set_string("current_mode", 2)
 		end
 		meta:set_string("formspec", is_constructed and get_table_formspec(meta:get_string("current_mode"), meta:get_string("owner"), is_correct_research(inv), meta:get_int("aspect_key") or 0) or "")
-		meta:set_string("infotext", is_constructed and "" or "Multiblock is not assembled!")
+		meta:set_string("infotext", is_constructed and "" or S"gui.info.multiblock_not_assembled")
 	end,
 })

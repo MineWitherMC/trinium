@@ -5,7 +5,7 @@ irp = {}
 irp.player_stuff = {}
 local S = trinium.S
 
-local S1 = {S"Recipe", S"Usage", S"Cheat"}
+local S1 = {S"gui.irp_mode.recipe", S"gui.irp_mode.usage", S"gui.irp_mode.cheat"}
 
 local function get_formspec_array(searchstring, mode)
 	local ss, items = searchstring:lower()
@@ -26,7 +26,7 @@ local function get_formspec_array(searchstring, mode)
 			button[7,0.2;1,0.5;irp~pageopen~+1;>]
 			button[5,0.2;2,0.5;irp~changemode;%s]
 			tooltip[irp~changemode;%s]
-		]=]):format(searchstring, S("Page @1 of @2", math.min(j, pa), pa), S"Change mode", S("Current mode: @1", S1[mode]))
+		]=]):format(searchstring, S("gui.irp_page @1@2", math.min(j, pa), pa), S"gui.irp_mode.change", S("gui.irp_mode.current @1", S1[mode]))
 	end
 	j = 1
 	local tbl = {}
@@ -66,7 +66,7 @@ minetest.after(0.1, function()
 	minetest.register_on_joinplayer(irp_on_join)
 end)
 
-local itempanel = {title = S"Recipes"}
+local itempanel = {title = S"gui.inventory.irp"}
 
 function itempanel:get(player, context)
 	local pn = player:get_player_name()
@@ -129,7 +129,7 @@ local function get_formspec(player, id, item, mode)
 		local formspec, width, height, number, new_id = trinium.draw_recipe(item, player, tonumber(id), mode == 1 and trinium.recipes.recipes or trinium.recipes.usages)
 		if not formspec or width == 0 or height == 0 then return end
 		formspec = ("size[%s,%s]bgcolor[#080808BB;true]background[-0.25,-0.25;%s,%s;gui_formbg.png;]%slabel[0,%s;%s]"):format(
-			width, height + 0.25, width + 0.5, height + 0.5, formspec, height + 0.2, S("Recipe @1 of @2", new_id, number))
+			width, height + 0.25, width + 0.5, height + 0.5, formspec, height + 0.2, S("gui.irp_recipe @1@2", new_id, number))
 
 		if number > 1 then
 			formspec = ("%sbutton[%s,0;1,0.5;irp~view_recipe~%s~%s;<]button[%s,0;1,0.5;irp~view_recipe~%s~%s;>]"):format(formspec, width - 2, item, new_id - 1, width - 1, item, new_id + 1)
@@ -141,7 +141,7 @@ local function get_formspec(player, id, item, mode)
 		local pn = player
 		local player = minetest.get_player_by_name(pn)
 		player:get_inventory():add_item("main", item.." "..stack)
-		cmsg.push_message_player(player, S("Given @1 @2 to @3", stack, item, pn))
+		cmsg.push_message_player(player, S("gui.info.given @1@2@3", stack, item, pn))
 	end
 end
 

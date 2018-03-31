@@ -1,0 +1,88 @@
+# textdomain:trinium
+material.type.plate @1=Пластина из @1
+material.type.sheet @1=Лист @1
+material.type.cell @1=Капсула @1
+material.type.ingot @1=Слиток @1
+material.type.crystal @1=Кристалл @1
+material.type.dust @1=Пыль @1
+material.type.water_mix @1=Водный раствор @1
+material.type.rod @1=Стержень из @1
+material.type.ring @1=Кольцо из @1
+material.type.brick @1=Кирпич из @1
+material.type.ore @1=Руда @1
+material.type.pulp @1=Порошок @1
+material.type.catalyst @1=Катализатор из @1
+
+material.al2o3=глинозёма
+material.fe2o3=триоксида железа
+material.cr2o3=хромовой зелени
+material.k2o=оксида калия
+material.alcl3=хлорида алюминия
+material.cr2o3al2o3=триоксида алюминия-хрома
+material.cr2o3fe2o3=триоксида хрома-железа
+material.fe7k2oal2o3=сплава железа-алюминия-калия
+
+material.water=воды
+material.hydrogen=водорода
+material.nitrogen=азота
+material.oxygen=кислорода
+material.chlorine=хлора
+material.hcl=хлороводорода
+material.ammonia=аммиака
+material.hcn=синильной кислоты
+material.h2s=сероводорода
+
+material.methane=метана
+material.ethene=этилена
+material.propene=пропена
+material.butane=бутана
+material.benzene=бензола
+material.toluene=толуола
+material.isooctane=изооктана
+material.chloroethane=хлороэтана
+material.ethyne=ацетилена
+material.ethylbenzene=этилбензола
+material.styrene=стирола
+material.butadiene=бутадиена
+material.acrylonitrile=акрилонитрила
+material.abs.compound=смеси ABS
+material.abs=ABS-пластика
+
+material.paper=бумаги
+material.carton=картона
+material.parchment=пергамента
+material.ink=чернил
+material.oil.raw=сырой нефти
+material.oil.desulf=очищенной нефти
+material.oil.gas=природного газа
+material.oil.naphtha=лигроина
+material.oil.kerosene=керосина
+material.oil.diesel=дизеля
+
+material.item.empty_cell=Пустая капсула
+material.item.stardust=Звёздная пыль
+
+material.catalyst.pyrolysis=пирокатализатора
+material.catalyst.xp=затвердевшего опыта
+material.bifrost=бифроста
+material.forcirium=форцириума
+material.forcirium.imbued=заряженного форцириума
+material.endium=эндиума
+
+material.element.ti=титана
+material.element.fe=железа
+material.element.ni=никеля
+material.element.cu=меди
+material.element.ag=серебра
+material.element.re=рения
+material.element.pt=платины
+
+material.alloy.rhenium=рениевого сплава
+material.alloy.cupronickel=купроникеля
+material.alloy.silver=серебряного сплава
+
+material.coal=угля
+material.antracite=антрацита
+material.graphite=графита
+material.diamond=алмаза
+material.tennantite=теннантита

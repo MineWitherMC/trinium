@@ -5,8 +5,8 @@ end
 
 minetest.register_node("trinium:machine_polymerizer", {
 	stack_max = 1,
-	tiles = {"chemical_casing.png", "chemical_casing.png", "chemical_casing.png", "chemical_casing.png", "chemical_casing.png", "chemical_casing.png^polymerizer_overlay.png"},
-	description = S"Polymerizer",
+	tiles = {"casing_chemical.png", "casing_chemical.png", "casing_chemical.png", "casing_chemical.png", "casing_chemical.png", "casing_chemical.png^polymerizer_overlay.png"},
+	description = S"node.machine.polymerizer",
 	groups = {harvested_by_pickaxe = 1},
 	paramtype2 = "facedir",
 	after_place_node = function(pos, player)
@@ -100,7 +100,7 @@ minetest.register_node("trinium:machine_polymerizer", {
 	end,
 })
 
-trinium.register_multiblock("polymerizer", {
+local polymerizer_mb = {
 	map = {
 		{x = -1, y = -2, z = 2, name = "trinium:casing_cupronickel_heating_ring"},
 		{x = -1, y = -2, z = 3, name = "trinium:casing_cupronickel_heating_ring"},
@@ -132,7 +132,7 @@ trinium.register_multiblock("polymerizer", {
 		{x = -3, y = -1, z = 3, name = "trinium:casing_chemical"},
 		{x = -3, y = -1, z = 2, name = "trinium:casing_chemical"},
 		{x = -1, y = -1, z = 0, name = "trinium:casing_chemical"},
-		{x = 0, y = -1, z = 0, name = "trinium:machine_catalyst_hatch"},
+		{x = 0, y = -1, z = 0, name = "trinium:machine_hatch_catalyst"},
 		{x = 1, y = -1, z = 0, name = "trinium:casing_chemical"},
 		{x = -1, y = -1, z = 6, name = "trinium:casing_chemical"},
 		{x = 0, y = -1, z = 6, name = "trinium:casing_chemical"},
@@ -153,8 +153,8 @@ trinium.register_multiblock("polymerizer", {
 		{x = -1, y = 0, z = 6, name = "trinium:casing_chemical"},
 		{x = 0, y = 0, z = 6, name = "trinium:casing_chemical"},
 		{x = 1, y = 0, z = 6, name = "trinium:casing_chemical"},
-		{x = 2, y = 0, z = 1, name = "trinium:machine_output_hatch"},
-		{x = -2, y = 0, z = 1, name = "trinium:machine_input_hatch"},
+		{x = 2, y = 0, z = 1, name = "trinium:machine_hatch_output"},
+		{x = -2, y = 0, z = 1, name = "trinium:machine_hatch_input"},
 		{x = 2, y = 0, z = 5, name = "trinium:casing_chemical"},
 		{x = -2, y = 0, z = 5, name = "trinium:casing_chemical"},
 		
@@ -217,7 +217,7 @@ trinium.register_multiblock("polymerizer", {
 			return
 		end
 		
-		local input, output, catalyst, status = table.exists(region, function(r) return r.name == "trinium:machine_input_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_output_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_catalyst_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_status_panel" end)
+		local input, output, catalyst, status = table.exists(region, function(r) return r.name == "trinium:machine_hatch_input" end), table.exists(region, function(r) return r.name == "trinium:machine_hatch_output" end), table.exists(region, function(r) return r.name == "trinium:machine_hatch_catalyst" end), table.exists(region, function(r) return r.name == "trinium:machine_status_panel" end)
 		meta:set_string("input_crd", vector.stringify(region[input].actual_pos))
 		meta:set_string("output_crd", vector.stringify(region[output].actual_pos))
 		meta:set_string("catalyst_crd", vector.stringify(region[catalyst].actual_pos))
@@ -228,4 +228,6 @@ trinium.register_multiblock("polymerizer", {
 		
 		T(minetest.get_node_timer(pos))
 	end,
-})
+}
+trinium.register_multiblock("polymerizer", polymerizer_mb)
+trinium.mbcr("trinium:machine_polymerizer", polymerizer_mb.map)

@@ -5,19 +5,24 @@ local compressor_formspec = ([=[
 	size[8,9]
 	bgcolor[#080808BB;true]
 	background[5,5;1,1;gui_formbg.png;true]
-	list[context;lens;3.5,2.5;1,1;]
+	list[context;lens;4,2.5;1,1;]
+	image[3,2.5;1,1;research_lens.png^[brighten]
 	list[context;gem;0,0;2,2;]
+	image[0.5,2;1,1;materials_gem.png]
 	list[context;metal;6,0;2,2;]
-	list[context;press;5,0.5;1,1;]
-	list[context;upgrade;3.5,4;1,1;]
+	image[6.5,2;1,1;materials_ingot.png^materials_ingot_overlay.png]
+	list[context;press;4,0.5;1,1;]
+	image[3,0.5;1,1;research_lens_press.png^[brighten]
+	list[context;upgrade;4,3.5;1,1;]
+	image[3,3.5;1,1;research_lens_upgrade_2.png^[brighten]
 	list[current_player;main;0,5;8,4;]
-	button[0,4;2,1;trinium~research~assemble_lens;%s]
-]=]):format(S"Assemble")
+	button[0,3.5;2,1;trinium~research~assemble_lens;%s]
+]=]):format(S"gui.lens_compressor.assemble")
 
 minetest.register_node("trinium:machine_lens_curver", {
 	stack_max = 1,
 	tiles = {"research_chassis.png"},
-	description = S"Lens Curver",
+	description = S"node.machine.lens_compressor",
 	groups = {harvested_by_pickaxe = 2},
 	paramtype2 = "facedir",
 	drawtype = "nodebox",
@@ -38,7 +43,7 @@ minetest.register_node("trinium:machine_lens_curver", {
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		trinium.initialize_inventory(inv, {lens = 1, gem = 4, metal = 4, press = 1, upgrade = 1})
-		meta:set_string("infotext", is_constructed and "" or "Multiblock is not assembled!")
+		meta:set_string("infotext", is_constructed and "" or S"gui.info.multiblock_not_assembled")
 	end,
 	allow_metadata_inventory_move = function(pos, list1, index1, list2, index2, stacksize, player)
 		return list1 == list2 and stacksize or 0
@@ -76,11 +81,11 @@ minetest.register_node("trinium:machine_lens_curver", {
 		local inv = meta:get_inventory()
 		local lens, press, upgrade = inv:get_stack("lens", 1), inv:get_stack("press", 1), inv:get_stack("upgrade", 1)
 		if not lens:is_empty() then
-			cmsg.push_message_player(player, S"Extract lens before continuing!")
+			cmsg.push_message_player(player, S"gui.info.extract_lens")
 			return
 		end
 		if press:is_empty() then
-			cmsg.push_message_player(player, S"Abscent banspress!")
+			cmsg.push_message_player(player, S"gui.info.no_press")
 			return
 		end
 		local pressmeta = press:get_meta()
@@ -94,7 +99,7 @@ minetest.register_node("trinium:machine_lens_curver", {
 		table.walk(metatbl.gem, function(x) stored_gem = stored_gem + ItemStack(x):get_count() end)
 		table.walk(metatbl.metal, function(x) stored_metal = stored_metal + ItemStack(x):get_count() end)
 		if stored_gem < req_gem or stored_metal < req_metal then
-			cmsg.push_message_player(player, S"Insufficient resources!")
+			cmsg.push_message_player(player, S"gui.info.no_resources")
 			return
 		end
 		local item_gem, item_metal
@@ -127,8 +132,8 @@ minetest.register_node("trinium:machine_lens_curver", {
 			end
 		end, function() return req_metal == 0 end)
 
-		table.walk(research.lens_forms.core, function(x, k) if item_gem == x then item_gem = k end end)
-		table.walk(research.lens_forms.band_material, function(x, k) if item_metal == x then item_metal = k end end)
+		item_gem = minetest.registered_items[item_gem].description:split("\n")[1]
+		item_metal = minetest.registered_items[item_metal].description:split("\n")[1]
 
 		local lens = ItemStack("trinium:research_lens")
 		local lensmeta = lens:get_meta()
@@ -136,13 +141,13 @@ minetest.register_node("trinium:machine_lens_curver", {
 		lensmeta:set_string("metal", item_metal)
 		lensmeta:set_int("tier", actual_tier)
 		lensmeta:set_string("shape", shape)
-		lensmeta:set_string("description", S("Research Lens\nGem material: @1\nMetal material: @2\nShape: @3\nTier: @4", S(item_gem), S(item_metal), S(shape), actual_tier))
+		lensmeta:set_string("description", S("item.research_lens @1@2@3@4", item_gem, item_metal, S("gui.research_lens_shape."..shape), actual_tier))
 		inv:set_stack("upgrade", 1, "")
 		inv:set_stack("lens", 1, lens)
 	end,
 	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
 		if minetest.get_meta(pos):get_int("assembled") == 0 then
-			cmsg.push_message_player(player, "Multiblock is not assembled!")
+			cmsg.push_message_player(player, S"gui.info.multiblock_not_assembled")
 		end
 	end,
 })
@@ -180,7 +185,7 @@ local lens_curver_mb = {
 	after_construct = function(pos, is_constructed)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", is_constructed and compressor_formspec or "")
-		meta:set_string("infotext", is_constructed and "" or "Multiblock is not assembled!")
+		meta:set_string("infotext", is_constructed and "" or S"gui.info.multiblock_not_assembled")
 	end,
 }
 

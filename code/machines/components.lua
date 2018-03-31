@@ -8,9 +8,9 @@ local catalyst_hatch_formspec = [=[
 	listring[]
 ]=]
 
-minetest.register_node("trinium:machine_catalyst_hatch", {
-	description = S"Catalyst Hatch",
-	tiles = {"chemical_casing.png", "chemical_casing.png", "chemical_casing.png", "chemical_casing.png", "chemical_casing.png", "chemical_casing.png^hatch_overlay.png"},
+minetest.register_node("trinium:machine_hatch_catalyst", {
+	description = S"node.hatch.catalyst",
+	tiles = {"casing_chemical.png", "casing_chemical.png", "casing_chemical.png", "casing_chemical.png", "casing_chemical.png", "casing_chemical.png^hatch_overlay.png"},
 	groups = {harvested_by_pickaxe = 1},
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -36,9 +36,9 @@ local input_hatch_formspec = [=[
 	listring[]
 ]=]
 
-minetest.register_node("trinium:machine_input_hatch", {
-	description = S"Input Hatch",
-	tiles = {"fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png^hatch_overlay.png"},
+minetest.register_node("trinium:machine_hatch_input", {
+	description = S"node.hatch.input",
+	tiles = {"casing_corrosive.png", "casing_corrosive.png", "casing_corrosive.png", "casing_corrosive.png", "casing_corrosive.png", "casing_corrosive.png^hatch_overlay.png"},
 	groups = {harvested_by_pickaxe = 1},
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -60,9 +60,9 @@ local output_hatch_formspec = [=[
 	listring[]
 ]=]
 
-minetest.register_node("trinium:machine_output_hatch", {
-	description = S"Output Hatch",
-	tiles = {"fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png^hatch_overlay.png"},
+minetest.register_node("trinium:machine_hatch_output", {
+	description = S"node.hatch.output",
+	tiles = {"casing_corrosive.png", "casing_corrosive.png", "casing_corrosive.png", "casing_corrosive.png", "casing_corrosive.png", "casing_corrosive.png^hatch_overlay.png"},
 	groups = {harvested_by_pickaxe = 1},
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -77,8 +77,8 @@ minetest.register_node("trinium:machine_output_hatch", {
 
 -- Status Panel
 minetest.register_node("trinium:machine_status_panel", {
-	description = S"Status Panel",
-	tiles = {"fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png", "fluoro_casing.png", "research_table_wall.png"},
+	description = S"node.machine.status_panel",
+	tiles = {"casing_corrosive.png", "casing_corrosive.png", "casing_corrosive.png", "casing_corrosive.png", "casing_corrosive.png", "research_table_wall.png"},
 	groups = {harvested_by_pickaxe = 2},
 	paramtype = "light",
 	paramtype2 = "colorfacedir",

@@ -5,8 +5,8 @@ end
 
 minetest.register_node("trinium:machine_chemical_cracker", {
 	stack_max = 1,
-	tiles = {"chemical_casing.png", "chemical_casing.png", "chemical_casing.png", "chemical_casing.png", "chemical_casing.png", "chemical_casing.png^chemical_cracker_overlay.png"},
-	description = S"Cracker",
+	tiles = {"casing_chemical.png", "casing_chemical.png", "casing_chemical.png", "casing_chemical.png", "casing_chemical.png", "casing_chemical.png^chemical_cracker_overlay.png"},
+	description = S"node.machine.chemcracker",
 	groups = {harvested_by_pickaxe = 1},
 	paramtype2 = "facedir",
 	after_place_node = function(pos, player)
@@ -50,7 +50,7 @@ minetest.register_node("trinium:machine_chemical_cracker", {
 			local other = {}
 			for i = 1, 12 do
 				local stack = input_inv:get_stack("input", i)
-				if not stack:is_empty() and stack:get_name() ~= "trinium:material_cell_empty" then
+				if not stack:is_empty() and stack:get_name() ~= "trinium:material_cell_a_empty" then
 					other[#other + 1] = stack:get_name()
 				end
 			end
@@ -97,7 +97,7 @@ minetest.register_node("trinium:machine_chemical_cracker", {
 	end,
 })
 
-trinium.register_multiblock("cracker", {
+local cracker_mb = {
 	map = {
 		{x = -2, y = -1, z = 2, name = "trinium:casing_chemical"},
 		{x = -2, y = -1, z = 1, name = "trinium:casing_chemical"},
@@ -116,7 +116,7 @@ trinium.register_multiblock("cracker", {
 		{x = 2, y = -1, z = 0, name = "trinium:casing_chemical"},
 		
 		{x = -2, y = 0, z = 2, name = "trinium:casing_chemical"},
-		{x = -2, y = 0, z = 1, name = "trinium:machine_input_hatch"},
+		{x = -2, y = 0, z = 1, name = "trinium:machine_hatch_input"},
 		{x = -2, y = 0, z = 0, name = "trinium:casing_chemical"},
 		{x = -1, y = 0, z = 2, name = "trinium:casing_cupronickel_heating_ring"},
 		{x = -1, y = 0, z = 0, name = "trinium:casing_cupronickel_heating_ring"},
@@ -124,7 +124,7 @@ trinium.register_multiblock("cracker", {
 		{x = 1, y = 0, z = 2, name = "trinium:casing_cupronickel_heating_ring"},
 		{x = 1, y = 0, z = 0, name = "trinium:casing_cupronickel_heating_ring"},
 		{x = 2, y = 0, z = 2, name = "trinium:casing_chemical"},
-		{x = 2, y = 0, z = 1, name = "trinium:machine_output_hatch"},
+		{x = 2, y = 0, z = 1, name = "trinium:machine_hatch_output"},
 		{x = 2, y = 0, z = 0, name = "trinium:casing_chemical"},
 		
 		{x = -2, y = 1, z = 2, name = "trinium:casing_chemical"},
@@ -162,7 +162,7 @@ trinium.register_multiblock("cracker", {
 			return
 		end
 		
-		local input, output, status = table.exists(region, function(r) return r.name == "trinium:machine_input_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_output_hatch" end), table.exists(region, function(r) return r.name == "trinium:machine_status_panel" end)
+		local input, output, status = table.exists(region, function(r) return r.name == "trinium:machine_hatch_input" end), table.exists(region, function(r) return r.name == "trinium:machine_hatch_output" end), table.exists(region, function(r) return r.name == "trinium:machine_status_panel" end)
 		meta:set_string("input_crd", vector.stringify(region[input].actual_pos))
 		meta:set_string("output_crd", vector.stringify(region[output].actual_pos))
 		meta:set_string("status_crd", vector.stringify(region[status].actual_pos))
@@ -172,4 +172,6 @@ trinium.register_multiblock("cracker", {
 		
 		T(minetest.get_node_timer(pos))
 	end,
-})
+}
+trinium.register_multiblock("cracker", cracker_mb)
+trinium.mbcr("trinium:machine_chemical_cracker", cracker_mb.map)

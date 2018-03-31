@@ -1,0 +1,49 @@
+# textdomain:trinium
+# tier 0
+aspect.aer=Воздух
+aspect.aqua=Вода
+aspect.ignis=Огонь
+aspect.terra=Земля
+
+# tier 1
+aspect.interitum=Разрушение
+aspect.lux=Свет
+aspect.motus=Движение
+aspect.ordinatio=Созидание
+aspect.tempestas=Погода
+aspect.vita=Жизнь
+
+# tier 2
+aspect.alienis=Необычность
+#anyone tell me how to translate this ^ properly
+aspect.celeritas=Скорость, полёт
+aspect.instrumentum=Инструмент
+aspect.potentia=Сила, энергия
+aspect.speculum=Кристалл
+aspect.venenum=Яд
+
+# tier 3
+aspect.firmitatem=Стабильность
+aspect.iter=Путешествие, телепортация
+aspect.meridiem=Свечение
+aspect.permutatio=Преобразование
+aspect.populus=Человек
+aspect.vinculum=Ловушка
+
+# tier 4
+aspect.caelesta=Небеса
+aspect.canaliculus=Механизм
+aspect.consequat=Сборка
+aspect.damnum=Оружие, урон
+aspect.herba=Растение
+aspect.metallicum=Металл
+aspect.sententia=Чувство
+aspect.tempus=Время
+
+# high tier
+aspect.arbor=Дерево
+aspect.ratus=Мышление
+aspect.spiritus=Душа
+aspect.stella=Звезда
+aspect.manifestatio=Зрение, открытие
+aspect.origo=Анимация

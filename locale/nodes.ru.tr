@@ -1,0 +1,43 @@
+# textdomain:trinium
+node.machine.chemreactor=Контроллер химического реактора
+node.machine.chemcracker=Контроллер крекинговой установки
+node.machine.polymerizer=Контроллер полимеризатора
+node.casing.chemical=Химически инертный корпус
+node.casing.corrosive=Коррозионно устойчивый корпус
+node.casing.heating.cupronickel=Константановое нагревательное кольцо
+node.casing.research1=Антрацитовый корпус
+node.casing.research2=Усовершенствованный антрацитовый корпус
+node.hatch.catalyst=Шина для катализаторов
+node.hatch.input=Входная шина
+node.hatch.output=Выходная шина
+node.machine.status_panel=Статусная панель
+
+node.cobble=Булыжник
+node.stone=Камень
+node.sand=Песок
+node.gravel=Гравий
+node.snow=Снег
+node.snow_layer=Снег
+node.dirt=Земля
+node.dirt.grass=Земля с травой
+node.dirt.snow=Земля с заснеженной травой
+node.dirt.podzol=Земля с листвой
+node.dirt.savanna=Земля с засушенной травой
+
+node.reflector_glass=Отражательное стекло
+node.lamp.frame=Рамка лампы
+node.lamp.forcirium=Форцириумная лампа
+node.machine.trash=Урна
+
+node.machine.recipe_encoder=Кодировщик рецептов
+
+node.machine.lens_compressor=Сборщик линз
+node.machine.press_randomizer=Сборщик прессов
+node.machine.research_node=Контроллер узла исследований
+node.machine.research_table=Стол исследований
+node.machine.enlightener=Магический светильник
+
+node.fluid.water.source=Источник воды
+node.fluid.water.flowing=Текущая вода
+node.fluid.river_water.source=Источник речной воды
+node.fluid.river_water.flowing=Текущая речная вода

@@ -1,75 +1,60 @@
---[[ Basis ]]--
--- Titanium
-materials.register_material("titanium", {
-	name = S"Titanium",
-	color = {220, 160, 240},
+local V = materials.vanilla_elements
+
+--[[ Elements ]]--
+V.titanium:register_material({
+	description = S"material.element.ti",
 	types = {"ingot", "dust"},
-	data = {melting_point = 1941},
-	formula = "Ti",
 })
 
--- Rhenium
-materials.register_material("rhenium", {
-	name = S"Rhenium",
-	color = {80, 80, 88},
+V.iron:register_material({
+	description = S"material.element.fe",
 	types = {"ingot", "dust"},
-	data = {melting_point = 3459},
-	formula = "Re",
 })
 
--- Iron
-materials.register_material("iron", {
-	name = S"Iron",
-	color = {200, 200, 200},
-	types = {"dust", "ingot"},
-	data = {melting_point = 1811},
-	formula = "Fe",
-})
-
--- Platinum
-materials.register_material("platinum", {
-	name = S"Platinum",
-	color = {255, 255, 200},
-	types = {"ingot", "catalyst", "dust"},
-	data = {melting_point = 2041},
-	formula = "Pt",
-})
-
--- Copper
-materials.register_material("copper", {
-	name = S"Copper",
-	color = {255, 100, 0},
+V.nickel:register_material({
+	description = S"material.element.ni",
 	types = {"ingot", "dust"},
-	data = {melting_point = 1357},
-	formula = "Cu",
 })
 
--- Nickel
-materials.register_material("nickel", {
-	name = S"Nickel",
-	color = {200, 200, 250},
+V.copper:register_material({
+	description = S"material.element.cu",
 	types = {"ingot", "dust"},
-	data = {melting_point = 1728},
-	formula = "Ni",
+})
+
+V.silver:register_material({
+	description = S"material.element.ag",
+	types = {"ingot", "dust"},
+})
+
+V.rhenium:register_material({
+	description = S"material.element.re",
+	types = {"ingot", "dust"},
+})
+
+V.platinum:register_material({
+	description = S"material.element.pt",
+	types = {"ingot", "dust", "catalyst"},
 })
 
 --[[ Compounds ]]--
--- Titanium-Rhenium - needed for some lenses and lens presses, obtained via direct alloying of Rhenium and Titanium in AST
-materials.register_material("titanium_rhenium", {
-	name = S"Titanium-Rhenium",
-	color = {190, 180, 200},
+-- Rhenium Alloy
+materials.new_material("rhenium_alloy", {
+	formula = {{"titanium", 11}, {"rhenium", 2}, {"platinum", 5}},
 	types = {"ingot", "dust"},
-	data = {melting_point = 2093},
-	formula = "Ti9Re",
-})
-trinium.register_recipe("trinium:alloysmelting_tower", {"trinium:material_ingot_titanium 9", "trinium:material_ingot_rhenium"}, {"trinium:material_ingot_titanium_rhenium 10"}, {temperature = 3500})
+	description = S"material.alloy.rhenium"
+}):generate_data("melting_point"):generate_interactions():generate_recipe("trinium:alloysmelting_tower")
 
--- Cupronickel - needed for coils, obtained via direct alloying of Copper and Nickel in AST
-materials.register_material("cupronickel", {
-	name = S"Cupronickel",
-	color = {227, 150, 128},
+-- Cupronickel
+materials.new_material("cupronickel", {
+	formula = {{"copper", 3}, {"nickel", 2}},
 	types = {"ingot", "dust"},
-	data = {melting_point = 1543},
-	formula = "CuNi",
-})
-trinium.register_recipe("trinium:alloysmelting_tower", {"trinium:material_ingot_nickel", "trinium:material_ingot_copper"}, {"trinium:material_ingot_cupronickel 2"}, {temperature = 1750})
+	description = S"material.alloy.cupronickel"
+}):generate_data("melting_point"):generate_interactions():generate_recipe("trinium:alloysmelting_tower")
+
+-- Silver Alloy
+materials.new_material("silver_alloy", {
+	formula = {{"silver", 2}, {"tennantite", 5}},
+	types = {"ingot", "dust"},
+	description = S"material.alloy.silver",
+	data = {melting_point = 1563},
+}):generate_interactions():generate_recipe("trinium:alloysmelting_tower")

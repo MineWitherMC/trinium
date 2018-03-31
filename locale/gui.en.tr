@@ -1,0 +1,110 @@
+# textdomain:trinium
+gui.machine.chemreactor=Chemical Reactor
+
+gui.inventory.crafting=Crafting
+gui.info.inv_full=Inventory is full!
+
+gui.inventory.irp=Recipes
+gui.irp_mode.recipe=Recipes
+gui.irp_mode.usage=Usages
+gui.irp_mode.cheat=Cheat
+gui.irp_mode.current @1=Current Mode: @1
+gui.irp_mode.change=Change Mode
+gui.irp_page @1@2=Page @1 of @2
+gui.irp_recipe @1@2=Recipe @1 of @2
+gui.info.given @1@2@3=Given @1 @2 to @3
+
+gui.inventory.utility=Utility
+
+gui.info.unknown=Unknown
+
+gui.machine.recipe_encoder=Recipe Encoder
+gui.encode=Encode
+gui.info.no_patterns=Insufficient patterns!
+gui.info.extract_pattern=Extract encoded pattern to continue!
+
+gui.recipe_method.furnace=Smelting
+gui.furnace.time @1=@1 Seconds
+gui.recipe_method.block_drop=Block Drops
+gui.max_drop @1=@1 max
+gui.recipe_method.grinder=Grinder
+gui.recipe_method.blast_furnace=Blast Furnace
+gui.blast_furnace.temperature @1=Melting Point: @1K
+gui.recipe_method.alloy_tower=Alloysmelting Tower
+gui.alloy_tower.temperature @1=Temperature: @1K
+gui.recipe_method.implosion=Implosion
+gui.recipe_method.metal_former=Metal Former
+gui.metal_former.type @1=Method: @1
+gui.metal_former_type.bending=Bending
+gui.metal_former_type.lathing=Lathing
+gui.metal_former_type.compressing=Compressing
+gui.metal_former_type.hammering=Hammering
+gui.recipe_method.mixer=Mixer
+gui.minimum_velocity @1=Minimum Velocity: @1 RPM
+gui.recipe_method.reconstructor=Molecular Reconstructor
+gui.reconstructor.type.melting=Melting
+gui.reconstructor.type.compressing=Compressing
+gui.reconstructor.type @1=Mode: @1
+gui.base_sg_t @1=@1 SG/t Base
+gui.tier @1=Recipe Tier: @1
+gui.recipe_method.chemreactor=Chemical Reactor
+gui.no_catalyst=No catalyst needed
+gui.chemreactor.time @1=@1 Seconds
+gui.recipe_method.cracker=Cracker
+gui.recipe_method.polymerizer=Polymerizer
+gui.recipe_method.crafting=Crafting
+
+gui.lens_compressor.assemble=Assemble
+gui.info.no_resources=Insufficient resources!
+gui.info.no_press=Abscent Press!
+gui.info.extract_lens=Extract lens to continue!
+gui.info.multiblock_not_assembled=Multiblock is not assembled!
+
+gui.press_randomizer.assemble=Assemble
+gui.info.no_rhenium=Insufficient Rhenium Alloy!
+gui.info.extract_press=Extract press to continue!
+
+gui.about_chapter_map=This chapter uses Chapter Map instead of normal research notes acquiring
+gui.get_chapter_map=Get Chapter Map
+gui.research_book.back=Back
+gui.research_book.pagenum @1@2@3=@1 - page @2 of @3
+gui.research_book.sub_research @1@2@3=@n@1 aspect (@2 required, @3 available)
+gui.inventory.research_book=Research Book
+gui.info.no_aspects=Insufficient Aspects!
+gui.info.no_ink=Insufficient Ink!
+gui.info.no_paper=Insufficient Paper!
+gui.info.use_notes=You already have these research notes!
+gui.info.no_diamond_dust=Insufficient Diamond Dust!
+
+gui.info.abacus @1@2=@1 aspect: @2@n
+gui.info.research_node @1@2=Paper available: @1; Ink available: @2
+
+gui.research_table.tab.map=Map
+gui.research_table.tab.inventory=Inventory
+gui.research_table.player_data @1@2@3=Ink: @1\nPaper: @2\nWarp: @3
+
+gui.info.no_catalysts=Insufficient Catalysts!
+gui.info.no_parchment=Insufficient Parchment!
+gui.info.no_lens=Abscent Lens!
+gui.info.no_research_map=Abscent Research Map!
+gui.info.extract_notes=Extract research notes to continue!
+gui.info.enlightening_failed=Enlightening failed!
+
+gui.research_lens_shape.hexagon=Hexagon
+gui.research_lens_shape.square=Square
+gui.research_lens_shape.diamond=Diamond
+gui.research_lens_shape.triangle=Triangle
+gui.research_lens_shape.circle=Circle
+gui.research_lens_shape.pentagon=Pentagon
+gui.research_lens_shape.starhexagon=Star Hexagon
+gui.research_lens_shape.octagon=Octagon
+gui.research_lens_shape.heptagon=Heptagon
+gui.research_lens_shape.reuleauxtriangle=Reuleaux Triangle
+
+gui.knowledge_crystal_binding @1=Bound to @1
+gui.info.knowledge_crystal_bound @1=Successfully bound to @1!
+
+gui.recipe_method.multiblock=Мультиблок
+gui.multiblock.height @1=Текущая высота: @1
+
+gui.info.time_set=Time successfully changed!
