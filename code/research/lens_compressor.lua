@@ -91,7 +91,7 @@ minetest.register_node("trinium:machine_lens_curver", {
 		local pressmeta = press:get_meta()
 		local base_tier = pressmeta:get_int("tier")
 		local umult = math.max(minetest.get_item_group(upgrade:get_name(), "lens_upgrade") + 1 - base_tier, 1)
-		local actual_tier = math.max(base_tier, minetest.get_item_group(upgrade:get_name(), "lens_upgrade") + 1)
+		local actual_tier = math.max(5, base_tier + minetest.get_item_group(upgrade:get_name(), "lens_upgrade"))
 
 		local req_gem, req_metal, shape = pressmeta:get_int("gem") * umult, pressmeta:get_int("metal") * umult, pressmeta:get_string("shape")
 		local stored_gem, stored_metal = 0, 0

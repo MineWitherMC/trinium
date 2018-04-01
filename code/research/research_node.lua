@@ -32,14 +32,14 @@ minetest.register_node("trinium:machine_research_node", {
 				res_data[pn].data.paper = res_data[pn].data.paper + itemstack:get_count() * 16
 				itemstack:take_item(99)
 			elseif item == "trinium:material_cell_ink" then
-				res_data[pn].data.ink = res_data[pn].data.ink + 100
-				itemstack:take_item(1)
+				res_data[pn].data.ink = res_data[pn].data.ink + itemstack:get_count() * 100
+				itemstack:take_item(99)
 			elseif item == "trinium:research_knowledge_charm" then
-				trinium.res.random_aspects(pn, 30)
-				itemstack:take_item(1)
+				trinium.res.random_aspects(pn, 30 * itemstack:get_count())
+				itemstack:take_item(99)
 			elseif item == "trinium:research_aspected_charm" then
-				trinium.res.random_aspects(pn, 100)
-				itemstack:take_item(1)
+				trinium.res.random_aspects(pn, 100 * itemstack:get_count())
+				itemstack:take_item(99)
 			elseif item == "trinium:research_focused_charm" then
 				if itemstack:get_meta():get_string("focus") ~= "" then
 					trinium.res.random_aspects(pn, 150, {itemstack:get_meta():get_string("focus")})

@@ -199,7 +199,7 @@ end
 function res.random_aspects(pn, amount, possible_aspects)
 	local tbl = possible_aspects or res.aspect_ids
 	for i = 1, amount do
-		aspect = tbl[math.random(1, #tbl)]
+		local aspect = tbl[math.random(1, #tbl)]
 		res.player_stuff[pn].data.aspects[aspect] = (res.player_stuff[pn].data.aspects[aspect] or 0) + 1
 	end
 	minetest.sound_play("experience", {

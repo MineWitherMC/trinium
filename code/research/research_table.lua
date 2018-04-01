@@ -145,7 +145,6 @@ local function delete_light(meta, index, pn)
 			add_fs[index] = nil
 			meta:set_string("formspec_additional_arr", minetest.serialize(add_fs))
 			meta:set_string("formspec_additional", table.fconcat(add_fs))
-			trinium.dump(add_fs, table.fconcat(add_fs))
 			meta:set_string("formspec", get_table_formspec(1, pn, is_correct_research(inv), meta:get_int("aspect_key") or 0)..table.fconcat(add_fs))
 		end
 	end
