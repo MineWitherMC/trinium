@@ -46,7 +46,7 @@ end
 
 local function is_correct_research(inv)
 	local research_notes, lens = inv:get_stack("research_notes", 1), inv:get_stack("lens", 1)
-	if research_notes:is_empty() or research_notes:get_name():split("___")[1] == "discovery" then return false end
+	if research_notes:is_empty() or research_notes:get_name():split("___")[1] == "trinium:discovery" then return false end
 	local lens_req = research.researches[research_notes:get_name():split("___")[2]:gsub("__", ".")].requires_lens
 	if lens:is_empty() and lens_req.requirement then return false end
 	if not lens_req.requirement then return true end
@@ -87,7 +87,13 @@ local function can_connect(inv, index1, index2)
 	return ad1.req1 == an2 or ad1.req2 == an2 or ad2.req1 == an1 or ad2.req2 == an1
 end
 
-local function add_light(inv, index)
+minetest.register_privilege("resreveal", {
+	description = "Reveal glowing underlay w/out research",
+	give_to_singleplayer = false,
+})
+
+local function add_light(meta, index, pn)
+	local inv = meta:get_inventory()
 	if index < 1 or index > 49 then return false end
 	local s1 = inv:get_stack("research_notes", 1)
 	if s1:is_empty() then return false end
@@ -96,8 +102,8 @@ local function add_light(inv, index)
 	if table.exists(mstr, function(x) return x == index end) then return false end -- already enlightened
 
 	if (can_connect(inv, index, index - 7) and table.exists(mstr, function(x) return x == index - 7 end)) or
-		(can_connect(inv, index, index - 1) and table.exists(mstr, function(x) return x == index - 1 end)) or
-		(can_connect(inv, index, index + 1) and table.exists(mstr, function(x) return x == index + 1 end)) or
+		((index - 1) % 7 > 0 and can_connect(inv, index, index - 1) and table.exists(mstr, function(x) return x == index - 1 end)) or
+		(index % 7 > 0 and can_connect(inv, index, index + 1) and table.exists(mstr, function(x) return x == index + 1 end)) or
 		(can_connect(inv, index, index + 7) and table.exists(mstr, function(x) return x == index + 7 end)) then
 			table.insert(mstr, index)
 	else
@@ -110,10 +116,23 @@ local function add_light(inv, index)
 	end
 	m1:set_string("map_l", minetest.serialize(mstr))
 	inv:set_stack("research_notes", 1, s1)
-	return add_light(inv, index - 7) or add_light(inv, index - 1) or add_light(inv, index + 1) or add_light(inv, index + 7)
+	
+	if minetest.check_player_privs(pn, "resreveal") or research.check_player_res(pn, "ResearchRevealing") then
+		local add_fs = minetest.deserialize(meta:get_string("formspec_additional_arr")) or {}
+		add_fs[index] = ("background[%s,%s;1,1;research_glowing_underlay.png]"):format(3.5 + trinium.modulate(index, 7), 1 + math.ceil(index / 7))
+		meta:set_string("formspec_additional_arr", minetest.serialize(add_fs))
+		meta:set_string("formspec_additional", table.fconcat(add_fs))
+		meta:set_string("formspec", get_table_formspec(1, pn, is_correct_research(inv), meta:get_int("aspect_key") or 0)..table.fconcat(add_fs))
+	end
+	
+	return add_light(meta, index - 7, pn) or 
+			((index - 1) % 7 > 0 and add_light(meta, index - 1, pn)) or 
+			(index % 7 > 0 and add_light(meta, index + 1, pn)) or 
+			add_light(meta, index + 7, pn)
 end
 
-local function delete_light(inv, index)
+local function delete_light(meta, index, pn)
+	local inv = meta:get_inventory()
 	local s1 = inv:get_stack("research_notes", 1)
 	if s1:is_empty() then return end
 	local m1 = s1:get_meta()
@@ -121,6 +140,14 @@ local function delete_light(inv, index)
 	local fnd = table.exists(mstr, function(x) return x == index end)
 	if fnd then
 		table.remove(mstr, fnd)
+		if minetest.check_player_privs(pn, "resreveal") or research.check_player_res(pn, "ResearchRevealing") then
+			local add_fs = minetest.deserialize(meta:get_string("formspec_additional_arr")) or {}
+			add_fs[index] = nil
+			meta:set_string("formspec_additional_arr", minetest.serialize(add_fs))
+			meta:set_string("formspec_additional", table.fconcat(add_fs))
+			trinium.dump(add_fs, table.fconcat(add_fs))
+			meta:set_string("formspec", get_table_formspec(1, pn, is_correct_research(inv), meta:get_int("aspect_key") or 0)..table.fconcat(add_fs))
+		end
 	end
 	m1:set_string("map_l", minetest.serialize(mstr))
 	inv:set_stack("research_notes", 1, s1)
@@ -197,12 +224,18 @@ minetest.register_node("trinium:machine_research_table", {
 					local key = meta:get_int("aspect_key")
 					key = math.min(key + 4, math.ceil(#research.aspect_ids / 4) * 4 - 24)
 					meta:set_int("aspect_key", key)
-					meta:set_string("formspec", get_table_formspec(meta:get_string("current_mode"), pn, is_correct_research(inv), key))
+					local m = meta:get_string("current_mode")
+					local nfs = get_table_formspec(m, pn, is_correct_research(inv), key)
+					if m == "1" then nfs = nfs..meta:get_string("formspec_additional") end
+					meta:set_string("formspec", nfs)
 				elseif a == "up" then
 					local key = meta:get_int("aspect_key")
 					key = math.max(key - 4, 0)
 					meta:set_int("aspect_key", key)
-					meta:set_string("formspec", get_table_formspec(meta:get_string("current_mode"), pn, is_correct_research(inv), key))
+					local m = meta:get_string("current_mode")
+					local nfs = get_table_formspec(m, pn, is_correct_research(inv), key)
+					if m == "1" then nfs = nfs..meta:get_string("formspec_additional") end
+					meta:set_string("formspec", nfs)
 				elseif a == "add_aspects" then
 					local a1, a2 = inv:get_stack("aspect_inputs", 1):get_name():sub(18), inv:get_stack("aspect_inputs", 2):get_name():sub(18)
 					if not a1 or a1 == "" or not a2 or a2 == "" then return end
@@ -287,7 +320,7 @@ minetest.register_node("trinium:machine_research_table", {
 			end
 			m1:set_string("map2", minetest.serialize(mstr))
 			inv:set_stack("research_notes", 1, s1)
-			delete_light(inv, index1)
+			delete_light(meta, index1, pn)
 		elseif list2 == "r2m" then
 			local a = inv:get_stack("r2m", 1):get_name():sub(18)
 			research.player_stuff[pn].data.aspects[a] = research.player_stuff[pn].data.aspects[a] + inv:get_stack("r2m", 1):get_count()
@@ -299,9 +332,11 @@ minetest.register_node("trinium:machine_research_table", {
 			table.insert(mstr, {num = index2, aspect = inv:get_stack(list2, index2):get_name()})
 			m1:set_string("map2", minetest.serialize(mstr))
 			inv:set_stack("research_notes", 1, s1)
-			if add_light(inv, index2) then
+			if add_light(meta, index2, pn) then
 				inv:set_stack("research_notes", 1, "trinium:discovery___"..s1:get_name():split("___")[2])
-				meta:set_string("formspec", get_table_formspec(meta:get_string("current_mode"), pn, false, meta:get_int("aspect_key")))
+				meta:set_string("formspec_additional_arr", "")
+				meta:set_string("formspec_additional", "")
+				meta:set_string("formspec", get_table_formspec(1, pn, false, meta:get_int("aspect_key")))
 			end
 		end
 
@@ -321,6 +356,7 @@ minetest.register_node("trinium:machine_research_table", {
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
+		local pn = player:get_player_name()
 		if listname == "research_notes" then
 			local resname = research.researches[stack:get_name():split("___")[2]]
 			for i = 1, #resname.map do
@@ -337,6 +373,14 @@ minetest.register_node("trinium:machine_research_table", {
 			if meta1:get_string("map_l") == "" then
 				meta1:set_string("map_l", minetest.serialize({resname.map[1].x + (resname.map[1].y - 1) * 7}))
 				inv:set_stack("research_notes", 1, stack)
+				
+				if minetest.check_player_privs(pn, "resreveal") or research.check_player_res(pn, "ResearchRevealing") then
+					local add_fs = {}
+					add_fs[resname.map[1].x + (resname.map[1].y - 1) * 7] = 
+						("background[%s,%s;1,1;research_glowing_underlay.png]"):format(3.5 + resname.map[1].x, 1 + resname.map[1].y)
+					meta:set_string("formspec_additional_arr", minetest.serialize(add_fs))
+					meta:set_string("formspec_additional", table.fconcat(add_fs))
+				end
 			end
 		end
 	end,
@@ -360,7 +404,14 @@ trinium.register_multiblock("research table", {
 		if r ~= "1" and r ~= "2" then
 			meta:set_string("current_mode", 2)
 		end
-		meta:set_string("formspec", is_constructed and get_table_formspec(meta:get_string("current_mode"), meta:get_string("owner"), is_correct_research(inv), meta:get_int("aspect_key") or 0) or "")
+		local fs = ""
+		if is_constructed then
+			fs = get_table_formspec(r, meta:get_string("owner"), is_correct_research(inv), meta:get_int("aspect_key") or 0)
+			if r == "1" then
+				fs = fs..meta:get_string("formspec_additional")
+			end
+		end
+		meta:set_string("formspec", fs)
 		meta:set_string("infotext", is_constructed and "" or S"gui.info.multiblock_not_assembled")
 	end,
 })

@@ -81,7 +81,7 @@ local function get_book_research_fs(researchid, pn, page, update)
 					label = label..S("gui.research_book.sub_research @1@2@3", trinium.adequate_text(k2), v2, res.player_stuff[pn].data.aspects[k2] or 0)
 					res.player_stuff[pn].research_array[2][k].reqs[k2] = v2
 				end
-				res.player_stuff[pn].research_array[2][k].text = res.player_stuff[pn].research_array[2][k].text.."label[0,1;"..label.."]"
+				res.player_stuff[pn].research_array[2][k].text = res.player_stuff[pn].research_array[2][k].text.."textarea[0,1;8,7;;;"..label.."]"
 			end
 		end
 	end

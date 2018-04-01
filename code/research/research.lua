@@ -214,3 +214,8 @@ function res.bind_to_map(mapname, def)
 	end
 	table.insert(res.bound_to_maps[mapname], def)
 end
+
+function res.check_player_res(pn, name)
+	local w = res.player_stuff[pn].researches._strings
+	return w[name] and true or false
+end

@@ -132,16 +132,20 @@ minetest.register_node("trinium:machine_lens_curver", {
 			end
 		end, function() return req_metal == 0 end)
 
-		item_gem = minetest.registered_items[item_gem].description:split("\n")[1]
-		item_metal = minetest.registered_items[item_metal].description:split("\n")[1]
-
+		local item_gem1 = minetest.registered_items[item_gem].description:split("\n")[1]
+		local item_metal1 = minetest.registered_items[item_metal].description:split("\n")[1]
+		
+		local item_gem2 = table.exists(research.lens_forms.core, function(x) return x == item_gem end)
+		local item_metal2 = table.exists(research.lens_forms.band_material, function(x) return x == item_metal end)
+		trinium.dump(item_gem2, item_metal2)
+		
 		local lens = ItemStack("trinium:research_lens")
 		local lensmeta = lens:get_meta()
-		lensmeta:set_string("gem", item_gem)
-		lensmeta:set_string("metal", item_metal)
+		lensmeta:set_string("gem", item_gem2)
+		lensmeta:set_string("metal", item_metal2)
 		lensmeta:set_int("tier", actual_tier)
 		lensmeta:set_string("shape", shape)
-		lensmeta:set_string("description", S("item.research_lens @1@2@3@4", item_gem, item_metal, S("gui.research_lens_shape."..shape), actual_tier))
+		lensmeta:set_string("description", S("item.research_lens @1@2@3@4", item_gem1, item_metal1, S("gui.research_lens_shape."..shape), actual_tier))
 		inv:set_stack("upgrade", 1, "")
 		inv:set_stack("lens", 1, lens)
 	end,

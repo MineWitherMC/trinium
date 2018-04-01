@@ -98,6 +98,13 @@ function table.sum(t)
 	return k
 end
 
+function table.fconcat(t, x)
+	x = x or ""
+	local str = ""
+	table.walk(t, function(v) str = str..x..v end)
+	return str:sub(x:len())
+end
+
 -- Basic functions
 function trinium.sortByParam(param)
 	return function(a, b)

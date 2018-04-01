@@ -280,8 +280,8 @@ for i = 1, #research.aspect_ids do
 		research.researches["Aspect"].text[p] = {"", 8, 8}
 	end
 	if as_r1 ~= "NULL" then
-		research.researches["Aspect"].text[p][1] = ("%sitem_image_button[0,%s;1,1;trinium:aspect___%s;;]label[1,%s;%s = %s + %s\n%s]item_image_button[6,%s;1,1;trinium:aspect___%s;;]item_image_button[7,%s;1,1;trinium:aspect___%s;;]")
-		:format(research.researches["Aspect"].text[p][1], h, as, h, trinium.adequate_text(as_n),
+		research.researches["Aspect"].text[p][1] = ("%sitem_image_button[0,%s;1,1;trinium:aspect___%s;;]textarea[1.2,%s;6,1;;;%s = %s + %s\n%s]item_image_button[6,%s;1,1;trinium:aspect___%s;;]item_image_button[7,%s;1,1;trinium:aspect___%s;;]")
+		:format(research.researches["Aspect"].text[p][1], h, as, h + 0.2, trinium.adequate_text(as_n),
 			trinium.adequate_text(as_r1), trinium.adequate_text(as_r2), as_t.name:split("\n")[2], h, as_r1, h, as_r2)
 	else
 		research.researches["Aspect"].text[p][1] = ("%sitem_image_button[0,%s;1,1;trinium:aspect___%s;;]label[1,%s;%s\n%s]")
@@ -290,3 +290,21 @@ for i = 1, #research.aspect_ids do
 end
 
 research.researches["Aspect"].text[1] = S("About Aspects - here are @1 pages", #research.researches["Aspect"].text - 1)
+
+research.register_research("ResearchRevealing", {
+	texture = "trinium:aspect___POTENTIA",
+	x = 7,
+	y = 0,
+	name = S("research.research_revealing"),
+	chapter = "SystemInfo",
+	text = {
+		S"research.text.revealing.1",
+	},
+	requires_lens = {},
+	color = "A1004A",
+	map = {
+		{x = 1, y = 1, aspect = "POTENTIA"},
+		{x = 7, y = 3, aspect = "MANIFESTATIO"},
+		{x = 3, y = 7, aspect = "RATUS"},
+	},
+})
