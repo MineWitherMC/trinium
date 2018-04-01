@@ -43,3 +43,7 @@ node.fluid.water.source=Источник воды
 node.fluid.water.flowing=Текущая вода
 node.fluid.river_water.source=Источник речной воды
 node.fluid.river_water.flowing=Текущая речная вода
+
+node.machine.pulsenet_controller=Контроллер пульсирующей сети
+node.machine.pulsenet_storage_cell=Ячейка хранения пульсирующей сети
+node.machine.pulsenet_terminal=Терминал доступа пульсирующей сети

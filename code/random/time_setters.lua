@@ -8,6 +8,10 @@ minetest.register_craftitem("trinium:item_timesetter_day", {
 		minetest.set_timeofday(0.5)
 		cmsg.push_message_player(player, S"gui.info.time_set")
 	end,
+	on_secondary_use = function(item, player, pointed_thing)
+		minetest.set_timeofday(0.5)
+		cmsg.push_message_player(player, S"gui.info.time_set")
+	end,
 })
 
 -- Night
@@ -19,6 +23,10 @@ minetest.register_craftitem("trinium:item_timesetter_night", {
 		minetest.set_timeofday(0)
 		cmsg.push_message_player(player, S"gui.info.time_set")
 	end,
+	on_secondary_use = function(item, player, pointed_thing)
+		minetest.set_timeofday(0)
+		cmsg.push_message_player(player, S"gui.info.time_set")
+	end,
 })
 
 -- Dawn
@@ -27,6 +35,10 @@ minetest.register_craftitem("trinium:item_timesetter_dawn", {
 	description = S("item.timesetter.dawn"),
 	stack_max = 1,
 	on_place = function(item, player, pointed_thing)
+		minetest.set_timeofday(0.27)
+		cmsg.push_message_player(player, S"gui.info.time_set")
+	end,
+	on_secondary_use = function(item, player, pointed_thing)
 		minetest.set_timeofday(0.27)
 		cmsg.push_message_player(player, S"gui.info.time_set")
 	end,

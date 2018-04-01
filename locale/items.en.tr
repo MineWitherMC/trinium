@@ -23,3 +23,5 @@ item.timesetter.night=Time Setter: Night
 item.research_notes @1=Research Notes - @1
 item.research_chapter_map @1=Chapter Map - @1
 item.research_discovery @1=Discovery - @1
+
+item.pulsenet.connector=Pulse Network Connector

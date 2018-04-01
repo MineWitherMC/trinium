@@ -43,3 +43,7 @@ node.fluid.water.source=Water Source
 node.fluid.water.flowing=Flowing Water
 node.fluid.river_water.source=River Water Source
 node.fluid.river_water.flowing=Flowing River Water
+
+node.machine.pulsenet_controller=Pulse Network Controller
+node.machine.pulsenet_storage_cell=Pulse Network Storage Cell
+node.machine.pulsenet_terminal=Pulse Network Access Terminal

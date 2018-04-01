@@ -23,3 +23,5 @@ item.timesetter.night=Установщик времени: полночь
 item.research_notes @1=Записи об исследовании "@1"
 item.research_chapter_map @1=Карта главы "@1"
 item.research_discovery @1=Открытие "@1"
+
+item.pulsenet.connector=Комбинатор пульсирующей сети

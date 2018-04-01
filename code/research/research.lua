@@ -109,6 +109,10 @@ function res.register_research(name, def)
 			on_place = function(rnotes, player, pointed_thing)
 				res.grant(player:get_player_name(), name)
 				return ""
+			end,
+			on_secondary_use = function(rnotes, player, pointed_thing)
+				res.grant(player:get_player_name(), name)
+				return ""
 			end
 		})
 	end

@@ -17,4 +17,5 @@ assert(loadfile(path.."/random/init.lua"))(path.."/random")
 assert(loadfile(path.."/research/init.lua"))(path.."/research")
 assert(loadfile(path.."/machines/init.lua"))(path.."/machines")
 assert(loadfile(path.."/chemistry/init.lua"))(path.."/chemistry")
+assert(loadfile(path.."/pulsenet/init.lua"))(path.."/pulsenet")
 S = nil

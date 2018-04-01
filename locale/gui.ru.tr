@@ -112,5 +112,12 @@ gui.info.time_set=Время успешно установлено!
 gui.basic_aspect @1=@1 - Базовый аспект
 gui.info.unknown_research=Неизвестное исследование!
 gui.info.unknown_chapter=Неизвестная глава!
-gui.info.granted @1@2=@2 выучил @1
-gui.info.force_granted @1@2=@2 выучил @1
+gui.info.granted @1@2=@2 выучил исследование "@1"
+gui.info.force_granted @1@2=@2 выучил исследование "@1"
+
+gui.info.current_space @1@2=использовано @1/@2 стаков
+gui.info.connector.connected=Инструмент успешно привязан к контроллеру!
+gui.info.connector.wrong_data=Please reconnect this connector to a controller!
+gui.info.connector.slave_connected=Slave successfully connected!
+gui.info.connector.incorrect_target=Incorrect target!
+gui.info.connector.already_connected=Slave already connected!

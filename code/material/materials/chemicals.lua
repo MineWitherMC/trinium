@@ -46,7 +46,7 @@ do
 	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_m_hydrogen 3", "trinium:material_cell_m_nitrogen 1"}, {"trinium:material_cell_ammonia 2", "trinium:material_cell_a_empty 2"}, {catalyst = "ipa_compound", time = 24})
 
 	materials.new_material("hydrogen_cyanide", {
-		formula = {{"nitrogen", 1}, {"carbon", 1}, {"hydrogen", 1}},
+		formula = {{"hydrogen", 1}, {"carbon", 1}, {"nitrogen", 1}},
 		types = {"cell"},
 		color = {180, 100, 215},
 		description = S"material.hcn", 

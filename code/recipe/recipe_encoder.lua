@@ -30,7 +30,7 @@ local encoder_formspec = ([=[
 
 minetest.register_node("trinium:recipe_encoder", {
 	stack_max = 1,
-	tiles = {"mn_terminal.png", "research_table_wall.png"},
+	tiles = {"recipe_encoder_top.png", "research_table_wall.png"},
 	description = S"node.machine.recipe_encoder",
 	groups = {harvested_by_pickaxe = 1},
 	after_place_node = function(pos, player)
