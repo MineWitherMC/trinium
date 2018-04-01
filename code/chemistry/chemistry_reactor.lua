@@ -9,8 +9,10 @@ local chemical_reactor_formspec = ([=[
 	bgcolor[#080808BB;true]
 	label[3,0;%s]
 	background[5,5;1,1;gui_formbg.png;true]
+	image[2,0.5;1,1;knowledge_crystal.png^[brighten]
 	list[context;knowledge_encoded;3,0.5;1,1;]
 	list[context;recipe_encoded;4,0.5;1,1;]
+	image[5,0.5;1,1;recipe_pattern_encoded.png^[brighten]
 	list[current_player;main;0,2.5;8,4;]
 ]=]):format(S"gui.machine.chemreactor")
 

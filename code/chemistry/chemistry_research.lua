@@ -20,8 +20,8 @@ research.register_chapter("Chemistry2", {
 --[[ Researches ]]--
 research.register_research("OilDesulf", {
 	texture = "trinium:material_cell_oil_raw",
-	x = 3.5,
-	y = 3.5,
+	x = 0,
+	y = 0,
 	name = S("research.oil_desulf"),
 	chapter = "Chemistry2",
 	text = {
@@ -41,8 +41,8 @@ research.register_research("OilDesulf", {
 
 research.register_research("OilDistillation", {
 	texture = "trinium:material_cell_fraction_diesel",
-	x = 3.5,
-	y = 2.5,
+	x = 0,
+	y = 2,
 	name = S("research.oil_distillation"),
 	chapter = "Chemistry2",
 	text = {
@@ -67,8 +67,8 @@ research.set_research_requirements("OilDistillation", {"OilDesulf"})
 
 research.register_research("OilCrack", {
 	texture = "trinium:machine_chemical_cracker",
-	x = 4.5,
-	y = 3,
+	x = 2,
+	y = 4,
 	name = S("research.oil_cracking"),
 	chapter = "Chemistry2",
 	text = {
@@ -95,8 +95,8 @@ research.set_research_requirements("OilCrack", {"OilDistillation"})
 
 research.register_research("HydrocarbonsCrack", {
 	texture = "trinium:material_cell_butadiene",
-	x = 5.5,
-	y = 2.5,
+	x = 5,
+	y = 4,
 	name = S("research.hydrocarbon_cracking"),
 	chapter = "Chemistry2",
 	text = {
@@ -123,8 +123,8 @@ research.set_research_requirements("HydrocarbonsCrack", {"OilCrack"})
 
 research.register_research("HydrogenCyanide", {
 	texture = "trinium:material_cell_hydrogen_cyanide",
-	x = 4.5,
-	y = 4,
+	x = 2,
+	y = 6,
 	name = S("research.hcn"),
 	chapter = "Chemistry2",
 	text = {
@@ -149,8 +149,8 @@ research.set_research_requirements("HydrogenCyanide", {"OilCrack"})
 
 research.register_research("Acrylonitrile", {
 	texture = "trinium:material_cell_acrylonitrile",
-	x = 4.5,
-	y = 5,
+	x = 5,
+	y = 6,
 	name = S("research.acrylonitrile"),
 	chapter = "Chemistry2",
 	text = {
@@ -175,8 +175,8 @@ research.set_research_requirements("Acrylonitrile", {"HydrogenCyanide", "Hydroca
 
 research.register_research("HydrocarbonsChlorination", {
 	texture = "trinium:material_cell_chloroethane",
-	x = 5.5,
-	y = 3.5,
+	x = 7,
+	y = 4,
 	name = S("research.chlorination.advanced"),
 	chapter = "Chemistry2",
 	text = {
@@ -201,8 +201,8 @@ research.set_research_requirements("HydrocarbonsChlorination", {"HydrocarbonsCra
 
 research.register_research("Ethylbenzene", {
 	texture = "trinium:material_cell_ethylbenzene",
-	x = 5.5,
-	y = 4.5,
+	x = 7,
+	y = 7,
 	name = S("research.ethylbenzene"),
 	chapter = "Chemistry2",
 	text = {
@@ -227,8 +227,8 @@ research.set_research_requirements("Ethylbenzene", {"HydrocarbonsChlorination"})
 
 research.register_research("ABSPC", {
 	texture = "trinium:material_cell_abs_plastic_compound",
-	x = 5.5,
-	y = 5.5,
+	x = 7,
+	y = 9,
 	name = S("research.abs_plastic"),
 	chapter = "Chemistry2",
 	text = {
