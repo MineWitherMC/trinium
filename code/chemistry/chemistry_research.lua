@@ -27,7 +27,7 @@ research.register_research("OilDesulf", {
 	text = {
 		S("research.text.oildesulf.1"),
 		{trinium.draw_research_recipe("trinium:material_cell_oil_desulfurized")},
-		research.label_escape(S("research.text.oildesulf.2"), S("research.text.oildesulf.3"), {RATUS = 8, MANIFESTATIO = 11, CONSEQUAT = 5})
+		research.label_escape(S("research.text.oildesulf.2"), S("research.header.oildesulf.2"), {RATUS = 8, MANIFESTATIO = 11, CONSEQUAT = 5})
 	},
 	requires_lens = {},
 	color = "101010",
@@ -103,7 +103,7 @@ research.register_research("HydrocarbonsCrack", {
 		S("research.text.hydrocarbonscrack.1"),
 		{trinium.draw_research_recipe("trinium:material_cell_butadiene")},
 		{trinium.draw_research_recipe("trinium:material_cell_acetylene")},
-		research.label_escape(S("research.text.hydrocarbonscrack.2"), S("research.text.hydrocarbonscrack.3"), {POTENTIA = 12, INTERITUM = 15, AQUA = 18, SENTENTIA = 24, RATUS = 21})
+		research.label_escape(S("research.text.hydrocarbonscrack.2"), S("research.header.hydrocarbonscrack.2"), {POTENTIA = 12, INTERITUM = 15, AQUA = 18, SENTENTIA = 24, RATUS = 21})
 	},
 	requires_lens = {
 		requirement = true,
