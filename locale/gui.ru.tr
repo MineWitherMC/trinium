@@ -117,7 +117,7 @@ gui.info.force_granted @1@2=@2 выучил исследование "@1"
 
 gui.info.current_space @1@2=использовано @1/@2 стаков
 gui.info.connector.connected=Инструмент успешно привязан к контроллеру!
-gui.info.connector.wrong_data=Please reconnect this connector to a controller!
-gui.info.connector.slave_connected=Slave successfully connected!
-gui.info.connector.incorrect_target=Incorrect target!
-gui.info.connector.already_connected=Slave already connected!
+gui.info.connector.wrong_data=Комбинатор отключился от контроллера, переподключите его!
+gui.info.connector.slave_connected=Механизм успешно подключен!
+gui.info.connector.incorrect_target=Неверная цель!
+gui.info.connector.already_connected=Механизм уже подключен!
