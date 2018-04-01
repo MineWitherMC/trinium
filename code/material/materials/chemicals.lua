@@ -129,7 +129,7 @@ do
 		color = {240, 240, 240},
 		description = S"material.ethylbenzene", 
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_chloroethane", "trinium:material_cell_benzene"}, {"trinium:material_cell_ethylbenzene", "trinium:material_cell_hydrogen_chloride"}, {time = 37.5, catalyst = "aluminium_chloride", research = "HydrocarbonsExtraction"})
+	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_chloroethane", "trinium:material_cell_benzene"}, {"trinium:material_cell_ethylbenzene", "trinium:material_cell_hydrogen_chloride"}, {time = 37.5, catalyst = "aluminium_chloride", research = "Ethylbenzene"})
 	
 	materials.new_material("acetylene", {
 		formula = {{"carbon", 2}, {"hydrogen", 2}},

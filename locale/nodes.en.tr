@@ -1,5 +1,6 @@
 # textdomain:trinium
 node.machine.chemreactor=Chemical Reactor Controller
+node.machine.chemreactor.advanced=Advanced Chemical Reactor Controller
 node.machine.chemcracker=Oil Cracker Controller
 node.machine.polymerizer=Polymerizer Controller
 node.casing.chemical=Chemically Inert Casing
@@ -10,6 +11,7 @@ node.casing.research2=Research Casing
 node.hatch.catalyst=Catalyst Hatch
 node.hatch.input=Input Hatch
 node.hatch.output=Output Hatch
+node.hatch.data=Data Access Hatch
 node.machine.status_panel=Status Panel
 
 node.cobble=Cobblestone
