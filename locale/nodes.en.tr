@@ -26,6 +26,11 @@ node.dirt.snow=Dirt with Snow
 node.dirt.podzol=Podzol
 node.dirt.savanna=Dirt with Dry Grass
 
+node.woodlog.fir=Fir Log
+node.leaves.fir=Fir Leaves
+node.woodlog.acacia=Acacia Log
+node.leaves.acacia=Acacia Leaves
+
 node.reflector_glass=Reflector Glass
 node.lamp.frame=Lamp Frame
 node.lamp.forcirium=Forcirium Lamp

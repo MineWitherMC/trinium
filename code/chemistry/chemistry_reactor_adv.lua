@@ -46,7 +46,7 @@ minetest.register_node("trinium:machine_advanced_chemical_reactor", {
 	
 	on_destruct = function(pos)
 		local meta = minetest.get_meta(pos)
-		local status = vector.destringify(meta:get_string("status_crd"))
+		local status = vector.destringify(meta:get_string"status_crd")
 		if not status.z then return end
 		trinium.recolor_facedir(status, 3)
 	end,
@@ -54,12 +54,12 @@ minetest.register_node("trinium:machine_advanced_chemical_reactor", {
 	on_timer = function(pos, elapsed)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
-		local activity = meta:get_int("active")
+		local activity = meta:get_int"active"
 		local timer = minetest.get_node_timer(pos)
-		local status = vector.destringify(meta:get_string("status_crd"))
+		local status = vector.destringify(meta:get_string"status_crd")
 		if activity == 1 then
-			local items = meta:get_string("output"):split(";")
-			local output = vector.destringify(meta:get_string("output_crd"))
+			local items = meta:get_string"output":split";"
+			local output = vector.destringify(meta:get_string"output_crd")
 			local output_inv = minetest.get_meta(output):get_inventory()
 			table.walk(items, function(item)
 				if output_inv:room_for_item("output", item) then
@@ -73,9 +73,9 @@ minetest.register_node("trinium:machine_advanced_chemical_reactor", {
 			end)
 		end
 		if activity ~= -1 then
-			local datahatch = vector.destringify(meta:get_string("datahatch_crd"))
+			local datahatch = vector.destringify(meta:get_string"datahatch_crd")
 			if not datahatch.z then return end
-			local dhinv = minetest.get_meta(datahatch):get_inventory():get_list("patterns")
+			local dhinv = minetest.get_meta(datahatch):get_inventory():get_list"patterns"
 			table.exists(dhinv, function(recipe)
 				if recipe:is_empty() then
 					meta:set_int("active", 0)
@@ -84,7 +84,7 @@ minetest.register_node("trinium:machine_advanced_chemical_reactor", {
 					T(timer)
 					return
 				end
-				local catalyst = vector.destringify(meta:get_string("catalyst_crd"))
+				local catalyst = vector.destringify(meta:get_string"catalyst_crd")
 				local catalyst_inv = minetest.get_meta(catalyst):get_inventory()
 				local rec = trinium.valid_recipe(recipe, "trinium:chemical_reactor", {catalyst_inv = catalyst_inv}) -- done
 				if not rec then
@@ -102,7 +102,7 @@ minetest.register_node("trinium:machine_advanced_chemical_reactor", {
 					T(timer)
 					return
 				end -- done
-				local input = vector.destringify(meta:get_string("input_crd"))
+				local input = vector.destringify(meta:get_string"input_crd")
 				local input_inv = minetest.get_meta(input):get_inventory()
 				if not trinium.has_inputs_for_recipe(recipe, input_inv, "input") then
 					meta:set_int("active", 0)

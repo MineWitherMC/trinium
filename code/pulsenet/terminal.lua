@@ -15,7 +15,8 @@ end
 
 minetest.register_node("trinium:pulsenet_terminal", {
 	stack_max = 16,
-	tiles = {"pulsenet_terminal_top.png", "pulsenet_terminal_bottom.png", "pulsenet_terminal_right.png", "pulsenet_terminal_left.png", "pulsenet_terminal_back.png", "pulsenet_terminal_front.png"},
+	tiles = {"pulsenet_terminal_top.png", "pulsenet_terminal_bottom.png", "pulsenet_terminal_right.png",
+			"pulsenet_terminal_left.png", "pulsenet_terminal_back.png", "pulsenet_terminal_front.png"},
 	description = S"node.machine.pulsenet_terminal",
 	groups = {harvested_by_pickaxe = 1, pulsenet_slave = 1},
 	paramtype2 = "facedir",

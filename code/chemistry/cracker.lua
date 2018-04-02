@@ -5,7 +5,8 @@ end
 
 minetest.register_node("trinium:machine_chemical_cracker", {
 	stack_max = 1,
-	tiles = {"casing_chemical.png", "casing_chemical.png", "casing_chemical.png", "casing_chemical.png", "casing_chemical.png", "casing_chemical.png^chemical_cracker_overlay.png"},
+	tiles = {"casing_chemical.png", "casing_chemical.png", "casing_chemical.png",
+			"casing_chemical.png", "casing_chemical.png", "casing_chemical.png^chemical_cracker_overlay.png"},
 	description = S"node.machine.chemcracker",
 	groups = {harvested_by_pickaxe = 1},
 	paramtype2 = "facedir",
@@ -18,7 +19,7 @@ minetest.register_node("trinium:machine_chemical_cracker", {
 	
 	on_destruct = function(pos)
 		local meta = minetest.get_meta(pos)
-		local status = vector.destringify(meta:get_string("status_crd"))
+		local status = vector.destringify(meta:get_string"status_crd")
 		if not status.z then return end
 		trinium.recolor_facedir(status, 3)
 	end,
@@ -27,10 +28,10 @@ minetest.register_node("trinium:machine_chemical_cracker", {
 		local meta = minetest.get_meta(pos)
 		local activity = meta:get_int("active")
 		local timer = minetest.get_node_timer(pos)
-		local status = vector.destringify(meta:get_string("status_crd"))
+		local status = vector.destringify(meta:get_string"status_crd")
 		if activity == 1 then
-			local items = meta:get_string("output"):split(";")
-			local output = vector.destringify(meta:get_string("output_crd"))
+			local items = meta:get_string"output":split";"
+			local output = vector.destringify(meta:get_string"output_crd")
 			local output_inv = minetest.get_meta(output):get_inventory()
 			table.walk(items, function(item)
 				if output_inv:room_for_item("output", item) then
@@ -45,7 +46,7 @@ minetest.register_node("trinium:machine_chemical_cracker", {
 		end
 		
 		if activity ~= -1 then
-			local input = vector.destringify(meta:get_string("input_crd"))
+			local input = vector.destringify(meta:get_string"input_crd")
 			local input_inv = minetest.get_meta(input):get_inventory()
 			local other = {}
 			for i = 1, 12 do
@@ -65,7 +66,8 @@ minetest.register_node("trinium:machine_chemical_cracker", {
 				if rec then
 					rec = recipes_crack[rec]
 					local j = reg[rec].inputs
-					if (not j[1] or input_inv:contains_item("input", j[1])) and (not j[2] or input_inv:contains_item("input", j[2])) then
+					if (not j[1] or input_inv:contains_item("input", j[1])) and 
+						(not j[2] or input_inv:contains_item("input", j[2])) then
 						recipe_selected = rec
 						break
 					end
@@ -162,7 +164,10 @@ local cracker_mb = {
 			return
 		end
 		
-		local input, output, status = table.exists(region, function(r) return r.name == "trinium:machine_hatch_input" end), table.exists(region, function(r) return r.name == "trinium:machine_hatch_output" end), table.exists(region, function(r) return r.name == "trinium:machine_status_panel" end)
+		local input, output, status = 
+			table.exists(region, function(r) return r.name == "trinium:machine_hatch_input" end), 
+			table.exists(region, function(r) return r.name == "trinium:machine_hatch_output" end), 
+			table.exists(region, function(r) return r.name == "trinium:machine_status_panel" end)
 		meta:set_string("input_crd", vector.stringify(region[input].actual_pos))
 		meta:set_string("output_crd", vector.stringify(region[output].actual_pos))
 		meta:set_string("status_crd", vector.stringify(region[status].actual_pos))

@@ -19,7 +19,7 @@ minetest.register_node("trinium:pulsenet_storage_cell", {
 		local ctrlpos = minetest.deserialize(meta:get_string"controller_pos")
 		if not ctrlpos or minetest.get_node(ctrlpos).name ~= "trinium:pulsenet_controller" then return true end
 		local ctrlmeta = minetest.get_meta(ctrlpos)
-		return ctrlmeta:get_int("current_space") - 30 >= ctrlmeta:get_int("current_used_space")
+		return ctrlmeta:get_int"current_space" - 30 >= ctrlmeta:get_int"current_used_space"
 	end,
 	
 	after_dig_node = function(pos, oldnode, oldmeta, digger)

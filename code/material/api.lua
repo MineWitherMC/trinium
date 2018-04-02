@@ -53,7 +53,9 @@ function mat.new_material(name, def)
 		def.color_string = ("%xC0"):format(def.color[1] * 256 * 256 + def.color[2] * 256 + def.color[3])
 		while #def.color_string < 8 do def.color_string = "0"..def.color_string end
 	elseif not def.color_string and def.formula then
-		local formula1 = table.map(def.formula, function(x) return {(mat.materials[x[1]] or mat.elements[x[1]]).color or {0, 0, 0}, x[2]} end)
+		local formula1 = table.map(def.formula, function(x) 
+				return {(mat.materials[x[1]] or mat.elements[x[1]]).color or {0, 0, 0}, x[2]} 
+			end)
 		local r, g, b
 		r = trinium.weighted_avg(table.map(formula1, function(x) return {x[1][1], x[2]} end))
 		g = trinium.weighted_avg(table.map(formula1, function(x) return {x[1][2], x[2]} end))

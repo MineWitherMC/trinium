@@ -1,7 +1,7 @@
 local speed = 100
 local caps = {times = {speed, speed, speed, speed}, uses = 0, maxlevel = 456}
 
-trinium.creative_mode = minetest.settings:get_bool("creative_mode")
+trinium.creative_mode = minetest.settings:get_bool"creative_mode"
 if trinium.creative_mode then
 	minetest.register_item(":", {
 		type = "none",

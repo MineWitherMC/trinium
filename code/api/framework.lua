@@ -332,7 +332,7 @@ end
 
 function trinium.register_recipe(method, inputs, outputs, data)
 	-- Assertions
-	local data = data or {}
+	data = data or {}
 	assert(type(method) == "string", "Incorrect method type: "..type(method))
 	local method_table = assert(trinium.recipes.craft_methods[method], "Method "..method.." not found!")
 

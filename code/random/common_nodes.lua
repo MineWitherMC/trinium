@@ -1,7 +1,7 @@
 -- Reflector Glass
 minetest.register_node("trinium:block_reflector_glass", {
 	tiles = {"reflector_glass.png"},
-	description = S("node.reflector_glass"),
+	description = S"node.reflector_glass",
 	drawtype = "glasslike",
 	sunlight_propagades = true,
 	paramtype = "light",
@@ -12,7 +12,7 @@ minetest.register_node("trinium:block_reflector_glass", {
 -- Lamp Frame
 minetest.register_node("trinium:block_lamp_frame", {
 	tiles = {"lamp_frame_32.png"},
-	description = S("node.lamp.frame"),
+	description = S"node.lamp.frame",
 	drawtype = "glasslike",
 	groups = {harvested_by_pickaxe = 2},
 })
@@ -30,7 +30,7 @@ minetest.register_node("trinium:block_forcirium_lamp", {
 			},
 		}
 	},
-	description = S("node.lamp.forcirium"),
+	description = S"node.lamp.forcirium",
 	drawtype = "glasslike",
 	light_source = 14,
 	groups = {harvested_by_pickaxe = 1},

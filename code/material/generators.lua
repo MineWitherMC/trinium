@@ -20,13 +20,17 @@ mat.add_recipe_generator("trinium:alloysmelting_tower", function(name)
 		end
 		inputs[#inputs + 1] = x
 		
-		if mat.materials[formula[i][1]].data.melting_point and mat.materials[formula[i][1]].data.melting_point > melting then
+		if mat.materials[formula[i][1]].data.melting_point and 
+				mat.materials[formula[i][1]].data.melting_point > melting then
 			melting = mat.materials[formula[i][1]].data.melting_point
 		end
 	end
 	melting = math.ceil(melting / 50) * 50
 	
-	trinium.register_recipe("trinium:alloysmelting_tower", inputs, {"trinium:material_ingot_"..name.." "..count}, {temperature = melting})
+	trinium.register_recipe("trinium:alloysmelting_tower", 
+		inputs, 
+		{"trinium:material_ingot_"..name.." "..count}, 
+		{temperature = melting})
 end)
 
 mat.add_data_generator("melting_point", function(name)

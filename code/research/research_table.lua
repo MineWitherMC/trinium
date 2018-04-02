@@ -46,15 +46,15 @@ end
 
 local function is_correct_research(inv)
 	local research_notes, lens = inv:get_stack("research_notes", 1), inv:get_stack("lens", 1)
-	if research_notes:is_empty() or research_notes:get_name():split("___")[1] == "trinium:discovery" then return false end
-	local lens_req = research.researches[research_notes:get_name():split("___")[2]:gsub("__", ".")].requires_lens
+	if research_notes:is_empty() or research_notes:get_name():split"___"[1] == "trinium:discovery" then return false end
+	local lens_req = research.researches[research_notes:get_name():split"___"[2]:gsub("__", ".")].requires_lens
 	if lens:is_empty() and lens_req.requirement then return false end
 	if not lens_req.requirement then return true end
 	lens = lens:get_meta()
-	return  (not lens_req.band_shape or lens:get_string("shape") == lens_req.band_shape) and
-			(not lens_req.band_tier or lens:get_int("tier") >= lens_req.band_tier) and
-			(not lens_req.core or lens:get_string("gem") == lens_req.core) and
-			(not lens_req.band_material or lens:get_string("metal") == lens_req.band_material)
+	return  (not lens_req.band_shape or lens:get_string"shape" == lens_req.band_shape) and
+			(not lens_req.band_tier or lens:get_int"tier" >= lens_req.band_tier) and
+			(not lens_req.core or lens:get_string"gem" == lens_req.core) and
+			(not lens_req.band_material or lens:get_string"metal" == lens_req.band_material)
 end
 
 local function recalc_aspects(pn, inv)
@@ -98,11 +98,11 @@ local function add_light(meta, index, pn)
 	local s1 = inv:get_stack("research_notes", 1)
 	if s1:is_empty() then return false end
 	local m1 = s1:get_meta()
-	local mstr = minetest.deserialize(m1:get_string("map_l"))
+	local mstr = minetest.deserialize(m1:get_string"map_l")
 	if table.exists(mstr, function(x) return x == index end) then return false end -- already enlightened
 
 	if (can_connect(inv, index, index - 7) and table.exists(mstr, function(x) return x == index - 7 end)) or
-		((index - 1) % 7 > 0 and can_connect(inv, index, index - 1) and table.exists(mstr, function(x) return x == index - 1 end)) or
+		(index % 7 ~= 1 and can_connect(inv, index, index - 1) and table.exists(mstr, function(x) return x == index - 1 end)) or
 		(index % 7 > 0 and can_connect(inv, index, index + 1) and table.exists(mstr, function(x) return x == index + 1 end)) or
 		(can_connect(inv, index, index + 7) and table.exists(mstr, function(x) return x == index + 7 end)) then
 			table.insert(mstr, index)
@@ -110,7 +110,7 @@ local function add_light(meta, index, pn)
 		return false
 	end
 
-	local r = research.researches[s1:get_name():split("___")[2]].map
+	local r = research.researches[s1:get_name():split"___"[2]].map
 	if table.every(r, function(x) return table.exists(mstr, function(y) return x.x + (x.y - 1) * 7 == y end) end) then -- all aspects in map enlightened
 		return true
 	end
@@ -118,11 +118,12 @@ local function add_light(meta, index, pn)
 	inv:set_stack("research_notes", 1, s1)
 	
 	if minetest.check_player_privs(pn, "resreveal") or research.check_player_res(pn, "ResearchRevealing") then
-		local add_fs = minetest.deserialize(meta:get_string("formspec_additional_arr")) or {}
-		add_fs[index] = ("background[%s,%s;1,1;research_glowing_underlay.png]"):format(3.5 + trinium.modulate(index, 7), 1 + math.ceil(index / 7))
+		local add_fs = minetest.deserialize(meta:get_string"formspec_additional_arr") or {}
+		add_fs[index] = ("background[%s,%s;1,1;research_glowing_underlay.png]")
+				:format(3.5 + trinium.modulate(index, 7), 1 + math.ceil(index / 7))
 		meta:set_string("formspec_additional_arr", minetest.serialize(add_fs))
 		meta:set_string("formspec_additional", table.fconcat(add_fs))
-		meta:set_string("formspec", get_table_formspec(1, pn, is_correct_research(inv), meta:get_int("aspect_key") or 0)..table.fconcat(add_fs))
+		meta:set_string("formspec", get_table_formspec(1, pn, is_correct_research(inv), meta:get_int"aspect_key" or 0)..table.fconcat(add_fs))
 	end
 	
 	return add_light(meta, index - 7, pn) or 
@@ -136,16 +137,16 @@ local function delete_light(meta, index, pn)
 	local s1 = inv:get_stack("research_notes", 1)
 	if s1:is_empty() then return end
 	local m1 = s1:get_meta()
-	local mstr = minetest.deserialize(m1:get_string("map_l"))
+	local mstr = minetest.deserialize(m1:get_string"map_l")
 	local fnd = table.exists(mstr, function(x) return x == index end)
 	if fnd then
 		table.remove(mstr, fnd)
 		if minetest.check_player_privs(pn, "resreveal") or research.check_player_res(pn, "ResearchRevealing") then
-			local add_fs = minetest.deserialize(meta:get_string("formspec_additional_arr")) or {}
+			local add_fs = minetest.deserialize(meta:get_string"formspec_additional_arr") or {}
 			add_fs[index] = nil
 			meta:set_string("formspec_additional_arr", minetest.serialize(add_fs))
 			meta:set_string("formspec_additional", table.fconcat(add_fs))
-			meta:set_string("formspec", get_table_formspec(1, pn, is_correct_research(inv), meta:get_int("aspect_key") or 0)..table.fconcat(add_fs))
+			meta:set_string("formspec", get_table_formspec(1, pn, is_correct_research(inv), meta:get_int"aspect_key" or 0)..table.fconcat(add_fs))
 		end
 	end
 	m1:set_string("map_l", minetest.serialize(mstr))
@@ -188,7 +189,7 @@ minetest.register_node("trinium:machine_research_table", {
 		local inv = meta:get_inventory()
 		if (list1 == "map" and list2 == "trash") then
 			local x, y = trinium.modulate(index1, 7), math.floor(index1 / 7) + 1
-			local res = research.researches[inv:get_stack("research_notes", 1):get_name():split("___")[2]:gsub("__", ".")]
+			local res = research.researches[inv:get_stack("research_notes", 1):get_name():split"___"[2]:gsub("__", ".")]
 			return table.every(res.map, function(z) return z.x ~= x or z.y ~= y end) and 1 or 0
 		end
 		if list2 == "r2m" then return stacksize end
@@ -217,26 +218,28 @@ minetest.register_node("trinium:machine_research_table", {
 				local a = ksplit[2]
 				if a == "change_fs" then
 					local tnb = tonumber(v)
-					meta:set_string("formspec", get_table_formspec(tnb, pn, is_correct_research(inv), meta:get_int("aspect_key")))
+					meta:set_string("formspec", get_table_formspec(tnb, pn, is_correct_research(inv), meta:get_int"aspect_key"))
 					meta:set_string("current_mode", tnb)
 				elseif a == "down" then
-					local key = meta:get_int("aspect_key")
+					local key = meta:get_int"aspect_key"
 					key = math.min(key + 4, math.ceil(#research.aspect_ids / 4) * 4 - 24)
 					meta:set_int("aspect_key", key)
-					local m = meta:get_string("current_mode")
+					local m = meta:get_string"current_mode"
 					local nfs = get_table_formspec(m, pn, is_correct_research(inv), key)
-					if m == "1" then nfs = nfs..meta:get_string("formspec_additional") end
+					if m == "1" then nfs = nfs..meta:get_string"formspec_additional" end
 					meta:set_string("formspec", nfs)
 				elseif a == "up" then
-					local key = meta:get_int("aspect_key")
+					local key = meta:get_int"aspect_key"
 					key = math.max(key - 4, 0)
 					meta:set_int("aspect_key", key)
-					local m = meta:get_string("current_mode")
+					local m = meta:get_string"current_mode"
 					local nfs = get_table_formspec(m, pn, is_correct_research(inv), key)
-					if m == "1" then nfs = nfs..meta:get_string("formspec_additional") end
+					if m == "1" then nfs = nfs..meta:get_string"formspec_additional" end
 					meta:set_string("formspec", nfs)
 				elseif a == "add_aspects" then
-					local a1, a2 = inv:get_stack("aspect_inputs", 1):get_name():sub(18), inv:get_stack("aspect_inputs", 2):get_name():sub(18)
+					local a1, a2 = 
+							inv:get_stack("aspect_inputs", 1):get_name():sub(18), 
+							inv:get_stack("aspect_inputs", 2):get_name():sub(18)
 					if not a1 or a1 == "" or not a2 or a2 == "" then return end
 
 					local a,b 
@@ -257,9 +260,12 @@ minetest.register_node("trinium:machine_research_table", {
 					end
 
 					local newaspect
-					newaspect = table.exists(research.known_aspects, function(v) return (v.req1 == a1 and v.req2 == a2) or (v.req2 == a1 and v.req1 == a2) end)
+					newaspect = table.exists(research.known_aspects, function(v) 
+							return (v.req1 == a1 and v.req2 == a2) or (v.req2 == a1 and v.req1 == a2) 
+						end)
 					if newaspect then
-						research.player_stuff[pn].data.aspects[newaspect] = (research.player_stuff[pn].data.aspects[newaspect] or 0) + 1
+						research.player_stuff[pn].data.aspects[newaspect] = 
+								(research.player_stuff[pn].data.aspects[newaspect] or 0) + 1
 						minetest.sound_play("experience", {
 							to_player = pn,
 							gain = 4.0
@@ -273,7 +279,7 @@ minetest.register_node("trinium:machine_research_table", {
 	end,
 
 	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
-		if minetest.get_meta(pos):get_int("assembled") == -1 then
+		if minetest.get_meta(pos):get_int"assembled" == -1 then
 			cmsg.push_message_player(player, S"gui.info.multiblock_not_assembled")
 		else
 			recalc_aspects(player:get_player_name(), minetest.get_meta(pos):get_inventory())
@@ -287,7 +293,8 @@ minetest.register_node("trinium:machine_research_table", {
 			local st = oldinv[i]
 			if not st:is_empty() then
 				local ct = st:get_count()
-				research.player_stuff[pn].data.aspects[research.sorted_aspect_ids[i]] = research.player_stuff[pn].data.aspects[research.sorted_aspect_ids[i]] + ct
+				research.player_stuff[pn].data.aspects[research.sorted_aspect_ids[i]] = 
+						research.player_stuff[pn].data.aspects[research.sorted_aspect_ids[i]] + ct
 			end
 		end
 
@@ -301,7 +308,7 @@ minetest.register_node("trinium:machine_research_table", {
 	end,
 
 	can_dig = function(pos, player)
-		return minetest.get_meta(pos):get_string("owner") == player:get_player_name()
+		return minetest.get_meta(pos):get_string"owner" == player:get_player_name()
 	end,
 
 	on_metadata_inventory_move = function(pos, list1, index1, list2, index2, stacksize, player)
@@ -312,7 +319,7 @@ minetest.register_node("trinium:machine_research_table", {
 			inv:set_stack("trash", 1, "")
 			local s1 = inv:get_stack("research_notes", 1)
 			local m1 = s1:get_meta()
-			local mstr = minetest.deserialize(m1:get_string("map2")) or {}
+			local mstr = minetest.deserialize(m1:get_string"map2") or {}
 			local fnd = table.exists(mstr, function(x) return x.num == index1 end)
 			if fnd then
 				table.remove(mstr, fnd)
@@ -327,15 +334,15 @@ minetest.register_node("trinium:machine_research_table", {
 		elseif list2 == "map" then
 			local s1 = inv:get_stack("research_notes", 1)
 			local m1 = s1:get_meta()
-			local mstr = minetest.deserialize(m1:get_string("map2")) or {}
+			local mstr = minetest.deserialize(m1:get_string"map2") or {}
 			table.insert(mstr, {num = index2, aspect = inv:get_stack(list2, index2):get_name()})
 			m1:set_string("map2", minetest.serialize(mstr))
 			inv:set_stack("research_notes", 1, s1)
 			if add_light(meta, index2, pn) then
-				inv:set_stack("research_notes", 1, "trinium:discovery___"..s1:get_name():split("___")[2])
+				inv:set_stack("research_notes", 1, "trinium:discovery___"..s1:get_name():split"___"[2])
 				meta:set_string("formspec_additional_arr", "")
 				meta:set_string("formspec_additional", "")
-				meta:set_string("formspec", get_table_formspec(1, pn, false, meta:get_int("aspect_key")))
+				meta:set_string("formspec", get_table_formspec(1, pn, false, meta:get_int"aspect_key"))
 			end
 		end
 
@@ -357,11 +364,11 @@ minetest.register_node("trinium:machine_research_table", {
 		local inv = meta:get_inventory()
 		local pn = player:get_player_name()
 		if listname == "research_notes" then
-			local resname = research.researches[stack:get_name():split("___")[2]]
+			local resname = research.researches[stack:get_name():split"___"[2]]
 			for i = 1, #resname.map do
-				inv:set_stack("map", resname.map[i].x + (resname.map[i].y - 1) * 7, "trinium:aspect___"..resname.map[i].aspect) 
+				inv:set_stack("map", resname.map[i].x + (resname.map[i].y - 1) * 7, "trinium:aspect___"..resname.map[i].aspect)
 			end
-			local map2 = minetest.deserialize(stack:get_meta():get_string("map2"))
+			local map2 = minetest.deserialize(stack:get_meta():get_string"map2")
 			if map2 then
 				for i = 1, #map2 do
 					inv:set_stack("map", map2[i].num, map2[i].aspect)
@@ -393,21 +400,23 @@ trinium.register_multiblock("research table", {
 	depth_f = 1,
 	controller = "trinium:machine_research_table",
 	activator = function(rg)
-		local ctrl = table.exists(rg.region, function(x) return x.x == 0 and x.y == -2 and x.z == -1 and x.name == "trinium:machine_research_node" end)
-		return ctrl and minetest.get_meta(rg.region[ctrl].actual_pos):get_int("assembled") == 1
+		local ctrl = table.exists(rg.region, function(x) 
+				return x.x == 0 and x.y == -2 and x.z == -1 and x.name == "trinium:machine_research_node" 
+			end)
+		return ctrl and minetest.get_meta(rg.region[ctrl].actual_pos):get_int"assembled" == 1
 	end,
 	after_construct = function(pos, is_constructed)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
-		local r = meta:get_string("current_mode")
+		local r = meta:get_string"current_mode"
 		if r ~= "1" and r ~= "2" then
 			meta:set_string("current_mode", 2)
 		end
 		local fs = ""
 		if is_constructed then
-			fs = get_table_formspec(r, meta:get_string("owner"), is_correct_research(inv), meta:get_int("aspect_key") or 0)
+			fs = get_table_formspec(r, meta:get_string"owner", is_correct_research(inv), meta:get_int"aspect_key" or 0)
 			if r == "1" then
-				fs = fs..meta:get_string("formspec_additional")
+				fs = fs..meta:get_string"formspec_additional"
 			end
 		end
 		meta:set_string("formspec", fs)

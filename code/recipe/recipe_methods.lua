@@ -12,7 +12,7 @@ trinium.register_recipe_handler("trinium:furnace", {
 	end,
 	formspec_width = 6,
 	formspec_height = 4,
-	formspec_name = S("gui.recipe_method.furnace"),
+	formspec_name = S"gui.recipe_method.furnace",
 	formspec_begin = function(data)
 		return ("label[0,3.7;%s]"):format(S("gui.furnace.time @1", data.time or 10))
 	end,
@@ -30,7 +30,7 @@ trinium.register_recipe_handler("trinium:drop", {
 	end,
 	formspec_width = 7,
 	formspec_height = 5,
-	formspec_name = S("gui.recipe_method.block_drop"),
+	formspec_name = S"gui.recipe_method.block_drop",
 	formspec_begin = function(data)
 		return ("label[0,4.7;%s]"):format(S("gui.max_drop @1", data.max_items))
 	end,
@@ -48,7 +48,7 @@ trinium.register_recipe_handler("trinium:grinder", {
 	end,
 	formspec_width = 7,
 	formspec_height = 4,
-	formspec_name = S("gui.recipe_method.grinder"),
+	formspec_name = S"gui.recipe_method.grinder",
 })
 
 -- Blast Furnace
@@ -66,7 +66,7 @@ trinium.register_recipe_handler("trinium:blast_furnace", {
 	end,
 	formspec_width = 7,
 	formspec_height = 5,
-	formspec_name = S("gui.recipe_method.blast_furnace"),
+	formspec_name = S"gui.recipe_method.blast_furnace",
 	formspec_begin = function(data)
 		return ("label[2,3.5;%s]"):format(S("gui.blast_furnace.temperature @1", data.melting_point or "???"))
 	end,
@@ -84,7 +84,7 @@ trinium.register_recipe_handler("trinium:alloysmelting_tower", {
 	end,
 	formspec_width = 8,
 	formspec_height = 7,
-	formspec_name = S("gui.recipe_method.alloy_tower"),
+	formspec_name = S"gui.recipe_method.alloy_tower",
 	formspec_begin = function(data)
 		return ("label[2,5.5;%s]"):format(S("gui.alloy_tower.temperature @1", data.temperature or "???"))
 	end,
@@ -102,7 +102,7 @@ trinium.register_recipe_handler("trinium:implosion", {
 	end,
 	formspec_width = 7,
 	formspec_height = 3,
-	formspec_name = S("gui.recipe_method.implosion"),
+	formspec_name = S"gui.recipe_method.implosion",
 })
 
 -- Metal Former
@@ -117,9 +117,10 @@ trinium.register_recipe_handler("trinium:metal_former", {
 	end,
 	formspec_width = 7,
 	formspec_height = 3,
-	formspec_name = S("gui.recipe_method.metal_former"),
+	formspec_name = S"gui.recipe_method.metal_former",
 	formspec_begin = function(data)
-		return "label[0,2;"..S("gui.metal_former.type @1", S("gui.metal_former_type."..data.type)).."]"
+		return ("label[0,2;%s]")
+			:format(S("gui.metal_former.type @1", S("gui.metal_former_type."..data.type)))
 	end,
 })
 
@@ -139,9 +140,10 @@ trinium.register_recipe_handler("trinium:mixer", {
 	end,
 	formspec_width = 5,
 	formspec_height = 4.5,
-	formspec_name = S("gui.recipe_method.mixer"),
+	formspec_name = S"gui.recipe_method.mixer",
 	formspec_begin = function(data)
-		return "label[0,4;"..S("gui.minimum_velocity @1", data.velocity or 400).."]"
+		return ("label[0,4;%s]")
+			:format(S("gui.minimum_velocity @1", data.velocity or 400))
 	end,
 })
 
@@ -157,7 +159,7 @@ trinium.register_recipe_handler("trinium:molecular_reconstructor", {
 	end,
 	formspec_width = 7,
 	formspec_height = 3,
-	formspec_name = S("gui.recipe_method.reconstructor"),
+	formspec_name = S"gui.recipe_method.reconstructor",
 	formspec_begin = function(data)
 		return ("label[0,2;%s\n%s\n%s]"):format(
 			S("gui.reconstructor.type @1", S("gui.reconstructor.type."..data.type)),
@@ -179,7 +181,7 @@ trinium.register_recipe_handler("trinium:chemical_reactor", {
 	end,
 	formspec_width = 7,
 	formspec_height = 5,
-	formspec_name = S("gui.recipe_method.chemreactor"),
+	formspec_name = S"gui.recipe_method.chemreactor",
 	formspec_begin = function(data)
 		local catalyst
 		if not data.catalyst then
@@ -219,7 +221,7 @@ trinium.register_recipe_handler("trinium:cracker", {
 	end,
 	formspec_width = 5,
 	formspec_height = 5,
-	formspec_name = S("gui.recipe_method.cracker"),
+	formspec_name = S"gui.recipe_method.cracker",
 })
 
 -- Polymerizer
@@ -234,7 +236,7 @@ trinium.register_recipe_handler("trinium:polymerizer", {
 	end,
 	formspec_width = 3,
 	formspec_height = 3.5,
-	formspec_name = S("gui.recipe_method.polymerizer"),
+	formspec_name = S"gui.recipe_method.polymerizer",
 })
 
 -- Crafting
@@ -249,5 +251,5 @@ trinium.register_recipe_handler("trinium:crafting", {
 	end,
 	formspec_width = 6,
 	formspec_height = 4.5,
-	formspec_name = S("gui.recipe_method.crafting"),
+	formspec_name = S"gui.recipe_method.crafting",
 })

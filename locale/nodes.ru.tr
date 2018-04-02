@@ -26,6 +26,13 @@ node.dirt.snow=Земля с заснеженной травой
 node.dirt.podzol=Земля с листвой
 node.dirt.savanna=Земля с засушенной травой
 
+node.woodlog.fir=Древесина пихты
+node.leaves.fir=Листва пихты
+node.woodlog.acacia=Древесина акации
+node.leaves.acacia=Листва акации
+node.woodlog.maple=Древесина клёна
+node.leaves.maple=Листва клёна
+
 node.reflector_glass=Отражательное стекло
 node.lamp.frame=Рамка лампы
 node.lamp.forcirium=Форцириумная лампа

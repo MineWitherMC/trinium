@@ -43,7 +43,10 @@ do
 		types = {"cell"},
 		description = S"material.ammonia", 
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_m_hydrogen 3", "trinium:material_cell_m_nitrogen 1"}, {"trinium:material_cell_ammonia 2", "trinium:material_cell_a_empty 2"}, {catalyst = "ipa_compound", time = 24})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_m_hydrogen 3", "trinium:material_cell_m_nitrogen 1"}, 
+		{"trinium:material_cell_ammonia 2", "trinium:material_cell_a_empty 2"}, 
+		{catalyst = "ipa_compound", time = 24})
 
 	materials.new_material("hydrogen_cyanide", {
 		formula = {{"hydrogen", 1}, {"carbon", 1}, {"nitrogen", 1}},
@@ -51,7 +54,11 @@ do
 		color = {180, 100, 215},
 		description = S"material.hcn", 
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_ammonia 2", "trinium:material_cell_methane 2", "trinium:material_cell_a_empty", "trinium:material_cell_m_oxygen 3"}, {"trinium:material_cell_hydrogen_cyanide 2", "trinium:material_cell_water 6"}, {catalyst = "platinum", time = 35, research = "HydrogenCyanide"})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_ammonia 2", "trinium:material_cell_methane 2", 
+			"trinium:material_cell_a_empty", "trinium:material_cell_m_oxygen 3"}, 
+		{"trinium:material_cell_hydrogen_cyanide 2", "trinium:material_cell_water 6"}, 
+		{catalyst = "platinum", time = 35, research = "HydrogenCyanide"})
 
 	materials.new_material("hydrogen_sulfide", {
 		formula = {{"hydrogen", 2}, {"sulfur", 1}},
@@ -59,7 +66,6 @@ do
 		color = {180, 100, 0},
 		description = S"material.h2s", 
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_ammonia 2", "trinium:material_cell_methane 2", "trinium:material_cell_a_empty", "trinium:material_cell_m_oxygen 3"}, {"trinium:material_cell_hydrogen_cyanide 2", "trinium:material_cell_water 6"}, {catalyst = "platinum", time = 35, research = "HydrogenCyanide"})
 end
 
 -- Organics
@@ -70,7 +76,10 @@ do
 		color = {240, 90, 240},
 		description = S"material.methane", 
 	})
-	trinium.register_recipe("trinium:cracker", {"trinium:material_cell_fraction_gas 10", "trinium:material_cell_a_empty 11"}, {"trinium:material_cell_methane 12", "trinium:material_cell_ethylene 4", "trinium:material_cell_propene 2", "trinium:material_cell_butane 3"}, {})
+	trinium.register_recipe("trinium:cracker", 
+		{"trinium:material_cell_fraction_gas 10", "trinium:material_cell_a_empty 11"}, 
+		{"trinium:material_cell_methane 12", "trinium:material_cell_ethylene 4", 
+			"trinium:material_cell_propene 2", "trinium:material_cell_butane 3"})
 
 	materials.new_material("ethylene", {
 		formula = {{"carbon", 2}, {"hydrogen", 4}},
@@ -99,7 +108,10 @@ do
 		color = {40, 40, 50},
 		description = S"material.benzene", 
 	})
-	trinium.register_recipe("trinium:cracker", {"trinium:material_cell_fraction_naphtha 10", "trinium:material_cell_a_empty 8"}, {"trinium:material_cell_butane 8", "trinium:material_cell_benzene 5", "trinium:material_cell_toluene 3", "trinium:material_cell_isooctane 2"}, {})
+	trinium.register_recipe("trinium:cracker", 
+		{"trinium:material_cell_fraction_naphtha 10", "trinium:material_cell_a_empty 8"}, 
+		{"trinium:material_cell_butane 8", "trinium:material_cell_benzene 5", 
+			"trinium:material_cell_toluene 3", "trinium:material_cell_isooctane 2"})
 
 	materials.new_material("toluene", {
 		formula = {{"carbon", 7}, {"hydrogen", 8}},
@@ -121,7 +133,10 @@ do
 		color = {190, 235, 230},
 		description = S"material.chloroethane", 
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_hydrogen_chloride", "trinium:material_cell_ethylene"}, {"trinium:material_cell_chloroethane", "trinium:material_cell_a_empty"}, {time = 12, catalyst = "aluminium_trioxide", research = "HydrocarbonsChlorination"})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_hydrogen_chloride", "trinium:material_cell_ethylene"}, 
+		{"trinium:material_cell_chloroethane", "trinium:material_cell_a_empty"}, 
+		{time = 12, catalyst = "aluminium_trioxide", research = "HydrocarbonsChlorination"})
 
 	materials.new_material("ethylbenzene", {
 		formula = {{"carbon", 8}, {"hydrogen", 10}},
@@ -129,7 +144,10 @@ do
 		color = {240, 240, 240},
 		description = S"material.ethylbenzene", 
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_chloroethane", "trinium:material_cell_benzene"}, {"trinium:material_cell_ethylbenzene", "trinium:material_cell_hydrogen_chloride"}, {time = 37.5, catalyst = "aluminium_chloride", research = "Ethylbenzene"})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_chloroethane", "trinium:material_cell_benzene"}, 
+		{"trinium:material_cell_ethylbenzene", "trinium:material_cell_hydrogen_chloride"}, 
+		{time = 37.5, catalyst = "aluminium_chloride", research = "Ethylbenzene"})
 	
 	materials.new_material("acetylene", {
 		formula = {{"carbon", 2}, {"hydrogen", 2}},
@@ -137,7 +155,10 @@ do
 		color = {255, 255, 240},
 		description = S"material.ethyne", 
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_methane 4", "trinium:material_cell_m_oxygen 3"}, {"trinium:material_cell_acetylene 2", "trinium:material_cell_water 3", "trinium:material_cell_a_empty 2"}, {time = 15, research = "HydrocarbonsCrack"})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_methane 4", "trinium:material_cell_m_oxygen 3"}, 
+		{"trinium:material_cell_acetylene 2", "trinium:material_cell_water 3", "trinium:material_cell_a_empty 2"}, 
+		{time = 15, research = "HydrocarbonsCrack"})
 	
 	materials.new_material("styrene", {
 		formula = {{"carbon", 6}, {"hydrogen", 5}, {"carbon", 1}, {"hydrogen", 1}, {"carbon", 1}, {"hydrogen", 2}},
@@ -145,7 +166,10 @@ do
 		color = {250, 230, 240},
 		description = S"material.styrene", 
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_ethylbenzene", "trinium:material_cell_a_empty"}, {"trinium:material_cell_styrene", "trinium:material_cell_m_hydrogen"}, {time = 85, catalyst = "chromium_iron_oxide", research = "HydrocarbonsCrack__4"})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_ethylbenzene", "trinium:material_cell_a_empty"}, 
+		{"trinium:material_cell_styrene", "trinium:material_cell_m_hydrogen"}, 
+		{time = 85, catalyst = "chromium_iron_oxide", research = "HydrocarbonsCrack__4"})
 	
 	materials.new_material("butadiene", {
 		formula = {{"carbon", 4}, {"hydrogen", 6}},
@@ -153,7 +177,10 @@ do
 		color = {50, 40, 40},
 		description = S"material.butadiene",
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_butane", "trinium:material_cell_a_empty 2"}, {"trinium:material_cell_butadiene", "trinium:material_cell_m_hydrogen 2"}, {catalyst = "chromium_aluminium_oxide", time = 40, research = "HydrocarbonsCrack"})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_butane", "trinium:material_cell_a_empty 2"}, 
+		{"trinium:material_cell_butadiene", "trinium:material_cell_m_hydrogen 2"}, 
+		{catalyst = "chromium_aluminium_oxide", time = 40, research = "HydrocarbonsCrack"})
 	
 	materials.new_material("acrylonitrile", {
 		formula = {{"carbon", 1}, {"hydrogen", 2}, {"carbon", 1}, {"hydrogen", 1}, {"carbon", 1}, {"nitrogen", 1}},
@@ -161,7 +188,10 @@ do
 		color = {240, 240, 225},
 		description = S"material.acrylonitrile",
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_acetylene", "trinium:material_cell_hydrogen_cyanide"}, {"trinium:material_cell_acrylonitrile", "trinium:material_cell_a_empty"}, {time = 55, research = "Acrylonitrile"})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_acetylene", "trinium:material_cell_hydrogen_cyanide"}, 
+		{"trinium:material_cell_acrylonitrile", "trinium:material_cell_a_empty"}, 
+		{time = 55, research = "Acrylonitrile"})
 	
 	materials.new_material("abs_plastic_compound", {
 		formula = {{"styrene", 8}, {"butadiene", 5}, {"acrylonitrile", 5}},
@@ -169,7 +199,10 @@ do
 		color = {250, 230, 210},
 		description = S"material.abs.compound",
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_styrene 8", "trinium:material_cell_butadiene 4", "trinium:material_cell_acrylonitrile 5"}, {"trinium:material_cell_abs_plastic_compound 17"}, {time = 20, research = "ABSPC"})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_styrene 8", "trinium:material_cell_butadiene 4", "trinium:material_cell_acrylonitrile 5"}, 
+		{"trinium:material_cell_abs_plastic_compound 17"}, 
+		{time = 20, research = "ABSPC"})
 	
 	materials.new_material("abs_plastic", {
 		formula = {{"abs_plastic_compound", 1}},
@@ -177,5 +210,7 @@ do
 		color = {50, 50, 50},
 		description = S"material.abs",
 	}):generate_interactions()
-	trinium.register_recipe("trinium:polymerizer", {"trinium:material_cell_abs_plastic_compound", "trinium:material_catalyst_aluminium_chloride"}, {"trinium:material_cell_abs_plastic"}, {})
+	trinium.register_recipe("trinium:polymerizer", 
+		{"trinium:material_cell_abs_plastic_compound", "trinium:material_catalyst_aluminium_chloride"}, 
+		{"trinium:material_cell_abs_plastic"})
 end

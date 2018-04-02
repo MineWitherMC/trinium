@@ -216,14 +216,21 @@ do
 		color = {12, 12, 12},
 		description = S"material.oil.desulf", 
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_oil_raw 14", "trinium:material_cell_m_hydrogen"}, {"trinium:material_cell_hydrogen_sulfide", "trinium:material_cell_oil_desulfurized 14"}, {time = 35, research = "OilDesulf"})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_oil_raw 14", "trinium:material_cell_m_hydrogen"}, 
+		{"trinium:material_cell_hydrogen_sulfide", "trinium:material_cell_oil_desulfurized 14"}, 
+		{time = 35, research = "OilDesulf"})
 	
 	materials.new_material("fraction_gas", {
 		types = {"cell"},
 		color = {240, 250, 250},
 		description = S"material.oil.gas",
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_oil_desulfurized 36"}, {"trinium:material_cell_fraction_gas 14", "trinium:material_cell_fraction_naphtha 12", "trinium:material_cell_fraction_kerosene 5", "trinium:material_cell_fraction_diesel 5"}, {time = 60, research = "OilDistillation"})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_oil_desulfurized 36"}, 
+		{"trinium:material_cell_fraction_gas 14", "trinium:material_cell_fraction_naphtha 12", 
+			"trinium:material_cell_fraction_kerosene 5", "trinium:material_cell_fraction_diesel 5"}, 
+		{time = 60, research = "OilDistillation"})
 	
 	materials.new_material("fraction_naphtha", {
 		types = {"cell"},

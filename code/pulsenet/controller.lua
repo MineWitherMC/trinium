@@ -4,7 +4,7 @@ local pulse = trinium.pulsenet
 
 function pulse.update_controller(pos)
 	local meta = minetest.get_meta(pos)
-	local inv = meta:get_inventory():get_list("pulsenet")
+	local inv = meta:get_inventory():get_list"pulsenet"
 	local k = 0
 	table.walk(inv, function(r) if r ~= "" and not r:is_empty() then k = k + 1 end end)
 	meta:set_int("current_used_space", k)
@@ -12,7 +12,8 @@ end
 
 minetest.register_node("trinium:pulsenet_controller", {
 	stack_max = 1,
-	tiles = {"pulsenet_controller_side.png", "pulsenet_controller_side.png", "pulsenet_controller_side.png", "pulsenet_controller_side.png", "pulsenet_controller_side.png", "pulsenet_controller.png"},
+	tiles = {"pulsenet_controller_side.png", "pulsenet_controller_side.png", "pulsenet_controller_side.png",
+			"pulsenet_controller_side.png", "pulsenet_controller_side.png", "pulsenet_controller.png"},
 	description = S"node.machine.pulsenet_controller",
 	groups = {harvested_by_pickaxe = 1},
 	paramtype2 = "facedir",
@@ -30,14 +31,15 @@ minetest.register_node("trinium:pulsenet_controller", {
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		if itemstack:is_empty() then
 			local meta = minetest.get_meta(pos)
-			cmsg.push_message_player(clicker, S("gui.info.current_space @1@2", meta:get_int"current_used_space", meta:get_int"current_space"))
+			cmsg.push_message_player(clicker, 
+					S("gui.info.current_space @1@2", meta:get_int"current_used_space", meta:get_int"current_space"))
 		end
 	end,
 })
 
 minetest.register_craftitem("trinium:pulsenet_connector", {
 	inventory_image = "pulsenet_connector.png",
-	description = S("item.pulsenet.connector"),
+	description = S"item.pulsenet.connector",
 	stack_max = 1,
 	on_place = function(item, player, pointed_thing)
 		local node = pointed_thing.under
@@ -49,15 +51,15 @@ minetest.register_craftitem("trinium:pulsenet_connector", {
 			return item
 		elseif minetest.get_item_group(name, "pulsenet_slave") > 0 then
 			local meta = item:get_meta()
+			local controller_pos = minetest.deserialize(meta:get_string"controller_pos")
 			if meta:get_string"controller_pos" == "" or 
-					minetest.get_node(minetest.deserialize(meta:get_string"controller_pos")).name ~= "trinium:pulsenet_controller" then
+					minetest.get_node(controller_pos).name ~= "trinium:pulsenet_controller" then
 				cmsg.push_message_player(player, S"gui.info.connector.wrong_data")
 			else
 				local meta1 = minetest.get_meta(node)
 				if meta1:get_string("controller_pos") ~= "" then
 					cmsg.push_message_player(player, S"gui.info.connector.already_connected")
 				else
-					local controller_pos = minetest.deserialize(meta:get_string"controller_pos")
 					meta1:set_string("controller_pos", meta:get_string("controller_pos"))
 					local meta2 = minetest.get_meta(controller_pos)
 					local cd = minetest.deserialize(meta2:get_string"connected_devices")
