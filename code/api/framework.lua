@@ -105,6 +105,17 @@ function table.fconcat(t, x)
 	return str:sub(x:len())
 end
 
+function table.tail(t)
+	local function helper(head, ...) return #{...} > 0 and {...} or nil end
+	return helper((table.unpack or unpack)(t))
+end
+
+function table.mtail(t, mult)
+	local k = t
+	for i = 1, mult do k = table.tail(k) end
+	return k
+end
+
 -- Basic functions
 function trinium.sortByParam(param)
 	return function(a, b)
@@ -194,6 +205,10 @@ function trinium.lograndom(a1, b1) -- more similar to normal
 		return lr1
 	end
 	return 2 + 0.33 * math.log(1 / math.random() - 1) / trinium.ln2
+end
+
+function trinium.formspec_restore(str)
+	return str:gsub("\\\\", "\\"):gsub("\\%[", "["):gsub("\\%]", "]"):gsub("\\,", ","):gsub("\\;", ";")
 end
 
 -- Data
@@ -563,14 +578,14 @@ end
 -- Various hacks
 local mt_register_item_old = minetest.register_item
 function minetest.register_item(name, def, ...)
-	def.stack_max = def.stack_max or 64
+	def.stack_max = def.stack_max or 72
 	if def.drop and def.drop ~= "" then
 		trinium.register_recipe("trinium:drop", {name},
 			type(def.drop) == "table" and def.drop.items or {def.drop}, 
 			{max_items = type(def.drop) == "table" and def.drop.max_items or 1}
 		)
 	end
-	if def.max_stack and def.stack_max == 64 then
+	if def.max_stack and def.stack_max == 72 then
 		def.stack_max = def.max_stack
 		def.max_stack = nil
 	end
@@ -582,6 +597,11 @@ function trinium.initialize_inventory(inv, def)
 	for k,v in pairs(def) do
 		inv:set_size(k,v)
 	end
+end
+
+function trinium.get_item_identifier(stack)
+	local s = stack:to_string():split(" ")
+	return s[1]..(s[4] and " "..table.concat(table.mtail(s, 3), " ") or "")
 end
 
 -- Palettes

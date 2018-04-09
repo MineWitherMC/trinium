@@ -115,7 +115,8 @@ gui.info.unknown_chapter=Unknown Chapter!
 gui.info.granted @1@2=Granted @1 research to @2
 gui.info.force_granted @1@2=Force-granted @1 research to @2
 
-gui.info.current_space @1@2=@1/@2 Stacks used
+gui.info.current_types @1@2=@1/@2 Item Types used
+gui.info.current_items @1@2=@1/@2 Items used
 gui.info.connector.connected=Successfully bound to controller!
 gui.info.connector.wrong_data=Please reconnect this connector to a controller!
 gui.info.connector.slave_connected=Slave successfully connected!

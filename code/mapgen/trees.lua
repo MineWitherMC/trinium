@@ -7,7 +7,7 @@ minetest.register_node("trinium:block_fir_log", {
 minetest.register_node("trinium:block_fir_leaves", {
 	tiles = {"leaves_fir.png"},
 	description = S"node.leaves.fir",
-	groups = {harvested_by_hand = 3},
+	groups = {harvested_by_hand = 3, leaves = 8},
 	drop = "",
 })
 
@@ -41,7 +41,7 @@ minetest.register_node("trinium:block_acacia_log", {
 minetest.register_node("trinium:block_acacia_leaves", {
 	tiles = {"leaves_acacia.png"},
 	description = S"node.leaves.acacia",
-	groups = {harvested_by_hand = 3},
+	groups = {harvested_by_hand = 3, leaves = 5},
 	drop = "",
 })
 
@@ -76,7 +76,7 @@ minetest.register_alias("trinium:block_wood", "trinium:block_maple_log")
 minetest.register_node("trinium:block_maple_leaves", {
 	tiles = {"leaves_maple.png"},
 	description = S"node.leaves.maple",
-	groups = {harvested_by_hand = 3},
+	groups = {harvested_by_hand = 3, leaves = 4},
 	drop = "",
 })
 minetest.register_alias("trinium:block_leaves", "trinium:block_maple_leaves")

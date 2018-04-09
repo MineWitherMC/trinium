@@ -2,12 +2,32 @@ local S = trinium.S
 trinium.pulsenet = {}
 local pulse = trinium.pulsenet
 
-function pulse.update_controller(pos)
+function pulse.import_to_controller(pos)
 	local meta = minetest.get_meta(pos)
-	local inv = meta:get_inventory():get_list"pulsenet"
-	local k = 0
-	table.walk(inv, function(r) if r ~= "" and not r:is_empty() then k = k + 1 end end)
-	meta:set_int("current_used_space", k)
+	local inv = meta:get_inventory()
+	local items = minetest.deserialize(meta:get_string"inventory")
+	local s = inv:get_stack("input", 1)
+	if not s:is_empty() then
+		local CI, UI, CT, UT = meta:get_int"capacity_items", meta:get_int"used_items", meta:get_int"capacity_types", meta:get_int"used_types" 
+		local max_import = CI - UI
+		local id = trinium.get_item_identifier(s)
+		trinium.dump(s:to_string(), id)
+		local dec = math.min(max_import, s:get_count())
+		if items[id] then
+			items[id] = items[id] + dec
+			s:take_item(dec)
+			inv:set_stack("input", 1, s)
+			meta:set_int("used_items", UI + dec)
+		elseif CT > UT then
+			items[id] = dec
+			s:take_item(dec)
+			inv:set_stack("input", 1, s)
+			meta:set_int("used_items", UI + dec)
+			meta:set_int("used_types", UT + 1)
+		end
+		
+		meta:set_string("inventory", minetest.serialize(items))
+	end
 end
 
 minetest.register_node("trinium:pulsenet_controller", {
@@ -19,20 +39,24 @@ minetest.register_node("trinium:pulsenet_controller", {
 	paramtype2 = "facedir",
 	after_place_node = function(pos, player)
 		local meta = minetest.get_meta(pos)
-		meta:set_int("current_space", 0)
-		meta:set_int("current_used_space", 0)
+		meta:set_int("capacity_types", 0)
+		meta:set_int("used_types", 0)
+		meta:set_int("capacity_items", 0)
+		meta:set_int("used_items", 0)
 		meta:set_string("connected_devices", minetest.serialize{})
+		meta:set_string("inventory", minetest.serialize{})
+		trinium.initialize_inventory(meta:get_inventory(), {input = 1})
 	end,
 	
-	on_metadata_inventory_put = pulse.update_controller,
-	on_metadata_inventory_take = pulse.update_controller,
-	on_metadata_inventory_move = pulse.update_controller,
+	on_metadata_inventory_put = pulse.import_to_controller,
+	-- allow_metadata_inventory_take = function() return 0 end,
 	
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		if itemstack:is_empty() then
 			local meta = minetest.get_meta(pos)
 			cmsg.push_message_player(clicker, 
-					S("gui.info.current_space @1@2", meta:get_int"current_used_space", meta:get_int"current_space"))
+					S("gui.info.current_types @1@2", meta:get_int"used_types", meta:get_int"capacity_types").."\n"..
+					S("gui.info.current_items @1@2", meta:get_int"used_items", meta:get_int"capacity_items"))
 		end
 	end,
 })

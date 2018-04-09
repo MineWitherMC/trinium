@@ -9,9 +9,10 @@ minetest.register_node("trinium:pulsenet_storage_cell", {
 	paramtype2 = "facedir",
 	on_pulsenet_connection = function(pos, ctrlpos)
 		local meta = minetest.get_meta(ctrlpos)
-		local cs = meta:get_int"current_space"
-		meta:set_int("current_space", cs + 30)
-		trinium.initialize_inventory(meta:get_inventory(), {pulsenet = cs + 30})
+		local cs = meta:get_int"capacity_types"
+		local items = meta:get_int"capacity_items"
+		meta:set_int("capacity_types", cs + 30)
+		meta:set_int("capacity_items", items + 5000)
 	end,
 	
 	can_dig = function(pos, player)
@@ -19,7 +20,8 @@ minetest.register_node("trinium:pulsenet_storage_cell", {
 		local ctrlpos = minetest.deserialize(meta:get_string"controller_pos")
 		if not ctrlpos or minetest.get_node(ctrlpos).name ~= "trinium:pulsenet_controller" then return true end
 		local ctrlmeta = minetest.get_meta(ctrlpos)
-		return ctrlmeta:get_int"current_space" - 30 >= ctrlmeta:get_int"current_used_space"
+		return ctrlmeta:get_int"capacity_types" - 30 >= ctrlmeta:get_int"used_types" and
+			ctrlmeta:get_int"capacity_items" - 5000 >= ctrlmeta:get_int"used_items"
 	end,
 	
 	after_dig_node = function(pos, oldnode, oldmeta, digger)
@@ -27,16 +29,10 @@ minetest.register_node("trinium:pulsenet_storage_cell", {
 		local dsp = minetest.deserialize(ctrlpos)
 		if ctrlpos and minetest.get_node(dsp).name == "trinium:pulsenet_controller" then
 			local ctrlmeta = minetest.get_meta(dsp)
-			local cs = ctrlmeta:get_int"current_space"
-			ctrlmeta:set_int("current_space", cs - 30)
-			local inv = ctrlmeta:get_inventory()
-			for i = cs - 29, cs do
-				local s = inv:get_stack("pulsenet", i)
-				inv:set_stack("pulsenet", i, "")
-				inv:add_item("pulsenet", s)
-			end
-			trinium.initialize_inventory(inv, {pulsenet = cs - 30})
-			pulse.update_controller(dsp)
+			local cs = ctrlmeta:get_int"capacity_types"
+			local items = ctrlmeta:get_int"capacity_items"
+			ctrlmeta:set_int("capacity_types", cs - 30)
+			ctrlmeta:set_int("capacity_items", items - 5000)
 		end
 	end,
 })

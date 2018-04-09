@@ -23,6 +23,7 @@ local function get_formspec_array(searchstring, mode)
 	for j = 1, page_amount do
 		formspec[j] = ([=[
 			field[0.25,8.8;6,0;irp~search;;%s]
+			field_close_on_enter[irp~search;false]
 			button[6,8.1;1,1;irp~search_use;>>]
 			button[7,8.1;1,1;irp~search_clear;X]
 			label[1,0.2;%s]
@@ -166,6 +167,9 @@ end
 
 function itempanel:on_player_receive_fields(player, context, fields)
 	if fields.quit then return end
+	if fields.key_enter then
+		fields["irp~search_use"] = 1
+	end
 	context.irpmode = context.irpmode or 1
 	local pn = player:get_player_name()
 	for k,v in pairs(fields) do

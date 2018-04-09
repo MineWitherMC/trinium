@@ -115,7 +115,8 @@ gui.info.unknown_chapter=Неизвестная глава!
 gui.info.granted @1@2=@2 выучил исследование "@1"
 gui.info.force_granted @1@2=@2 выучил исследование "@1"
 
-gui.info.current_space @1@2=использовано @1/@2 стаков
+gui.info.current_types @1@2=Использовано @1/@2 типов
+gui.info.current_items @1@2=Содержит @1/@2 предметов
 gui.info.connector.connected=Инструмент успешно привязан к контроллеру!
 gui.info.connector.wrong_data=Комбинатор отключился от контроллера, переподключите его!
 gui.info.connector.slave_connected=Механизм успешно подключен!

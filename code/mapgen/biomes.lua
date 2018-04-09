@@ -152,7 +152,7 @@ minetest.register_biome{
 }
 
 
-minetest.register_biome{
+--[[minetest.register_biome{
 	name = "rainforest",
 	node_top = "trinium:block_dirt_with_podzol",
 	depth_top = 1,
@@ -164,7 +164,7 @@ minetest.register_biome{
 	y_min = 1,
 	heat_point = 86,
 	humidity_point = 65,
-}
+}]]--
 
 minetest.register_biome{
 	name = "underground",
