@@ -1,5 +1,6 @@
 local S = trinium.S
 local pulse = trinium.pulsenet
+local M = trinium.materials.materials
 
 minetest.register_node("trinium:pulsenet_storage_cell", {
 	stack_max = 16,
@@ -36,3 +37,7 @@ minetest.register_node("trinium:pulsenet_storage_cell", {
 		end
 	end,
 })
+trinium.register_recipe("trinium:crafting_wizard",
+	{"PMP WCA aaa", P = M.pulsating_alloy:get("plate"), M = "trinium:module_storage", W = "trinium:module_wireless",
+		C = "trinium:casing_pulsenet", A = "trinium:recipe_pattern", a = M.antracite:get("brick")},
+	{"trinium:pulsenet_storage_cell"})

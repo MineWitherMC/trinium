@@ -25,3 +25,11 @@ item.research_chapter_map @1=Карта главы "@1"
 item.research_discovery @1=Открытие "@1"
 
 item.pulsenet.connector=Комбинатор пульсирующей сети
+
+item.rock=Камень
+item.stick=Палка
+
+item.module_power=Энергетический модуль
+item.module_wireless=Модуль беспроводной связи
+item.module_storage=Модуль хранения
+item.module_display=Дисплейный модуль

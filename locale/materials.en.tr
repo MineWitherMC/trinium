@@ -12,6 +12,8 @@ material.type.brick @1=@1 Brick
 material.type.ore @1=@1 Ore
 material.type.pulp @1=@1 Pulp
 material.type.catalyst @1=@1 Catalyst
+material.type.foil @1=@1 Foil
+material.type.wire @1=Fine @1 Wire
 
 material.al2o3=Alumina
 material.fe2o3=Ferric Oxide
@@ -48,6 +50,11 @@ material.acrylonitrile=Acrylonitrile
 material.abs.compound=ABS Plastic Compound
 material.abs=ABS Plastic
 
+material.fluixine_silicide=Fluixine Silicide
+material.sodium_fluix_silicide=Sodium Silicofluixide
+
+material.glass=Glass
+
 material.paper=Paper
 material.carton=Carton
 material.parchment=Parchment
@@ -61,6 +68,8 @@ material.oil.diesel=Diesel
 
 material.item.empty_cell=Empty Cell
 material.item.stardust=Stardust
+material.item.brick=Brick
+material.item.clay_ball=Clay Ball
 
 material.catalyst.pyrolysis=Pyrocatalyst
 material.catalyst.xp=Solidified Experience
@@ -69,6 +78,9 @@ material.forcirium=Forcirium
 material.forcirium.imbued=Imbued Forcirium
 material.endium=Ender Alloy
 
+material.element.na=Sodium
+material.element.al=Aluminium
+material.element.si=Silicon
 material.element.ti=Titanium
 material.element.fe=Iron
 material.element.ni=Nickel
@@ -80,6 +92,8 @@ material.element.pt=Platinum
 material.alloy.rhenium=Rhenium Alloy
 material.alloy.cupronickel=Cupronickel
 material.alloy.silver=Silver Alloy
+material.alloy.pulsating=Pulsating Alloy
+material.alloy.bronze=Bronze
 
 material.coal=Coal
 material.antracite=Antracite

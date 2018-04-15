@@ -25,9 +25,9 @@ research.register_research("OilDesulf", {
 	name = S("research.oil_desulf"),
 	chapter = "Chemistry2",
 	text = {
-		S"research.text.oildesulf.1",
+		S"research.text.oil_desulf.1",
 		{trinium.draw_research_recipe"trinium:material_cell_oil_desulfurized"},
-		research.label_escape(S"research.text.oildesulf.2", S"research.header.oildesulf.2", {RATUS = 8, MANIFESTATIO = 11, CONSEQUAT = 5})
+		research.label_escape(S"research.text.oil_desulf.2", S"research.header.oil_desulf.2", {RATUS = 8, MANIFESTATIO = 11, CONSEQUAT = 5})
 	},
 	requires_lens = {},
 	color = "101010",
@@ -46,7 +46,7 @@ research.register_research("OilDistillation", {
 	name = S"research.oil_distillation",
 	chapter = "Chemistry2",
 	text = {
-		S"research.text.oildistillation",
+		S"research.text.oil_distillation.1",
 		{trinium.draw_research_recipe"trinium:material_cell_fraction_naphtha"}
 	},
 	requires_lens = {
@@ -72,8 +72,8 @@ research.register_research("OilCrack", {
 	name = S"research.oil_cracking",
 	chapter = "Chemistry2",
 	text = {
-		S"research.text.oilcrack.1",
-		S"research.text.oilcrack.2",
+		S"research.text.oil_cracking.1",
+		S"research.text.oil_cracking.2",
 		{trinium.draw_research_recipe"trinium:material_cell_propene"},
 		{trinium.draw_research_recipe"trinium:material_cell_isooctane"}
 	},
@@ -97,13 +97,16 @@ research.register_research("HydrocarbonsCrack", {
 	texture = "trinium:material_cell_butadiene",
 	x = 5,
 	y = 4,
-	name = S"research.hydrocarbon_cracking",
+	name = S"research.hc_cracking",
 	chapter = "Chemistry2",
 	text = {
-		S"research.text.hydrocarbonscrack.1",
+		S"research.text.hc_cracking.1",
 		{trinium.draw_research_recipe"trinium:material_cell_butadiene"},
 		{trinium.draw_research_recipe"trinium:material_cell_acetylene"},
-		research.label_escape(S"research.text.hydrocarbonscrack.2", S"research.header.hydrocarbonscrack.2", {POTENTIA = 12, INTERITUM = 15, AQUA = 18, SENTENTIA = 24, RATUS = 21})
+		{trinium.draw_research_recipe"trinium:material_cell_styrene"..
+				("textarea[0.25,4.5;7.5,3;;;%s]"):format(S"research.text.hc_cracking.2"),
+			8, 8, S"research.header.hc_cracking.2", 
+			{POTENTIA = 12, INTERITUM = 15, AQUA = 18, SENTENTIA = 24, RATUS = 21}}
 	},
 	requires_lens = {
 		requirement = true,
@@ -125,10 +128,10 @@ research.register_research("HydrogenCyanide", {
 	texture = "trinium:material_cell_hydrogen_cyanide",
 	x = 2,
 	y = 6,
-	name = S"research.hcn",
+	name = S"research.hydrogen_cyanide",
 	chapter = "Chemistry2",
 	text = {
-		S"research.text.hydrogencyanide",
+		S"research.text.hydrogen_cyanide.1",
 		{trinium.draw_research_recipe"trinium:material_cell_hydrogen_cyanide"},
 	},
 	requires_lens = {
@@ -154,7 +157,7 @@ research.register_research("Acrylonitrile", {
 	name = S"research.acrylonitrile",
 	chapter = "Chemistry2",
 	text = {
-		S"research.text.acrylonitrile",
+		S"research.text.acrylonitrile.1",
 		{trinium.draw_research_recipe"trinium:material_cell_acrylonitrile"},
 	},
 	requires_lens = {
@@ -180,7 +183,7 @@ research.register_research("HydrocarbonsChlorination", {
 	name = S"research.chlorination.advanced",
 	chapter = "Chemistry2",
 	text = {
-		S"research.text.hydrocarbonschlorination",
+		S"research.text.chlorination.advanced.1",
 		{trinium.draw_research_recipe"trinium:material_cell_chloroethane"},
 	},
 	requires_lens = {
@@ -206,7 +209,7 @@ research.register_research("Ethylbenzene", {
 	name = S"research.ethylbenzene",
 	chapter = "Chemistry2",
 	text = {
-		S"research.text.ethylbenzene",
+		S"research.text.ethylbenzene.1",
 		{trinium.draw_research_recipe"trinium:material_cell_ethylbenzene"},
 	},
 	requires_lens = {
@@ -232,7 +235,7 @@ research.register_research("ABSPC", {
 	name = S"research.abs_plastic",
 	chapter = "Chemistry2",
 	text = {
-		S"research.text.abspc",
+		S"research.text.abs_plastic.1",
 		{trinium.draw_research_recipe"trinium:material_cell_abs_plastic_compound"},
 	},
 	requires_lens = {

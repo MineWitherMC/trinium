@@ -1,0 +1,15 @@
+# textdomain:trinium
+
+tool.type.axe @1=Топор из @1
+tool.type.shovel @1=Лопата из @1
+
+tool.material.rock=камня
+tool.material.bronze=бронзы
+tool.material.iron=железа
+
+tool.rod.stick=Деревянный
+tool.rod.copper=Медный
+
+tool.capability.speed @1=Скорость: @1
+tool.capability.durability @1=Базовая прочность: @1
+tool.capability.level @1=Уровень добычи: @1

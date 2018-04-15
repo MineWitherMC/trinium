@@ -25,3 +25,11 @@ item.research_chapter_map @1=Chapter Map - @1
 item.research_discovery @1=Discovery - @1
 
 item.pulsenet.connector=Pulse Network Connector
+
+item.rock=Rock
+item.stick=Stick
+
+item.module_power=Power Module
+item.module_wireless=Wireless Module
+item.module_storage=Storage Module
+item.module_display=Display Module

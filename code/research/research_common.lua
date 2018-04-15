@@ -1,4 +1,5 @@
 local S = trinium.S
+local M = trinium.materials.materials
 
 -- Research Chassis
 minetest.register_node("trinium:research_chassis", {
@@ -6,11 +7,9 @@ minetest.register_node("trinium:research_chassis", {
 	description = S"node.casing.research1",
 	groups = {harvested_by_pickaxe = 2},
 })
-trinium.register_recipe("trinium:crafting", {
-		[2] = "trinium:block_stone", 
-		[4] = "trinium:block_stone", [5] = "trinium:material_brick_antracite", [6] = "trinium:block_stone",
-		[8] = "trinium:block_stone"
-}, {"trinium:research_chassis 4"}, {})
+trinium.register_recipe("trinium:crafting_wizard",
+	{"_S_ SAS _S_", S = "trinium:block_stone", A = M.antracite:get("brick")}, 
+	{"trinium:research_chassis 4"})
 
 -- Research Casing
 minetest.register_node("trinium:research_casing", {
@@ -18,11 +17,9 @@ minetest.register_node("trinium:research_casing", {
 	description = S"node.casing.research2",
 	groups = {harvested_by_pickaxe = 1},
 })
-trinium.register_recipe("trinium:crafting", {
-		"trinium:material_ingot_iron", "trinium:material_brick_antracite", "trinium:material_ingot_iron", 
-		"trinium:material_brick_antracite", "trinium:research_chassis", "trinium:material_brick_antracite", 
-		"trinium:material_ingot_iron", "trinium:material_brick_antracite", "trinium:material_ingot_iron"
-}, {"trinium:research_casing"}, {})
+trinium.register_recipe("trinium:crafting_wizard", 
+	{"IAI ACA IAI", I = M.copper:get("ingot"), A = M.antracite:get("brick"), C = "trinium:research_chassis"},
+	{"trinium:research_casing"})
 
 -- Knowledge Charms
 minetest.register_craftitem("trinium:research_knowledge_charm", {

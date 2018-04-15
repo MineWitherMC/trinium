@@ -1,5 +1,6 @@
 local res_data = trinium.res.player_stuff
 local S = trinium.S
+local M = trinium.materials.materials
 
 minetest.register_node("trinium:machine_research_node", {
 	max_stack = 1,
@@ -56,6 +57,9 @@ minetest.register_node("trinium:machine_research_node", {
 		end
 	end,
 })
+trinium.register_recipe("trinium:crafting_wizard",
+	{"RPR PCP RPR", R = M.copper:get("rod"), P = M.silver:get("plate"), C = "trinium:research_chassis"},
+	{"trinium:machine_research_node"})
 
 local node_mb = {
 	width = 3,

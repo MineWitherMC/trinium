@@ -131,6 +131,9 @@ minetest.register_globalstep(function(dtime)
 				player:hud_change(player_to_id_current_item[player], "text", "")
 			elseif not stack:is_known() then
 				player:hud_change(player_to_id_current_item[player], "text", S"info.unknown")
+			elseif stack:get_meta():get_string"description" ~= "" then
+				player:hud_change(player_to_id_current_item[player], "text", 
+						stack:get_meta():get_string"description":split"\n"[1])
 			else
 				player:hud_change(player_to_id_current_item[player], "text", 
 						minetest.registered_items[stack:get_name()].description:split("\n")[1] or "???")

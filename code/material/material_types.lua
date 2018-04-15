@@ -161,10 +161,9 @@ end)
 materials.register_interaction("brick_compression", {
 	requirements = {"dust", "brick"},
 	apply = function(name, data)
-		trinium.register_recipe("trinium:metal_former", 
+		trinium.register_recipe("trinium:crude_compressor", 
 			{"trinium:material_dust_"..name}, 
-			{"trinium:material_brick_"..name}, 
-			{["type"] = "compressing"})
+			{"trinium:material_brick_"..name})
 		trinium.register_recipe("trinium:grinder", 
 			{"trinium:material_brick_"..name}, 
 			{"trinium:material_dust_"..name})
@@ -215,3 +214,37 @@ materials.register_mattype("catalyst", function(def)
 		max_stack = 1,
 	})
 end)
+
+
+materials.register_mattype("foil", function(def)
+	minetest.register_craftitem(("trinium:material_foil_%s"):format(def.id), {
+		description = S("material.type.foil @1", def.name)..def.formula,
+		inventory_image = "materials_foil.png^[colorize:#"..def.color:sub(0, 6).."80",
+	})
+end)
+materials.register_interaction("plate_bending", {
+	requirements = {"plate", "foil"},
+	apply = function(name, data)
+		trinium.register_recipe("trinium:metal_former", 
+			{"trinium:material_plate_"..name}, 
+			{"trinium:material_foil_"..name.." 4"}, 
+			{["type"] = "bending"})
+	end,
+})
+
+
+materials.register_mattype("wire", function(def)
+	minetest.register_craftitem(("trinium:material_wire_%s"):format(def.id), {
+		description = S("material.type.wire @1", def.name)..def.formula,
+		inventory_image = "(materials_fine_wire.png^[colorize:#"..def.color..")^materials_fine_wire_overlay.png",
+	})
+end)
+materials.register_interaction("wire_extruding", {
+	requirements = {"ingot", "wire"},
+	apply = function(name, data)
+		trinium.register_recipe("trinium:metal_former", 
+			{"trinium:material_ingot_"..name}, 
+			{"trinium:material_wire_"..name.." 4"}, 
+			{["type"] = "extruding"})
+	end,
+})

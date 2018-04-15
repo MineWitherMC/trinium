@@ -146,3 +146,15 @@ trinium.register_fluid("trinium:block_river_water_source", "trinium:block_river_
 		liquid_range = 2,
 	})
 minetest.register_alias("mapgen_river_water_source", "trinium:block_river_water_source")
+
+-- Clay
+minetest.register_node("trinium:block_clay", {
+	tiles = {"clay_block.png"},
+	description = S"node.clay",
+	groups = {harvested_by_shovel = 2},
+	drop = {
+		{items = "trinium:material_ball_clay 3", rarity = 1}, 
+		{items = "trinium:material_ball_clay", rarity = 2}, 
+		{items = "trinium:material_ball_clay", rarity = 4}, 
+	},	
+})

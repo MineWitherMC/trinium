@@ -1,6 +1,7 @@
 local S = trinium.S
 trinium.pulsenet = {}
 local pulse = trinium.pulsenet
+local M = trinium.materials.materials
 
 function pulse.import_to_controller(pos)
 	local meta = minetest.get_meta(pos)
@@ -11,7 +12,6 @@ function pulse.import_to_controller(pos)
 		local CI, UI, CT, UT = meta:get_int"capacity_items", meta:get_int"used_items", meta:get_int"capacity_types", meta:get_int"used_types" 
 		local max_import = CI - UI
 		local id = trinium.get_item_identifier(s)
-		trinium.dump(s:to_string(), id)
 		local dec = math.min(max_import, s:get_count())
 		if items[id] then
 			items[id] = items[id] + dec
@@ -60,6 +60,10 @@ minetest.register_node("trinium:pulsenet_controller", {
 		end
 	end,
 })
+trinium.register_recipe("trinium:crafting_wizard",
+	{"ABA BPB TWT", A = M.pulsating_alloy:get("plate"), B = M.abs:get("plate"),
+		W = "trinium:module_power", T = M.titanium:get("plate"), P = "trinium:casing_pulsenet"},
+	{"trinium:pulsenet_controller"})
 
 minetest.register_craftitem("trinium:pulsenet_connector", {
 	inventory_image = "pulsenet_connector.png",
@@ -71,6 +75,9 @@ minetest.register_craftitem("trinium:pulsenet_connector", {
 		if name == "trinium:pulsenet_controller" then
 			local meta = item:get_meta()
 			meta:set_string("controller_pos", minetest.serialize(pointed_thing.under))
+			meta:set_string("description", S"item.pulsenet.connector".."\n"..
+					S("item.pulsenet.connector.desc @1@2@3", 
+						pointed_thing.under.x, pointed_thing.under.y, pointed_thing.under.z))
 			cmsg.push_message_player(player, S"gui.info.connector.connected")
 			return item
 		elseif minetest.get_item_group(name, "pulsenet_slave") > 0 then
@@ -106,3 +113,7 @@ minetest.register_craftitem("trinium:pulsenet_connector", {
 		end
 	end,
 })
+trinium.register_recipe("trinium:crafting_wizard",
+	{"FE_ ER_ _PR", R = M.rhenium_alloy:get("rod"), P = M.abs:get("plate"),
+		F = M.forcirium:get("gem"), E = M.pulsating_alloy:get("rod")},
+	{"trinium:pulsenet_connector"})

@@ -14,7 +14,7 @@ trinium.register_recipe_handler("trinium:furnace", {
 	formspec_height = 4,
 	formspec_name = S"gui.recipe_method.furnace",
 	formspec_begin = function(data)
-		return ("label[0,3.7;%s]"):format(S("gui.furnace.time @1", data.time or 10))
+		return ("label[0,3.7;%s]"):format(S("gui.time @1", data.time or 10))
 	end,
 })
 
@@ -33,6 +33,20 @@ trinium.register_recipe_handler("trinium:drop", {
 	formspec_name = S"gui.recipe_method.block_drop",
 	formspec_begin = function(data)
 		return ("label[0,4.7;%s]"):format(S("gui.max_drop @1", data.max_items))
+	end,
+	
+	process_outputs = function(outputs)
+		if type(outputs[1]) == "string" then return outputs end
+		local outputs1 = table.copy(outputs[1])
+		
+		table.walk(outputs1, function(v, k)
+			if type(v) == "table" then
+				outputs1[k] = v.items.." "..(#v.items:split(" ") == 1 and "1 " or "")
+					..(math.floor(10000 / (v.rarity or 1)) / 100)
+			end
+		end)
+		
+		return outputs1
 	end,
 })
 
@@ -143,7 +157,7 @@ trinium.register_recipe_handler("trinium:mixer", {
 	formspec_name = S"gui.recipe_method.mixer",
 	formspec_begin = function(data)
 		return ("label[0,4;%s]")
-			:format(S("gui.minimum_velocity @1", data.velocity or 400))
+			:format(S("gui.velocity @1", data.velocity or 400))
 	end,
 })
 
@@ -194,7 +208,7 @@ trinium.register_recipe_handler("trinium:chemical_reactor", {
 				catalyst = catalyst_item.description:split("\n")[1]
 			end
 		end
-		return ("label[1,3.5;%s\n%s]"):format(catalyst, S("gui.chemreactor.time @1", data.time))
+		return ("label[1,3.5;%s\n%s]"):format(catalyst, S("gui.time @1", data.time))
 	end,
 	can_perform = function(pn, recipe_data)
 		local x = recipe_data.research
@@ -252,4 +266,86 @@ trinium.register_recipe_handler("trinium:crafting", {
 	formspec_width = 6,
 	formspec_height = 4.5,
 	formspec_name = S"gui.recipe_method.crafting",
+})
+
+-- Precision Assembler
+trinium.register_recipe_handler("trinium:precision_assembler", {
+	input_amount = 8,
+	output_amount = 1,
+	get_input_coords = function(n)
+		return trinium.modulate(n, 4) - 0.75, math.ceil(n / 4)
+	end,
+	get_output_coords = function(n)
+		return 5.75, 1.5
+	end,
+	formspec_width = 7,
+	formspec_height = 5.5,
+	formspec_name = S"gui.recipe_method.precision_assembler",
+	formspec_begin = function(data)
+		return ("textarea[0.25,3.5;6.5,1.75;;;%s\n%s\n%s]"):format(
+			S("gui.tier @1", data.tier),
+			S("gui.pressure @1", data.pressure),
+			S("gui.time @1", data.time)
+		)
+	end,
+})
+
+-- Crude Compressor
+trinium.register_recipe_handler("trinium:crude_compressor", {
+	input_amount = 1,
+	output_amount = 1,
+	get_input_coords = function(n)
+		return 0.5, 1
+	end,
+	get_output_coords = function(n)
+		return 2.75, 1
+	end,
+	formspec_width = 4.25,
+	formspec_height = 3,
+	formspec_name = S"gui.recipe_method.crude_compressor",
+})
+
+-- Crude Alloy Smelter
+trinium.register_recipe_handler("trinium:crude_alloyer", {
+	input_amount = 2,
+	output_amount = 1,
+	get_input_coords = function(n)
+		return 0.5, n
+	end,
+	get_output_coords = function(n)
+		return 3, 1.5
+	end,
+	formspec_width = 4.5,
+	formspec_height = 3,
+	formspec_name = S"gui.recipe_method.crude_alloyer",
+})
+
+-- Crafting Builder
+--[[
+	{"AAA BCB DDD", A = "item1", B = "item2", C = "item3", D = "item4"}
+	{"AAA A_A AAA", A = "item1"} - _ is empty
+	{"AAA BBB", A = "item1", B = "item2"} - ok
+	{"AA AA CX", A = "item1", C = "item2", X = "item3"} - as is this
+	{"AA AC X", A = "item1", C = "item2", X = "item3"} - even this is OK
+]]--
+trinium.register_recipe_handler("trinium:crafting_wizard", {
+	callback = function() return "trinium:crafting" end,
+	process_inputs = function(inputs)
+		local H = 0
+		local V = 0
+		local inputs1 = {}
+		for i = 1, #inputs[1] do
+			local sym = inputs[1]:sub(i, i)
+			if sym == " " then
+				V = V + 1
+				H = 0
+			else
+				H = H + 1
+				if sym ~= "_" then
+					inputs1[H + V * 3] = assert(inputs[sym], "No given item for "..sym)
+				end
+			end
+		end
+		return inputs1
+	end,
 })

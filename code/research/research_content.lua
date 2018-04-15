@@ -271,31 +271,37 @@ research.register_research("Aspect", {
 	pre_unlock = true,
 })
 
-local p, as, as_t, as_n, as_r1, as_r2, h
-for i = 1, #research.aspect_ids do
-	p, as, h = math.ceil(i / 7) + 1, research.aspect_ids[i], ((i - 1) % 7) + 1
-	as_t = research.known_aspects[as]
-	as_n, as_r1, as_r2 = as_t.id, as_t.req1, as_t.req2
-	if not research.researches["Aspect"].text[p] then
-		research.researches["Aspect"].text[p] = {"", 8, 8}
-	end
-	if as_r1 ~= "NULL" then
-		research.researches["Aspect"].text[p][1] = research.researches["Aspect"].text[p][1]..([=[
-			item_image_button[0,%s;1,1;trinium:aspect___%s;;]
-			textarea[1.2,%s;6,1;;;%s = %s + %s\n%s]
-			item_image_button[6,%s;1,1;trinium:aspect___%s;;]
-			item_image_button[7,%s;1,1;trinium:aspect___%s;;]
-		]=]):format(h, as, h + 0.2, trinium.adequate_text(as_n), 
-			trinium.adequate_text(as_r1), trinium.adequate_text(as_r2), as_t.name:split"\n"[2], h, as_r1, h, as_r2)
-	else
-		research.researches["Aspect"].text[p][1] = research.researches["Aspect"].text[p][1]..([=[
-			item_image_button[0,%s;1,1;trinium:aspect___%s;;]
-			textarea[1.2,%s;6,1;;;%s\n%s]
-		]=]):format(h, as, h, S("gui.basic_aspect @1", trinium.adequate_text(as_n)), as_t.name:split"\n"[2])
-	end
-end
+research.register_research("ResearchNode", {
+	texture = "trinium:machine_research_node",
+	x = 0,
+	y = 2,
+	name = S"research.research_node",
+	chapter = "SystemInfo",
+	text = {
+		S"research.text.research_node.1",
+		{trinium.draw_research_recipe("trinium:research_chassis", 1)},
+		{trinium.draw_research_recipe("trinium:research_casing", 1)},
+		{trinium.draw_research_recipe("trinium:machine_research_node", 1)},
+		{trinium.draw_research_recipe("trinium:machine_research_node", 2)},
+		{trinium.draw_research_recipe("trinium:machine_research_node", 3)},
+		{trinium.draw_research_recipe("trinium:machine_research_node", 4)},
+	},
+	pre_unlock = true,
+})
 
-research.researches["Aspect"].text[1] = S("About Aspects - here are @1 pages", #research.researches["Aspect"].text - 1)
+research.register_research("ResearchTable", {
+	texture = "trinium:machine_research_table",
+	x = 3,
+	y = 2,
+	name = S"research.research_table",
+	chapter = "SystemInfo",
+	text = {
+		S"research.text.research_table.1",
+		{trinium.draw_research_recipe("trinium:machine_research_table", 1)},
+	},
+	pre_unlock = true,
+})
+research.set_research_requirements("ResearchTable", {"Aspect", "ResearchNode"})
 
 research.register_research("ResearchRevealing", {
 	texture = "trinium:aspect___POTENTIA",
@@ -304,7 +310,7 @@ research.register_research("ResearchRevealing", {
 	name = S"research.research_revealing",
 	chapter = "SystemInfo",
 	text = {
-		S"research.text.revealing.1",
+		S"research.text.research_revealing.1",
 	},
 	requires_lens = {},
 	color = "A1004A",
@@ -314,3 +320,35 @@ research.register_research("ResearchRevealing", {
 		{x = 3, y = 7, aspect = "RATUS"},
 	},
 })
+research.set_research_requirements("ResearchRevealing", {"ResearchTable"})
+
+
+function research.rebuild_aspect_cache()
+	research.researches["Aspect"].text = {""}
+	local p, as, as_t, as_n, as_r1, as_r2, h
+	for i = 1, #research.aspect_ids do
+		p, as, h = math.ceil(i / 7) + 1, research.aspect_ids[i], ((i - 1) % 7) + 1
+		as_t = research.known_aspects[as]
+		as_n, as_r1, as_r2 = as_t.id, as_t.req1, as_t.req2
+		if not research.researches["Aspect"].text[p] then
+			research.researches["Aspect"].text[p] = {"", 8, 8}
+		end
+		if as_r1 ~= "NULL" then
+			research.researches["Aspect"].text[p][1] = research.researches["Aspect"].text[p][1]..([=[
+				item_image_button[0,%s;1,1;trinium:aspect___%s;;]
+				textarea[1.2,%s;6,1;;;%s]
+				item_image_button[6,%s;1,1;trinium:aspect___%s;;]
+				item_image_button[7,%s;1,1;trinium:aspect___%s;;]
+			]=]):format(h, as, h + 0.2, S("gui.aspect_addition @1@2@3@4", trinium.adequate_text(as_n), 
+				trinium.adequate_text(as_r1), trinium.adequate_text(as_r2), as_t.name:split"\n"[2]), h, as_r1, h, as_r2)
+		else
+			research.researches["Aspect"].text[p][1] = research.researches["Aspect"].text[p][1]..([=[
+				item_image_button[0,%s;1,1;trinium:aspect___%s;;]
+				textarea[1.2,%s;6,1;;;%s]
+			]=]):format(h, as, h, S("gui.basic_aspect @1@2", trinium.adequate_text(as_n), as_t.name:split"\n"[2]))
+		end
+	end
+
+	research.researches["Aspect"].text[1] = S("research.text.aspects.1 @1", #research.researches["Aspect"].text - 1)
+end
+research.rebuild_aspect_cache()

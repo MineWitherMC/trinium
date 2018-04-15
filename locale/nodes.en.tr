@@ -3,11 +3,16 @@ node.machine.chemreactor=Chemical Reactor Controller
 node.machine.chemreactor.advanced=Advanced Chemical Reactor Controller
 node.machine.chemcracker=Oil Cracker Controller
 node.machine.polymerizer=Polymerizer Controller
+
 node.casing.chemical=Chemically Inert Casing
 node.casing.corrosive=Corrosion Proof Casing
 node.casing.heating.cupronickel=Cupronickel Heating Ring
 node.casing.research1=Research Chassis
 node.casing.research2=Research Casing
+node.casing.pulsenet=Pulse Network Machine Casing
+node.casing.heat.1=Heat-Resistant Machine Casing
+node.casing.heat.2=Heat-Proof Machine Casing
+
 node.hatch.catalyst=Catalyst Hatch
 node.hatch.input=Input Hatch
 node.hatch.output=Output Hatch
@@ -25,6 +30,7 @@ node.dirt.grass=Dirt with Grass
 node.dirt.snow=Dirt with Snow
 node.dirt.podzol=Podzol
 node.dirt.savanna=Dirt with Dry Grass
+node.clay=Clay
 
 node.woodlog.fir=Fir Log
 node.leaves.fir=Fir Leaves
@@ -52,3 +58,8 @@ node.fluid.river_water.flowing=Flowing River Water
 node.machine.pulsenet_controller=Pulse Network Controller
 node.machine.pulsenet_storage_cell=Pulse Network Storage Cell
 node.machine.pulsenet_terminal=Pulse Network Access Terminal
+
+node.rock=Rock
+node.stick=Stick
+
+node.tool_station=Tool Station

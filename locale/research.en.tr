@@ -1,49 +1,78 @@
 # textdomain:trinium
-research.chapter.systeminfo=Research System
-research.chapter.chemistry.basic=Basic Chemistry
-research.chapter.chemistry.advanced=Advanced Chemistry
-research.aspects=Aspects
-research.oil_desulf=Oil Desulfurization
-research.oil_distillation=Oil Distillation
-research.oil_cracking=Oil Cracking
-research.hydrocarbon_cracking=Hydrocarbons Cracking
-research.hcn=Hydrogen Cyanide
-research.acrylonitrile=Acrylonitrile
-research.chlorination.advanced=Chlorination II
-research.ethylbenzene=Ethylbenzene
-research.abs_plastic=ABS Plastics
 
-research.text.oildesulf.1=You found some interesting dark brown liquid a long time ago. It looked like it contained a lot of power at the beginning, but it was poisonous and power couldn't be used due to this.@
+# Basic Chemistry
+research.chapter.chemistry.basic=Basic Chemistry
+
+# Advanced Chemistry
+research.chapter.chemistry.advanced=Advanced Chemistry
+
+research.oil_desulf=Oil Desulfurization
+research.text.oil_desulf.1=You found some interesting dark brown liquid a long time ago. It looked like it contained a lot of power at the beginning, but it was poisonous and power couldn't be used due to this.@
 But you've just discovered the way to purify it from useless and dangerous brimstone. You think it is possible to capture it using hydrogen. Such an active gas should bind sulfur into hydrogen sulfide, shouldn't it?..
-research.text.oildesulf.2=You think that for oil researches a diamond lens will be useful - no material has such complicated carbon structure... Also, platinum will do. A very inert metal, probably a good catalyst, definitely good for holding active materials, You realise you'll need it too.
-research.header.oildesulf.2=Further Oil Researching
-research.text.oildistillation=The hydrogen you added to the raw oil worked perfectly. But what is next?@
+research.text.oil_desulf.2=You think that for oil researches a diamond lens will be useful - no material has such complicated carbon structure... Also, platinum will do. A very inert metal, probably a good catalyst, definitely good for holding active materials, You realise you'll need it too.
+research.header.oil_desulf.2=Further Oil Researching
+
+research.oil_distillation=Oil Distillation
+research.text.oil_distillation.1=The hydrogen you added to the raw oil worked perfectly. But what is next?@
 You think that oil is not powerful enough until it is separated into components, which is what the distillation tower is used for. It should give a lot of light fractions and some kerosene and diesel, which are heavier and thus rarer.
-research.text.oilcrack.1=Heavier fractions of the oil, kerosene and diesel, are probably very good fuels that can be used in multiverse turbines. But naphtha and natural gas, lighter fractions, are not that useful - kerosene holds more than twice the power of naphtha, and gas is actually awful.@
+
+research.oil_cracking=Oil Cracking
+research.text.oil_cracking.1=Heavier fractions of the oil, kerosene and diesel, are probably very good fuels that can be used in multiverse turbines. But naphtha and natural gas, lighter fractions, are not that useful - kerosene holds more than twice the power of naphtha, and gas is actually awful.@
 You realised that and started to think outside of the box. Your new idea was a device that heats naphtha and gas and breaks them into the hydrocarbons, more useful things than the gases themselves. Fuels, plastics, chemistry, and more can be achieved here!..
-research.text.oilcrack.2=But device is not easy to build. It uses cupronickel coils to heat the naphtha and gas, which are contained in some kind of pipe made of chemical casings. Also the device's controller is probably very hard to assemble.@
+research.text.oil_cracking.2=But device is not easy to build. It uses cupronickel coils to heat the naphtha and gas, which are contained in some kind of pipe made of chemical casings. Also the device's controller is probably very hard to assemble.@
 But after a closer look you finally got that this device not only cracks the oil compounds, but also ALMOST DOUBLES them!
-research.text.hydrocarbonscrack.1=Some of the hydrocarbons you obtained from cracking are useful, for instance, octane and toluene. They both can be used in creation of a very strong fuel, premium gasoline, even stronger than natural diesel. Furthermore, former probably can be used to create some kind of explosives.@
+
+research.hc_cracking=Hydrocarbons Cracking
+research.text.hc_cracking.1=Some of the hydrocarbons you obtained from cracking are useful, for instance, octane and toluene. They both can be used in creation of a very strong fuel, premium gasoline, even stronger than natural diesel. Furthermore, former probably can be used to create some kind of explosives.@
 But what can be done with, e.g., methane or butane, absolutely useless gases, main components of natural gas and naphtha respectively?..@
 You found an answer. These two can be dehydrated with usage of the new catalysts to form acetylene and butadiene respectively, which are definitely useful.
-research.text.hydrocarbonscrack.2=After some deeper research, you discovered that styrene can also be obtained with this mechanic by dehydrating ethylbenzene.
-research.header.hydrocarbonscrack.2=Styrene Production
-research.text.hydrogencyanide=Methane is not really useful, you thought. But you needed something dangerous.@
+research.text.hc_cracking.2=After some deeper research, you discovered that styrene can also be obtained with this mechanic by dehydrating ethylbenzene.
+research.header.hc_cracking.2=Styrene Production
+
+research.hydrogen_cyanide=Hydrogen Cyanide
+research.text.hydrogen_cyanide.1=Methane is not really useful, you thought. But you needed something dangerous.@
 You found an interesting thing. When ammonia, methane and oxygen are combined with presence of platinum and high temperature, they burn, leaving not carbon dioxide and nitrogen oxides, but a weak acid you called hydrogen cyanide. It is probably most poisonous compound you've ever seen, able to kill anyone in several seconds. But you're sure there is another usage for it...
-research.text.acrylonitrile=Hydrogen cyanide you obtained a while ago is useful not only as a poison.@
+
+research.acrylonitrile=Acrylonitrile
+research.text.acrylonitrile.1=Hydrogen cyanide you obtained a while ago is useful not only as a poison.@
 In fact, it has an ability to mix with organic chemicals, which are mostly inert, to create some new materials. You mixed the acid with acetylene and got a whitish compound, which is not that useful as a fluid but probably very durable when crystallized.@
 You called the compound 'acrylonitrile'.
-research.text.hydrocarbonschlorination=You were performing some chemical reactions with chlorine on non-organic compounds. Now you have petrochemicals obtained from crack, and you think if it is possible to perform similar reactions on them.@
+
+research.chlorination.advanced=Chlorination II
+research.text.chlorination.advanced.1=You were performing some chemical reactions with chlorine on non-organic compounds. Now you have petrochemicals obtained from crack, and you think if it is possible to perform similar reactions on them.@
 And after some deep research you were able to say yes! You found a way to chlorinate ethylene with hydrogen chloride to obtain a somewhat poisonous fluid you've named chloroethane. However, you needed a more complicated catalyst than you mostly use, but it did the trick.
-research.text.ethylbenzene=You had found some notes about the chloroethane and you thought they might be useful.@
+
+research.ethylbenzene=Ethylbenzene
+research.text.ethylbenzene.1=You had found some notes about the chloroethane and you thought they might be useful.@
 "Yeah, that chloroethane is obviously a very interesting fluid. But it doesn't work. Really. It is absolutely useless, I can't find any purpose for it.@
 I guess, I've just figured out something amazing. Seems that combining chloroethane with benzene with presence of catalyst - aluminium chloride - yields surprising results. The hydrogen chloride gets returned to me, and also I get a product called ethylbenzene which must lead me to new plastic.@
 In fact, these two reactions use hydrogen chloride as a catalyst, and isn't it possible to simply combine ethylene and benzene for performing the reaction?.."
-research.text.abspc="I've suddenly found the ideal proportions for this reaction... X of acrylonitrile, Y of butadiene and a lot of styrene..." - it is a page from an old diary of some chemist. Nothing more was saved from the destructive nature of world. Yeah, X and Y weren't saved, too.@
+
+research.abs_plastic=ABS Plastics
+research.text.abs_plastic.1="I've suddenly found the ideal proportions for this reaction... X of acrylonitrile, Y of butadiene and a lot of styrene..." - it is a page from an old diary of some chemist. Nothing more was saved from the destructive nature of world. Yeah, X and Y weren't saved, too.@
 But it was enough for you, and after some trial and error you found these proportions.@
 It is 8 parts of styrene, 4 parts of butadiene and 5 parts of acrylonitrile.@
 This compound will definitely be very useful in your further progressions.
 
+# SystemInfo
+research.chapter.systeminfo=Research System
+
 research.research_revealing=Research Improvements
 research.text.revealing.1=Research Table has a huge con: it doesn't show if research is done correctly. But after slight researching of the research table, you found a way to fix it.@
 Now research table will enlighten all aspects connected to the Master one, including Master, greatly simplifying work with it.
+
+research.aspects=Aspects
+research.text.aspects.1 @1=Most researches cannot be obtained without the Research Table, which in turn is absolutely useless on its own.@
+Researchers found a way to contain most of world information in items they called Aspects. They definitely cannot exist outside the Research Table, but can help one researching inside it. They have to be linked in order to function - two aspects in table can be linked if they're adjacent to each other and one of them is a direct compound of another.@
+The following @1 pages show all aspects and their derivatives for the compound ones.
+
+research.research_node=Research Node Controller
+research.text.research_node.1=The Research Node is a wonderful multiblock structure. As the name suggests, it is used for some research-related things.@
+Research Node has several functions:@
+* Right-clicking it with Ink Cell or Paper Sheet will place it inside, giving 100 Ink points per cell or 1 Paper point per sheet. Paper points and Ink points are shared between all your Research Nodes.@
+* It is required for construction of Research Table and probably some other structures.@
+* When right-clicked with empty hand, it shows amount of Paper and Ink inside player storage.
+
+research.research_table=Research Table
+research.text.research_table.1=Research Table is the main way to unlock researches. To research something you need to obtain Research Notes from book and then connect all aspects to a single chain. When all aspects on Research Notes are connected into single chain, it is replaced by Discovery which can be right-clicked to earn research.@
+In order to function, the table has to be installed on top block of Research Node.

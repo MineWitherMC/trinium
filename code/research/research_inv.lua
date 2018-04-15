@@ -82,7 +82,6 @@ local function draw_connection(x1, y1, x2, y2)
 	else
 		if x1 > x2 then
 			x1, x2 = x2, x1
-		else
 			y1, y2 = y2, y1
 		end
 		return ("background[%s,%s;%s,%s;research_connector_dd.png]")
@@ -117,7 +116,8 @@ local function get_book_chapter_fs(chapterid, pn, cx, cy)
 					item_image_button[%s,%s;1,1;trinium:researchicon___%s___%s;research~research_open~%s;]
 				]=]):format(v.x - cx, v.y - cy, texture, v.number, k)
 			end
-		elseif table.every(v.requirements, function(a) return res.player_stuff[pn].researches[a] end) and not v.hidden then
+		elseif table.every(v.requirements, function(a) return res.researches[a].pre_unlock or 
+				res.player_stuff[pn].researches[a] end) and not v.hidden then
 			-- Obtainable research sheet
 			for k1,v1 in pairs(v.requirements) do
 				if res.researches_by_chapter[chapterid][v1] then
@@ -225,9 +225,9 @@ function book:on_player_receive_fields(player, context, fields)
 	if fields.quit then return end
 	local pn = player:get_player_name()
 	for k,v in pairs(fields) do
-		if k == "key_up" and context.book:split"~"[1] == "chapter" then
+		if k == "key_up" then
 			context.book_y = context.book_y - 1
-		elseif k == "key_down" then
+		elseif k == "key_down" and context.book:split"~"[1] == "chapter" then
 			context.book_y = context.book_y + 1
 		else
 			local ksplit = k:split"~" -- Module, action, parameters

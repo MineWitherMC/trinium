@@ -1,5 +1,6 @@
 local S = trinium.S
 local pulse = trinium.pulsenet
+local M = trinium.materials.materials
 
 local function generate_buttons(ctrlpos, index, search)
 	local meta = minetest.get_meta(ctrlpos)
@@ -28,7 +29,9 @@ local function generate_buttons(ctrlpos, index, search)
 	return str
 end
 
-local function get_terminal_formspec(ctrlpos, index, searchstring) -- needs search... but i'm lazy
+local function get_terminal_formspec(ctrlpos, index, searchstring)
+	local meta = minetest.get_meta(ctrlpos)
+	local CI, UI, CT, UT = meta:get_int"capacity_items", meta:get_int"used_items", meta:get_int"capacity_types", meta:get_int"used_types" 
 	return ([[
 		size[8,12]
 		bgcolor[#080808BB;true]
@@ -43,7 +46,9 @@ local function get_terminal_formspec(ctrlpos, index, searchstring) -- needs sear
 		button[6,11;1,1;pulseterm~send_search;>>]
 		field_close_on_enter[pulseterm~search;false]
 		%s
-	]]):format(searchstring, generate_buttons(ctrlpos, index, searchstring))
+		textarea[5.25,5.7;3,1;;;%s]
+	]]):format(searchstring, generate_buttons(ctrlpos, index, searchstring), 
+			S("gui.terminal.types @1@2", UT, CT).."\n"..S("gui.terminal.items @1@2", UI, CI))
 end
 
 minetest.register_node("trinium:pulsenet_terminal", {
@@ -141,3 +146,8 @@ minetest.register_node("trinium:pulsenet_terminal", {
 		end
 	end,
 })
+
+trinium.register_recipe("trinium:crafting_wizard",
+	{"PMP SCS PWP", P = M.abs:get("plate"), M = "trinium:module_display", W = "trinium:module_wireless",
+		C = "trinium:casing_pulsenet", S = "trinium:module_storage"},
+	{"trinium:pulsenet_terminal"})

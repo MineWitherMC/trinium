@@ -12,6 +12,8 @@ material.type.brick @1=Кирпич из @1
 material.type.ore @1=Руда @1
 material.type.pulp @1=Порошок @1
 material.type.catalyst @1=Катализатор из @1
+material.type.foil @1=Фольга из @1
+material.type.wire @1=Проволока из @1
 
 material.al2o3=глинозёма
 material.fe2o3=триоксида железа
@@ -48,6 +50,11 @@ material.acrylonitrile=акрилонитрила
 material.abs.compound=смеси ABS
 material.abs=ABS-пластика
 
+material.fluixine_silicide=флаиксосилицида
+material.sodium_fluix_silicide=флаиксосилицида натрия
+
+material.glass=стекла
+
 material.paper=бумаги
 material.carton=картона
 material.parchment=пергамента
@@ -61,6 +68,8 @@ material.oil.diesel=дизеля
 
 material.item.empty_cell=Пустая капсула
 material.item.stardust=Звёздная пыль
+material.item.brick=Кирпич
+material.item.clay_ball=Глина
 
 material.catalyst.pyrolysis=пирокатализатора
 material.catalyst.xp=затвердевшего опыта
@@ -69,6 +78,9 @@ material.forcirium=форцириума
 material.forcirium.imbued=заряженного форцириума
 material.endium=эндиума
 
+material.element.na=натрия
+material.element.al=алюминия
+material.element.si=кремния
 material.element.ti=титана
 material.element.fe=железа
 material.element.ni=никеля
@@ -80,6 +92,8 @@ material.element.pt=платины
 material.alloy.rhenium=рениевого сплава
 material.alloy.cupronickel=купроникеля
 material.alloy.silver=серебряного сплава
+material.alloy.pulsating=пульсирующего сплава
+material.alloy.bronze=бронзы
 
 material.coal=угля
 material.antracite=антрацита

@@ -1,5 +1,6 @@
 local research = trinium.res
 local S = trinium.S
+local M = trinium.materials.materials
 
 local function get_table_formspec(mode, pn, real_research, aspect_key)
 	aspect_key = aspect_key or 0
@@ -391,6 +392,10 @@ minetest.register_node("trinium:machine_research_table", {
 		end
 	end,
 })
+trinium.register_recipe("trinium:crafting_wizard",
+	{"SSR __R AGA", 
+		A = M.antracite:get("brick"), S = M.silver:get("plate"), R = M.copper:get("rod"), G = M.glass:get("plate")},
+	{"trinium:machine_research_table"})
 
 trinium.register_multiblock("research table", {
 	width = 0,

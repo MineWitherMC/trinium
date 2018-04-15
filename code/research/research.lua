@@ -114,6 +114,10 @@ function res.register_research(name, def)
 	if (minetest.registered_items[def.texture].tiles or "") ~= "" then
 		tbl.tiles = minetest.registered_items[def.texture].tiles
 	end
+	if minetest.registered_items[def.texture].node_box then
+		tbl.node_box = minetest.registered_items[def.texture].node_box
+		tbl.drawtype = "nodebox"
+	end
 	local function1 = tbl.tiles and minetest.register_node or minetest.register_craftitem
 	function1(("trinium:researchicon___%s___%s"):format(texture, i), tbl)
 

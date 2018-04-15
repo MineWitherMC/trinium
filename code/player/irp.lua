@@ -89,7 +89,7 @@ function trinium.absolute_draw_recipe(recipes, rec_id)
 	local method = trinium.recipes.craft_methods[recipe.type]
 
 	local formspec = ("%slabel[0,0;%s]"):format(method.formspec_begin(recipe.data), method.formspec_name)
-	local itemname, amount, x, y, arr
+	local itemname, amount, x, y, arr, chance
 	for i = 1, method.input_amount do
 		amount = nil
 		if recipe.inputs[i] then
@@ -100,19 +100,19 @@ function trinium.absolute_draw_recipe(recipes, rec_id)
 		end
 		x, y = method.get_input_coords(i)
 		formspec = formspec..("item_image_button[%s,%s;1,1;%s;irp~view_recipe~%s;%s]"):format(x, y, 
-				itemname, itemname, amount or "")
+				itemname, itemname, amount ~= 1 and amount ~= "1" and amount or "" or "")
 	end
 	for i = 1, method.output_amount do
-		amount = nil
+		chance, amount = nil, nil
 		if recipe.outputs[i] then
 			arr = recipe.outputs[i]:split" "
-			itemname, amount = unpack(arr)
+			itemname, amount, chance = unpack(arr)
 		else
 			itemname = ""
 		end
 		x, y = method.get_output_coords(i)
-		formspec = formspec..("item_image_button[%s,%s;1,1;%s;irp~view_recipe~%s;%s]"):format(x, y, 
-				itemname, itemname, amount or "")
+		formspec = formspec..("item_image_button[%s,%s;1,1;%s;irp~view_recipe~%s;%s]"):format(x, y, itemname, itemname, 
+				table.fconcat({amount ~= 1 and amount ~= "1" and amount or nil, chance and chance.." %" or nil}, "\n"))
 	end
 
 	return formspec, method.formspec_width, method.formspec_height, max, id
@@ -129,9 +129,9 @@ function trinium.draw_recipe(item, player, rec_id, tbl1, rec_method, tbl)
 end
 
 local R = trinium.recipes.recipes
-function trinium.draw_research_recipe(item)
-	local x = {trinium.absolute_draw_recipe(R[item], 1)}
-	return x[1]
+function trinium.draw_research_recipe(item, num)
+	local x = {trinium.absolute_draw_recipe(R[item], num or 1)}
+	return x[1], x[2], x[3]
 end
 
 local function get_formspec(player, id, item, mode)
