@@ -132,3 +132,5 @@ gui.info.connector.already_connected=Slave already connected!
 gui.terminal.types @1@2=@1/@2 types
 gui.terminal.items @1@2=@1/@2 items
 item.pulsenet.connector.desc @1@2@3=Bound to Controller at (@1, @2, @3)
+
+info.unknown=Unknown Item
