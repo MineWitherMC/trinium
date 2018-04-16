@@ -2,10 +2,12 @@
 
 tool.type.axe @1=Топор из @1
 tool.type.shovel @1=Лопата из @1
+tool.type.pickaxe @1=Кирка из @1
 
 tool.material.rock=камня
 tool.material.bronze=бронзы
 tool.material.iron=железа
+tool.material.imbforce=заряженного форцириума
 
 tool.rod.stick=Деревянный
 tool.rod.copper=Медный

@@ -355,6 +355,8 @@ function trinium.register_recipe(method, inputs, outputs, data)
 	inputs = method_table.process_inputs(inputs)
 	outputs = method_table.process_outputs(outputs)
 	data = method_table.process_data(data)
+	
+	if inputs == -1 or outputs == -1 or data == -1 then return end
 	assert(trinium.validate({input = inputs, output = outputs, data = data}, {input = "table", output = "table", data = "table"}))
 
 	-- Redoing all the redirects

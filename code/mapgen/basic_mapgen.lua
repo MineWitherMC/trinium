@@ -8,10 +8,14 @@ minetest.register_node("trinium:block_cobble", {
 minetest.register_node("trinium:block_stone", {
 	tiles = {"stone.png"},
 	description = S"node.stone",
-	groups = {stone = 1, harvested_by_pickaxe = 4},
+	groups = {stone = 1, harvested_by_pickaxe = 3},
 	drop = "trinium:block_cobble",
 })
 minetest.register_alias("mapgen_stone", "trinium:block_stone")
+trinium.register_recipe("trinium:furnace", 
+	{"trinium:block_cobble"}, 
+	{"trinium:block_stone"}, 
+	{time = 5})
 
 -- Dirt
 minetest.register_node("trinium:block_dirt", {
@@ -25,7 +29,7 @@ minetest.register_alias("mapgen_dirt", "trinium:block_dirt")
 minetest.register_node("trinium:block_sand", {
 	tiles = {"sand.png"},
 	description = S"node.sand",
-	groups = {harvested_by_shovel = 4, falling_node = 1},
+	groups = {harvested_by_shovel = 3, falling_node = 1},
 })
 minetest.register_alias("mapgen_sand", "trinium:block_sand")
 
@@ -153,8 +157,11 @@ minetest.register_node("trinium:block_clay", {
 	description = S"node.clay",
 	groups = {harvested_by_shovel = 2},
 	drop = {
-		{items = "trinium:material_ball_clay 3", rarity = 1}, 
-		{items = "trinium:material_ball_clay", rarity = 2}, 
-		{items = "trinium:material_ball_clay", rarity = 4}, 
+		-- max_items = 3,
+		items = {
+			{items = {"trinium:material_ball_clay 3"}, rarity = 1}, 
+			{items = {"trinium:material_ball_clay"}, rarity = 2}, 
+			{items = {"trinium:material_ball_clay"}, rarity = 4},
+		},
 	},	
 })

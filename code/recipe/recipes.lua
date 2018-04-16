@@ -1,1 +1,0 @@
-trinium.register_recipe("trinium:furnace", {"trinium:block_cobble"}, {"trinium:block_stone"}, {time = 5})

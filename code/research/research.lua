@@ -66,6 +66,7 @@ function res.register_research(name, def)
 	else
 		if type(def.color) == "table" then
 			def.color = ("%x"):format(def.color[1] * 256 * 256 + def.color[2] * 256 + def.color[3])
+			while #def.color < 6 do def.color = "0"..def.color end
 		end
 		
 		assert(trinium.validate(def, {
@@ -165,7 +166,7 @@ function res.grant(pn, research)
 	minetest.chat_send_player(pn, S("gui.info.granted @1@2", res.researches[research].name, pn))
 end
 
-function res.grant_force(pn, research, rn)
+function res.grant_force(pn, research)
 	for _,k in pairs(res.researches[research].requirements) do
 		if not res.player_stuff[pn].researches[k] then
 			res.grant_force(pn, k)

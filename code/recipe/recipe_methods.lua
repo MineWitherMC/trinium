@@ -37,16 +37,20 @@ trinium.register_recipe_handler("trinium:drop", {
 	
 	process_outputs = function(outputs)
 		if type(outputs[1]) == "string" then return outputs end
-		local outputs1 = table.copy(outputs[1])
+		local outputs1 = {}
 		
-		table.walk(outputs1, function(v, k)
-			if type(v) == "table" then
-				outputs1[k] = v.items.." "..(#v.items:split(" ") == 1 and "1 " or "")
-					..(math.floor(10000 / (v.rarity or 1)) / 100)
+		table.walk(outputs, function(v, k)
+			if type(v) == "string" then
+				table.insert(outputs1, v)
+			else
+				table.walk(v.items, function(v1)
+					table.insert(outputs1, v1..(#(v1:split(" ")) == 1 and " 1" or "")..
+							" "..math.ceil(10000 / v.rarity) / 100)
+				end)
 			end
 		end)
 		
-		return outputs1
+		return #outputs1 > 9 and -1 or outputs1
 	end,
 })
 

@@ -22,6 +22,11 @@ if trinium.creative_mode then
 			damage_groups = {fleshy = 10},
 		}
 	})
+	minetest.register_on_joinplayer(function(player)
+		if not minetest.check_player_privs(player, {fly = true}) then
+			minetest.set_player_privs(player:get_player_name(), {fly = true})
+		end
+	end)
 else
 	minetest.register_item(":", {
 		type = "none",

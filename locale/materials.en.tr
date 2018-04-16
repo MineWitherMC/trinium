@@ -86,6 +86,7 @@ material.element.fe=Iron
 material.element.ni=Nickel
 material.element.cu=Copper
 material.element.ag=Silver
+material.element.sn=Tin
 material.element.re=Rhenium
 material.element.pt=Platinum
 

@@ -2,10 +2,12 @@
 
 tool.type.axe @1=@1 Axe
 tool.type.shovel @1=@1 Shovel
+tool.type.pickaxe @1=@1 Pickaxe
 
 tool.material.rock=Stone
 tool.material.bronze=Bronze
 tool.material.iron=Iron
+tool.material.imbforce=Imbued Forcirium
 
 tool.rod.stick=Stick
 tool.rod.copper=Copper

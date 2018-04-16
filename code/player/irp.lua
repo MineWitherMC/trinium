@@ -118,7 +118,7 @@ function trinium.absolute_draw_recipe(recipes, rec_id)
 	return formspec, method.formspec_width, method.formspec_height, max, id
 end
 
-function trinium.draw_recipe(item, player, rec_id, tbl1, rec_method, tbl)
+function trinium.draw_recipe(item, player, rec_id, tbl1, rec_method)
 	local recipes = tbl1[item]
 	if not recipes then return "", 0, 0, 0 end
 	recipes = table.remap(table.filter(recipes, function(v1)

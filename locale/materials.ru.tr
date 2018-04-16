@@ -86,6 +86,7 @@ material.element.fe=железа
 material.element.ni=никеля
 material.element.cu=меди
 material.element.ag=серебра
+material.element.sn=олова
 material.element.re=рения
 material.element.pt=платины
 

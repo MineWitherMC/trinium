@@ -126,7 +126,7 @@ minetest.register_globalstep(function(dtime)
         end
 		
 		local stack = player:get_wielded_item()
-		if stack:get_name() ~= player_to_cwield[player] then
+		if stack:to_string() ~= player_to_cwield[player] then
 			if stack:is_empty() then
 				player:hud_change(player_to_id_current_item[player], "text", "")
 			elseif not stack:is_known() then
@@ -138,7 +138,7 @@ minetest.register_globalstep(function(dtime)
 				player:hud_change(player_to_id_current_item[player], "text", 
 						minetest.registered_items[stack:get_name()].description:split("\n")[1] or "???")
 			end
-			player_to_cwield[player] = stack:get_name()
+			player_to_cwield[player] = stack:to_string()
 		end
     end
 end)

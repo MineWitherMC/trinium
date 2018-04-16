@@ -14,11 +14,6 @@ function mat.register_interaction(name, def)
 	mat.material_interactions[name] = def
 end
 
-function mat.get_material(name)
-	local a = select(3, unpack(name:split("_")))
-	return table.concat({a}, "_")
-end
-
 mat.elements = {}
 mat.materials_reg = {}
 
@@ -32,7 +27,7 @@ function mat.add_data_generator(name, callback) mat.data_generators[name] = call
 function mat.add_recipe_generator(name, callback) mat.recipe_generators[name] = callback end
 
 function mat.new_material(name, def)
-	local name = def.name or name
+	name = def.name or name
 	if not def.formula_string and def.formula then
 		local fs = ""
 		for i = 1, #def.formula do

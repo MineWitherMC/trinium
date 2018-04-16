@@ -16,11 +16,18 @@ ts.register_tool_material(M.bronze:get("ingot"), {
 	time_mult = 24,
 })
 
-ts.register_tool_material(M.bronze:get("ingot"), {
+ts.register_tool_material(M.iron:get("ingot"), {
 	name = S"tool.material.iron",
 	durability = 70,
 	level = 1,
 	time_mult = 22,
+})
+
+ts.register_tool_material(M.forcirium2:get("ingot"), {
+	name = S"tool.material.imbforce",
+	durability = 200,
+	level = 3,
+	time_mult = 80,
 })
 
 ts.register_tool_rod("trinium:stick", {
