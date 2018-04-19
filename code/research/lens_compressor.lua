@@ -43,7 +43,7 @@ minetest.register_node("trinium:machine_lens_curver", {
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		trinium.initialize_inventory(inv, {lens = 1, gem = 4, metal = 4, press = 1, upgrade = 1})
-		meta:set_string("infotext", is_constructed and "" or S"gui.info.multiblock_not_assembled")
+		meta:set_string("infotext", S"gui.info.multiblock_not_assembled")
 	end,
 	allow_metadata_inventory_move = function(pos, list1, index1, list2, index2, stacksize, player)
 		return list1 == list2 and stacksize or 0

@@ -76,13 +76,14 @@ function table.keys(t)
 	return keys
 end
 
-local function iterator(callback)
+function trinium.iterator(callback)
 	return function(max, current)
 		if max == current then return end
 		current = current + 1
 		return callback(current)
 	end
 end
+local iterator = trinium.iterator
 
 function table.asort(t, callable)
 	callable = callable or function(a, b) return a < b end
@@ -183,6 +184,23 @@ function trinium.setting_get(name, default)
 	return s
 end
 
+function trinium.roman_number(a)
+	local one = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"}
+	local ten = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"}
+	local hun = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"}
+	local k = a
+	local str = ""
+	while k >= 1000 do
+		k = k - 1000
+		str = str.."M"
+	end
+	
+	str = str..hun[(k - k % 100)/100 + 1]
+	str = str..ten[(k % 100 - k % 10)/10 + 1]
+	str = str..one[k % 10 + 1]
+	return str
+end
+
 function vector.stringify(v)
 	return v.x..","..v.y..","..v.z
 end
@@ -205,6 +223,18 @@ function trinium.lograndom(a1, b1) -- more similar to normal
 		return lr1
 	end
 	return 2 + 0.33 * math.log(1 / math.random() - 1) / trinium.ln2
+end
+
+function trinium.weighted_random(mas, func)
+	func = func or math.random
+	local j = table.sum(mas)
+	local k = func(1, j)
+	local i = 1
+	while k > mas[i] do
+		k = k - mas[i]
+		i = i + 1
+	end
+	return i
 end
 
 function trinium.formspec_restore(str)
@@ -622,4 +652,100 @@ end
 function trinium.get_color_facedir(pos) -- n from 0 to 7
 	local node = minetest.get_node(pos)
 	return math.floor(node.param2 / 32)
+end
+
+-- Datamesh - somewhat like hash tables from JS
+trinium.DataMesh = {}
+local DataMesh = trinium.DataMesh
+
+function DataMesh:new()
+	local dm = setmetatable({}, {__index = DataMesh})
+	dm._data = {}
+	return dm
+end
+
+function DataMesh:data(b)
+	if b then
+		self._data = b
+		return self
+	else
+		return self._data
+	end
+end
+
+function DataMesh:filter(func)
+	for k, v in pairs(self._data) do
+		if not func(v, k) then
+			self._data[k] = nil
+		end
+	end
+	return self
+end
+
+function DataMesh:map(func)
+	for k, v in pairs(self._data) do
+		self._data[k] = func(v, k)
+	end
+	return self
+end
+
+function DataMesh:forEach(func)
+	for k, v in pairs(self._data) do
+		func(v, k)
+	end
+	return self
+end
+
+function DataMesh:exists(func)
+	return table.exists(self._data, func)
+end
+
+function DataMesh:serialize()
+	return minetest.serialize(self._data)
+end
+
+function DataMesh:copy()
+	local dm = DataMesh:new()
+	dm._data = table.copy(self._data)
+	return dm
+end
+
+function DataMesh:push(val)
+	table.insert(self._data, val)
+	return self
+end
+
+-- is it needed? well...
+function trinium.advanced_search(begin, serialize, vertex)
+	local dm = DataMesh:new()
+	local dd = dm._data
+	local used = {}
+	local operation = {[begin] = 1}
+	local underoperation
+	local step = 0
+	local finished = false
+	repeat
+		finished = true
+		underoperation = {}
+		step = step + 1
+		for v in pairs(operation) do
+			if not used[serialize(v)] then
+				used[serialize(v)] = 1
+				if step > 1 then
+					table.insert(dd, {v, step})
+				end
+				finished = false
+				for v1 in pairs(vertex(v)) do
+					underoperation[v1] = 1
+				end
+			end
+		end
+
+		operation = table.copy(underoperation)
+	until finished
+	return dm
+end
+
+function trinium.search(begin, serialize, vertex)
+	return trinium.advanced_search(begin, serialize, vertex):map(function(r) return r[1] end)
 end

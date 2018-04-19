@@ -165,3 +165,23 @@ minetest.register_node("trinium:block_clay", {
 		},
 	},	
 })
+minetest.register_ore{
+	ore_type = "blob",
+	ore = "trinium:block_clay",
+	wherein = "trinium:block_stone",
+	clust_scarcity = 135,
+	clust_num_ores = 7,
+	clust_size = 4,
+	y_min = -200,
+	y_max = 64,
+	flags = "",
+	noise_threshold = 0.5,
+	noise_params = {
+		offset = 0,
+		scale = 1,
+		spread = {x = 100, y = 100, z = 100},
+		seed = 226,
+		octaves = 3,
+		persist = 0.7
+	},
+}

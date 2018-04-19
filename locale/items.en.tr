@@ -33,3 +33,9 @@ item.module_power=Power Module
 item.module_wireless=Wireless Module
 item.module_storage=Storage Module
 item.module_display=Display Module
+
+item.scanner=Portable Scanner
+
+item.bonemeal_wand=Bone Meal Staff
+item.seeds @1=Seeds of @1
+item.ingridient.loremipsum=Lorem Ipsum Grass

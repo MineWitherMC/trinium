@@ -1,5 +1,5 @@
 local speed = 100
-local caps = {times = {speed, speed, speed, speed}, uses = 0, maxlevel = 456}
+local caps = {times = {speed, speed, speed}, uses = 0, maxlevel = 456}
 
 trinium.creative_mode = minetest.settings:get_bool"creative_mode"
 if trinium.creative_mode then
@@ -23,9 +23,9 @@ if trinium.creative_mode then
 		}
 	})
 	minetest.register_on_joinplayer(function(player)
-		if not minetest.check_player_privs(player, {fly = true}) then
-			minetest.set_player_privs(player:get_player_name(), {fly = true})
-		end
+		local privs = minetest.get_player_privs(player:get_player_name())
+		privs.fly = 1
+		minetest.set_player_privs(player:get_player_name(), privs)
 	end)
 else
 	minetest.register_item(":", {

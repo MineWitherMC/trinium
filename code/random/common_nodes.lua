@@ -11,7 +11,7 @@ minetest.register_node("trinium:block_reflector_glass", {
 
 -- Lamp Frame
 minetest.register_node("trinium:block_lamp_frame", {
-	tiles = {"lamp_frame_32.png"},
+	tiles = {"lamp_frame_single.png"},
 	description = S"node.lamp.frame",
 	drawtype = "glasslike",
 	groups = {harvested_by_pickaxe = 2},

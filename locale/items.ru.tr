@@ -33,3 +33,9 @@ item.module_power=Энергетический модуль
 item.module_wireless=Модуль беспроводной связи
 item.module_storage=Модуль хранения
 item.module_display=Дисплейный модуль
+
+item.scanner=Портативный сканер
+
+item.bonemeal_wand=Жезл костяной муки
+item.seeds @1=Семена @1
+item.ingridient.loremipsum=Трава Lorem Ipsum

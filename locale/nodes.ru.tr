@@ -65,3 +65,12 @@ node.rock=Камень
 node.stick=Палка
 
 node.tool_station=Верстак для инструментов
+
+node.cable=Кабель
+node.cable_emitter=Статический излучатель
+node.signal_lamp=Динамическая лампа
+
+node.herb.sprout @1=Росток @1
+node.herb.shoot @1=Побег @1
+node.herb.flower @1=Цветок @1
+node.herb.loremipsumgrass=травы Lorem Ipsum

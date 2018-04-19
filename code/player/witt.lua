@@ -54,6 +54,7 @@ end
 
 local function handle_tiles(node)
     local tiles = node.tiles
+    local overlay_tiles = node.overlay_tiles
 
     if tiles then
         for i,v in pairs(tiles) do
@@ -63,6 +64,29 @@ local function handle_tiles(node)
                 else
                     return ""
                 end
+            end
+        end
+
+        if overlay_tiles then
+            if #tiles < 6 then
+                for i = #tiles + 1, 6 do
+                    tiles[i] = tiles[#tiles]
+                end
+            end
+            if #overlay_tiles < 6 then
+                for i = #overlay_tiles + 1, 6 do
+                    overlay_tiles[i] = overlay_tiles[#overlay_tiles]
+                end
+            end
+            for i = 1, #overlay_tiles do
+                if type(overlay_tiles[i]) == "table" then
+                    if overlay_tiles[i].name then
+                        overlay_tiles[i] = overlay_tiles[i].name
+                    else
+                        return "aspect_tempus.png"
+                    end
+                end
+                tiles[i] = "("..tiles[i]..")^("..overlay_tiles[i]..")"
             end
         end
 

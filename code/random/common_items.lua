@@ -41,3 +41,13 @@ trinium.register_recipe("trinium:precision_assembler",
 	{M.silver:get("plate"), M.diamond:get("gem"), M.silver_alloy:get("wire", 8)},
 	{"trinium:module_display 4"},
 	{tier = 1, pressure = 50, time = 75})
+
+minetest.register_craftitem("trinium:item_scanner", {
+	inventory_image = "scanner.png",
+	description = S"item.scanner",
+	stack_max = 1,
+    on_place = function(item, player, pointed_thing)
+        local node = minetest.get_node(pointed_thing.under)
+		cmsg.push_message_player(player, "Name: "..node.name.."\nParam1: "..node.param1.."\nParam2: "..node.param2)
+	end,
+})

@@ -63,3 +63,12 @@ node.rock=Rock
 node.stick=Stick
 
 node.tool_station=Tool Station
+
+node.cable=Cable
+node.cable_emitter=Static Emitter
+node.signal_lamp=Dynamic Lamp
+
+node.herb.sprout @1=Sprout of @1
+node.herb.shoot @1=Shoot of @1
+node.herb.flower @1=Flower of @1
+node.herb.loremipsumgrass=Lorem Ipsum Grass

@@ -150,36 +150,63 @@ function res.register_research(name, def)
 end
 
 function res.grant(pn, research)
-	for _,k in pairs(res.researches[research].requirements) do
-		if not res.player_stuff[pn].researches[k] then
-			minetest.chat_send_player(pn, S"gui.info.unknown_research")
-			return
+	if res.researches[research].requirements then
+		for _,k in pairs(res.researches[research].requirements) do
+			if not res.player_stuff[pn].researches[k] then
+				minetest.chat_send_player(pn, S"gui.info.unknown_research")
+				return
+			end
 		end
 	end
-	for k in pairs(res.chapters[res.researches[research].chapter].requirements) do
-		if not res.player_stuff[pn].researches[k] then
-			minetest.chat_send_player(pn, S"gui.info.unknown_chapter")
-			return
+	if res.chapters[res.researches[research].chapter].requirements then
+		for k in pairs(res.chapters[res.researches[research].chapter].requirements) do
+			if not res.player_stuff[pn].researches[k] then
+				minetest.chat_send_player(pn, S"gui.info.unknown_chapter")
+				return
+			end
 		end
 	end
 	res.player_stuff[pn].researches[research] = 1
 	minetest.chat_send_player(pn, S("gui.info.granted @1@2", res.researches[research].name, pn))
 end
 
-function res.grant_force(pn, research)
-	for _,k in pairs(res.researches[research].requirements) do
-		if not res.player_stuff[pn].researches[k] then
-			res.grant_force(pn, k)
+function res.grant_force(pn, research1)
+	local research = research1:split"__"[1]
+	if res.researches[research].requirements then
+		for _,k in pairs(res.researches[research].requirements) do
+			if not res.player_stuff[pn].researches[k] then
+				res.grant_force(pn, k)
+			end
 		end
 	end
-	for k in pairs(res.chapters[res.researches[research].chapter].requirements) do
-		if not res.player_stuff[pn].researches[k] then
-			res.grant_force(pn, k)
+	if res.chapters[res.researches[research].chapter].requirements then
+		for k in pairs(res.chapters[res.researches[research].chapter].requirements) do
+			if not res.player_stuff[pn].researches[k] then
+				res.grant_force(pn, k)
+			end
 		end
 	end
 	res.player_stuff[pn].researches[research] = 1
+	res.player_stuff[pn].researches[research1] = 1
 	minetest.chat_send_player(pn, S("gui.info.force_granted @1@2", res.researches[research].name, pn))
 end
+core.register_privilege("researchgrant", {
+	description = "Can use /research and /research_me commands",
+	give_to_singleplayer = false,
+})
+
+minetest.register_chatcommand("research_me", {
+	params = "<research>",
+	description = "Give research to activator",
+	privs = {researchgrant=1},
+	func = function(name, param)
+		if res.researches[param] then
+			res.grant_force(name, param)
+		else
+			minetest.chat_send_player(pn, S("gui.info.unknown_research @1", param))
+		end
+	end,
+})
 
 function res.register_aspect(name, def)
 	def.req1 = def.req1 or "NULL"

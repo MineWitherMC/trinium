@@ -82,6 +82,7 @@ gui.info.no_ink=Insufficient Ink!
 gui.info.no_paper=Insufficient Paper!
 gui.info.use_notes=You already have these research notes!
 gui.info.no_diamond_dust=Insufficient Diamond Dust!
+gui.info.unknown_research @1=Unknown Research "@1"!
 
 gui.info.abacus @1@2=@1 aspect: @2@n
 gui.info.research_node @1@2=Paper available: @1; Ink available: @2

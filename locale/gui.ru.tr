@@ -82,6 +82,7 @@ gui.info.no_ink=Недостаточно чернил!
 gui.info.no_paper=Недостаточно бумаги!
 gui.info.use_notes=У вас уже есть лист с этим исследованием!
 gui.info.no_diamond_dust=Недостаточно алмазной пыли!
+gui.info.unknown_research @1=Неизвестное исследование "@1"!
 
 gui.info.abacus @1@2=@2x @1@n
 gui.info.research_node @1@2=@1 бумаги, @2 чернил
