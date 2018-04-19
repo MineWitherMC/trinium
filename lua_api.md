@@ -48,7 +48,7 @@ Table helpers
 	Table is composed like this: {{a1, b1}, {a2, b2}, ...}
 	Then, this function returns weighted average of `a_i` where weights are `b_i`.
 	Example:
-	trinium.weighted_avg({{5, 2}, {8, 1}}) => 7
+	trinium.weighted_avg({{5, 2}, {8, 1}}) => 6
 * `vector.stringify(vec)`
 	Returns `x,y,z` string which can be used in nodemeta ans as more compact
 	storage of coordinates.
@@ -60,6 +60,7 @@ Table helpers
 * `trinium.initialize_inventory(inv, arr)`
 	Initializes inventory: for all (K,V) pairs from arr inventory list K size is
 	set to V.
+* `trinium.weighted_random(mas, func)` - func is `math.random` by default
 
 String helpers
 --------------
@@ -70,8 +71,9 @@ String helpers
 * `trinium.formspec_restore(str)`
 	Reverse of `minetest.formspec_escape`.
 * `trinium.get_item_identifier(stack)`
-	Stack is of type ItemStack. Similar to stack:to_string(), but also cuts
+	Stack is of type ItemStack. Similar to `stack:to_string()`, but also cuts
 	item amount.
+* `trinium.roman_number(num)`
 	
 Recipes, Multiblocks, etc
 -------------------------
@@ -255,7 +257,15 @@ Other
 	* `max_height`
 * `trinium.pulsenet.import_to_controller(pos)` - puts controller internal item 
 	to network.
-	
+* `trinium.advanced_search(begin, serialize(item), vertex(current_item))`
+	Performs BFS on graph whose vertices connected to vertice A are in list
+	`vertex(A)`.
+	`serialize` is a function that returns item in string/etc form.
+	Returns list of `{element, step}`, where `step >= 2` - distance from begin.
+	Beginning element is not in the list.
+* `trinium.search(begin, serialize(item), vertex(item))`
+	Same as previous function, but returns list of `element` instead of pairs.
+
 ### Recipe Method
 Recipe Method is a table with following keys:
 * `input_amount`
@@ -309,3 +319,17 @@ Multiblock Definition is a table with following keys:
 	This function is called when multiblock checking tick is done.
 	`is_constructed` is a boolean which is true if map is checked.
 	`region` format is the same as with activator.
+
+### DataMesh
+DataMesh is a table that can have chained methods.
+The possible methods are:
+* `new()`
+* `data()` - gets data
+* `data(smth)` - sets data
+* `filter(func(v, k))`
+* `map(func(v, k))`
+* `forEach(func(v, k))`
+* `exists(func(v, k))`
+* `serialize()`
+* `copy()`
+* `push(element)`

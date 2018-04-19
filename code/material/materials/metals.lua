@@ -80,7 +80,6 @@ M.silver_alloy = materials.new_material("silver_alloy", {
 	description = S"material.alloy.silver",
 	data = {melting_point = 1563},
 }):generate_interactions():generate_recipe("trinium:alloysmelting_tower"):generate_recipe("trinium:crude_alloyer")
-trinium.dump(materials.materials_reg.silver_alloy.color_string)
 
 -- Bronze
 M.bronze = materials.new_material("bronze", {
