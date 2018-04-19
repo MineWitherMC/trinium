@@ -23,36 +23,42 @@ gui.encode=Encode
 gui.info.no_patterns=Insufficient patterns!
 gui.info.extract_pattern=Extract encoded pattern to continue!
 
+gui.time @1=@1 Seconds
+gui.tier @1=Tier: @1
+gui.pressure @1=Min. Pressure: @1 Bar
+gui.velocity @1=Minimum Velocity: @1 RPM
+gui.base_sg_t @1=@1 SG/t Base
+
 gui.recipe_method.furnace=Smelting
-gui.furnace.time @1=@1 Seconds
 gui.recipe_method.block_drop=Block Drops
-gui.max_drop @1=@1 max
 gui.recipe_method.grinder=Grinder
 gui.recipe_method.blast_furnace=Blast Furnace
-gui.blast_furnace.temperature @1=Melting Point: @1K
 gui.recipe_method.alloy_tower=Alloysmelting Tower
-gui.alloy_tower.temperature @1=Temperature: @1K
 gui.recipe_method.implosion=Implosion
 gui.recipe_method.metal_former=Metal Former
+gui.recipe_method.mixer=Mixer
+gui.recipe_method.reconstructor=Molecular Reconstructor
+gui.recipe_method.chemreactor=Chemical Reactor
+gui.recipe_method.cracker=Cracker
+gui.recipe_method.polymerizer=Polymerizer
+gui.recipe_method.crafting=Crafting
+gui.recipe_method.precision_assembler=Precision Assembler
+gui.recipe_method.crude_compressor=Crude Compressor
+gui.recipe_method.crude_alloyer=Crude Alloyer
+
+gui.max_drop @1=@1 max
+gui.blast_furnace.temperature @1=Melting Point: @1K
+gui.alloy_tower.temperature @1=Temperature: @1K
 gui.metal_former.type @1=Method: @1
 gui.metal_former_type.bending=Bending
 gui.metal_former_type.lathing=Lathing
 gui.metal_former_type.compressing=Compressing
 gui.metal_former_type.hammering=Hammering
-gui.recipe_method.mixer=Mixer
-gui.minimum_velocity @1=Minimum Velocity: @1 RPM
-gui.recipe_method.reconstructor=Molecular Reconstructor
+gui.metal_former_type.extruding=Extruding
 gui.reconstructor.type.melting=Melting
 gui.reconstructor.type.compressing=Compressing
 gui.reconstructor.type @1=Mode: @1
-gui.base_sg_t @1=@1 SG/t Base
-gui.tier @1=Recipe Tier: @1
-gui.recipe_method.chemreactor=Chemical Reactor
 gui.no_catalyst=No catalyst needed
-gui.chemreactor.time @1=@1 Seconds
-gui.recipe_method.cracker=Cracker
-gui.recipe_method.polymerizer=Polymerizer
-gui.recipe_method.crafting=Crafting
 
 gui.lens_compressor.assemble=Assemble
 gui.info.no_resources=Insufficient resources!
@@ -70,6 +76,7 @@ gui.research_book.back=Back
 gui.research_book.pagenum @1@2@3=@1 - page @2 of @3
 gui.research_book.sub_research @1@2@3=@n@1 aspect (@2 required, @3 available)
 gui.inventory.research_book=Research Book
+gui.aspect_addition @1@2@3@4=@1 = @2 + @3@n@4
 gui.info.no_aspects=Insufficient Aspects!
 gui.info.no_ink=Insufficient Ink!
 gui.info.no_paper=Insufficient Paper!
@@ -104,7 +111,26 @@ gui.research_lens_shape.reuleauxtriangle=Reuleaux Triangle
 gui.knowledge_crystal_binding @1=Bound to @1
 gui.info.knowledge_crystal_bound @1=Successfully bound to @1!
 
-gui.recipe_method.multiblock=Мультиблок
-gui.multiblock.height @1=Текущая высота: @1
+gui.recipe_method.multiblock=Multiblock
+gui.multiblock.height @1=Current Height: @1
 
 gui.info.time_set=Time successfully changed!
+
+gui.basic_aspect @1@2=@1 - Basic Aspect@n@2
+gui.info.unknown_research=Unknown Research!
+gui.info.unknown_chapter=Unknown Chapter!
+gui.info.granted @1@2=Granted @1 research to @2
+gui.info.force_granted @1@2=Force-granted @1 research to @2
+
+gui.info.current_types @1@2=@1/@2 Item Types used
+gui.info.current_items @1@2=@1/@2 Items used
+gui.info.connector.connected=Successfully bound to controller!
+gui.info.connector.wrong_data=Please reconnect this connector to a controller!
+gui.info.connector.slave_connected=Slave successfully connected!
+gui.info.connector.incorrect_target=Incorrect target!
+gui.info.connector.already_connected=Slave already connected!
+gui.terminal.types @1@2=@1/@2 types
+gui.terminal.items @1@2=@1/@2 items
+item.pulsenet.connector.desc @1@2@3=Bound to Controller at (@1, @2, @3)
+
+info.unknown=Unknown Item

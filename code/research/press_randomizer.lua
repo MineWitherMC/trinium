@@ -50,14 +50,18 @@ minetest.register_node("trinium:machine_press_randomizer", {
 	end,
 	allow_metadata_inventory_put = function(pos, list, index, stack, player)
 		local name,size = stack:get_name(), stack:get_count()
-		return ((list == "rhenium_alloy" and name == "trinium:material_ingot_rhenium_alloy") or (list == "upgrade" and minetest.get_item_group(name, "lens_upgrade") ~= 0)) and size or 0
+		return ((list == "rhenium_alloy" and name == "trinium:material_ingot_rhenium_alloy") or 
+				(list == "upgrade" and minetest.get_item_group(name, "lens_upgrade") ~= 0)) and size or 0
 	end,
 	on_receive_fields = function(pos, formname, fields, player)
 		if not fields["trinium~research~assemble_press"] then return end
 
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
-		local alloy, upgrade, press1 = inv:get_stack("rhenium_alloy", 1), inv:get_stack("upgrade", 1), inv:get_stack("press", 1)
+		local alloy, upgrade, press1 = 
+				inv:get_stack("rhenium_alloy", 1), 
+				inv:get_stack("upgrade", 1), 
+				inv:get_stack("press", 1)
 		if alloy:get_count() < press_cost then
 			cmsg.push_message_player(player, S"gui.info.no_rhenium")
 			return
@@ -67,10 +71,12 @@ minetest.register_node("trinium:machine_press_randomizer", {
 			return
 		end
 
-		local press = ItemStack("trinium:research_lens_band_press")
+		local press = ItemStack"trinium:research_lens_band_press"
 		local pressmeta = press:get_meta()
 		local upg = minetest.get_item_group(upgrade:get_name(), "lens_upgrade") + 1
-		local shape = table.remap(table.filter(research.lens_forms.shapes, function(x) return research.lens_forms.shapes_by_mintier[x] <= upg end))
+		local shape = table.remap(table.filter(research.lens_forms.shapes, function(x)
+				return research.lens_forms.shapes_by_mintier[x] <= upg 
+			end))
 		local gem, metal, shape, tierexp =
 			trinium.lograndom(research.lens_forms.min_gem, research.lens_forms.max_gem), 
 			trinium.lograndom(research.lens_forms.min_metal, research.lens_forms.max_metal),
@@ -82,7 +88,8 @@ minetest.register_node("trinium:machine_press_randomizer", {
 		pressmeta:set_string("shape", shape)
 		pressmeta:set_int("tier", tier)
 
-		pressmeta:set_string("description", S("item.band_press @1@2@3@4", gem, metal, S("gui.research_lens_shape."..shape), tier))
+		pressmeta:set_string("description", S("item.band_press @1@2@3@4", 
+				gem, metal, S("gui.research_lens_shape."..shape), tier))
 		alloy:take_item(press_cost)
 		inv:set_stack("rhenium_alloy", 1, alloy)
 		inv:set_stack("press", 1, press)
@@ -103,7 +110,9 @@ trinium.register_multiblock("press randomizer", {
 	depth_f = 0,
 	controller = "trinium:machine_press_randomizer",
 	activator = function(rg)
-		local ctrl = table.exists(rg.region, function(x) return x.x == 0 and x.y == 1 and x.z == 1 and x.name == "trinium:machine_research_node" end)
+		local ctrl = table.exists(rg.region, function(x) 
+			return x.x == 0 and x.y == 1 and x.z == 1 and x.name == "trinium:machine_research_node"
+		end)
 		return ctrl and minetest.get_meta(rg.region[ctrl].actual_pos):get_int("assembled") == 1
 	end,
 	after_construct = function(pos, is_constructed)

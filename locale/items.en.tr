@@ -2,17 +2,38 @@
 item.pattern=Recipe Pattern
 item.pattern.encoded=Encoded Recipe Pattern
 item.pattern.invalid=Invalid Recipe Pattern
-item.research_lens @1@2@3@4=Research Lens@nGem material: @1@nMetal material: @2@nShape: @3@nTier: @4
-item.band_press @1@2@3@4=Band Press@nGem required: @1@nMetal Required: @2@nShape: @3@nTier: @4
+
 item.research_charm1=Knowledge Charm
 item.research_charm2=Aspected Charm
 item.research_charm3=Focused Charm
 item.research_abacus=Abacus
-item.research_lens=Research Lens
-item.band_press=Band Press
 item.knowledge_crystal=Knowledge Crystal
+
 item.lens_upgrade.1=Basic Lens Upgrade
 item.lens_upgrade.2=Improved Lens Upgrade
+item.research_lens=Research Lens
+item.band_press=Band Press
+item.research_lens @1@2@3@4=Research Lens@nGem material: @1@nMetal material: @2@nShape: @3@nTier: @4
+item.band_press @1@2@3@4=Band Press@nGem required: @1@nMetal Required: @2@nShape: @3@nTier: @4
+
 item.timesetter.dawn=Time Setter: Dawn
 item.timesetter.day=Time Setter: Day
 item.timesetter.night=Time Setter: Night
+
+item.research_notes @1=Research Notes - @1
+item.research_chapter_map @1=Chapter Map - @1
+item.research_discovery @1=Discovery - @1
+
+item.pulsenet.connector=Pulse Network Connector
+
+item.rock=Rock
+item.stick=Stick
+
+item.module_power=Power Module
+item.module_wireless=Wireless Module
+item.module_storage=Storage Module
+item.module_display=Display Module
+
+item.bonemeal_wand=Bone meal staff
+item.seeds @1=Seeds of @1
+item.ingridient.loremipsum=Lorem Ipsum grass

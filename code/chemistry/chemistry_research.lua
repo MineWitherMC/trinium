@@ -5,7 +5,7 @@ research.register_chapter("Chemistry1", {
 	texture = "trinium:machine_chemical_reactor",
 	x = 0,
 	y = 1,
-	name = S("research.chapter.chemistry.basic"),
+	name = S"research.chapter.chemistry.basic",
 	tier = 1
 })
 
@@ -13,22 +13,21 @@ research.register_chapter("Chemistry2", {
 	texture = "trinium:material_ingot_abs_plastic",
 	x = 1,
 	y = 1,
-	name = S("research.chapter.chemistry.advanced"),
+	name = S"research.chapter.chemistry.advanced",
 	tier = 2
 })
 
 --[[ Researches ]]--
 research.register_research("OilDesulf", {
 	texture = "trinium:material_cell_oil_raw",
-	x = 3.5,
-	y = 3.5,
+	x = 0,
+	y = 0,
 	name = S("research.oil_desulf"),
 	chapter = "Chemistry2",
 	text = {
-		[[Some decent time ago, you found some interesting dark brown liquid. It seemed to contained a lot of power at first, but it was poisonous and power couldn't be used because of this.
-But now you've discovered a way to purify it from the useless and dangerous Sulfur. You think it is possible to capture it using hydrogen. Such an active gas should bind Sulfur into Hydrogen Sulfide, shouldn't it?..]],
-		{trinium.draw_research_recipe("trinium:material_cell_oil_desulfurized")},
-		research.label_escape([[You think that for oil researches Diamond lens will be useful - no one material has so complicated carbon structure... Also, platinum. Very inert metal, probably a good catalyst, definitely good for holding active materials, I think I'll need it too.]], "Further Oil Researching", {RATUS = 8, MANIFESTATIO = 11, CONSEQUAT = 5})
+		S"research.text.oil_desulf.1",
+		{trinium.draw_research_recipe"trinium:material_cell_oil_desulfurized"},
+		research.label_escape(S"research.text.oil_desulf.2", S"research.header.oil_desulf.2", {RATUS = 8, MANIFESTATIO = 11, CONSEQUAT = 5})
 	},
 	requires_lens = {},
 	color = "101010",
@@ -42,14 +41,13 @@ But now you've discovered a way to purify it from the useless and dangerous Sulf
 
 research.register_research("OilDistillation", {
 	texture = "trinium:material_cell_fraction_diesel",
-	x = 3.5,
-	y = 2.5,
-	name = S("research.oil_distillation"),
+	x = 0,
+	y = 2,
+	name = S"research.oil_distillation",
 	chapter = "Chemistry2",
 	text = {
-		[[The hydrogen you added to Raw Oil worked perfectly. But what next?
-You think that oil is not strong until it is separated into components, which is what Distillation Tower used for. It should give a lot of light fractions and some kerosene and diesel, which are heavier and thus rarer.]],
-		{trinium.draw_research_recipe("trinium:material_cell_fraction_naphtha")}
+		S"research.text.oil_distillation.1",
+		{trinium.draw_research_recipe"trinium:material_cell_fraction_naphtha"}
 	},
 	requires_lens = {
 		requirement = true,
@@ -69,17 +67,15 @@ research.set_research_requirements("OilDistillation", {"OilDesulf"})
 
 research.register_research("OilCrack", {
 	texture = "trinium:machine_chemical_cracker",
-	x = 4.5,
-	y = 3,
-	name = S("research.oil_cracking"),
+	x = 2,
+	y = 4,
+	name = S"research.oil_cracking",
 	chapter = "Chemistry2",
 	text = {
-		[[Heavier fractions of the oil, Kerosene and Diesel, probably are very good fuels that can be used in Multiverse Turbines. But Naphtha and Natural Gas, lighter fractions, are not that useful - Kerosene holds more than double Naphtha power, and Gas is really awful.
-You thought that, and started to think outside of the box. And your new idea was a device, that heats Naphtha and Gas and breaks them into the Hydrocarbons, more useful things than the gases themselves. Fuels, plastics, chemistry, and more can be achieved here!..]],
-		[[But device is not easy. It uses Cupronickel Coils to heat the Naphtha and Gas, which are contained in some kind of pipe made of Chemical Casings. Also the device's controller is probably very hard to assemble.
-But after closer look you finally got that this device not only cracks the oil compounds, but also ALMOST DOUBLES them!]],
-		{trinium.draw_research_recipe("trinium:material_cell_propene")},
-		{trinium.draw_research_recipe("trinium:material_cell_isooctane")}
+		S"research.text.oil_cracking.1",
+		S"research.text.oil_cracking.2",
+		{trinium.draw_research_recipe"trinium:material_cell_propene"},
+		{trinium.draw_research_recipe"trinium:material_cell_isooctane"}
 	},
 	requires_lens = {
 		requirement = true,
@@ -99,17 +95,18 @@ research.set_research_requirements("OilCrack", {"OilDistillation"})
 
 research.register_research("HydrocarbonsCrack", {
 	texture = "trinium:material_cell_butadiene",
-	x = 5.5,
-	y = 2.5,
-	name = S("research.hydrocarbon_cracking"),
+	x = 5,
+	y = 4,
+	name = S"research.hc_cracking",
 	chapter = "Chemistry2",
 	text = {
-		[[Some of the hydrocarbons you obtained from cracking are useful. For example, Octane and Toluene. They both can be used in creation of very strong fuel, Premium Gasoline, even stronger than natural Diesel. Furthermore, former probably can be used to create some kind of explosives.
-But what can be done with, e.g., Methane, or Butane? Absolutely useless gases, main components of Gas and Naphtha respectively?..
-You found an answer. These two can be dehydrated with usage of new catalysts to form Acetylene and Butadiene respectively. Which are definitely useful.]],
-		{trinium.draw_research_recipe("trinium:material_cell_butadiene")},
-		{trinium.draw_research_recipe("trinium:material_cell_acetylene")},
-		research.label_escape([[After some deeper research, you discovered that Styrene can also be obtained with this mechanic by dehydrating Ethylbenzene.]], "Styrene Production", {POTENTIA = 12, INTERITUM = 15, AQUA = 18, SENTENTIA = 24, RATUS = 21})
+		S"research.text.hc_cracking.1",
+		{trinium.draw_research_recipe"trinium:material_cell_butadiene"},
+		{trinium.draw_research_recipe"trinium:material_cell_acetylene"},
+		{trinium.draw_research_recipe"trinium:material_cell_styrene"..
+				("textarea[0.25,4.5;7.5,3;;;%s]"):format(S"research.text.hc_cracking.2"),
+			8, 8, S"research.header.hc_cracking.2", 
+			{POTENTIA = 12, INTERITUM = 15, AQUA = 18, SENTENTIA = 24, RATUS = 21}}
 	},
 	requires_lens = {
 		requirement = true,
@@ -129,14 +126,13 @@ research.set_research_requirements("HydrocarbonsCrack", {"OilCrack"})
 
 research.register_research("HydrogenCyanide", {
 	texture = "trinium:material_cell_hydrogen_cyanide",
-	x = 4.5,
-	y = 4,
-	name = S("research.hcn"),
+	x = 2,
+	y = 6,
+	name = S"research.hydrogen_cyanide",
 	chapter = "Chemistry2",
 	text = {
-		[[Methane is not really useful, you thought. But you needed something dangerous.
-You found an interesting thing. When Ammonia, Methane and Oxygen are combined with presence of Platinum and high temperature, they burn, leaving not Carbon Dioxide and Nitrogen Oxides, but a weak acid you called Hydrogen Cyanide. It is probably most poisonous compound you've ever seen, able to kill anyone in several seconds. But you're sure there is another usage for it...]],
-		{trinium.draw_research_recipe("trinium:material_cell_hydrogen_cyanide")},
+		S"research.text.hydrogen_cyanide.1",
+		{trinium.draw_research_recipe"trinium:material_cell_hydrogen_cyanide"},
 	},
 	requires_lens = {
 		requirement = true,
@@ -156,15 +152,13 @@ research.set_research_requirements("HydrogenCyanide", {"OilCrack"})
 
 research.register_research("Acrylonitrile", {
 	texture = "trinium:material_cell_acrylonitrile",
-	x = 4.5,
-	y = 5,
-	name = S("research.acrylonitrile"),
+	x = 5,
+	y = 6,
+	name = S"research.acrylonitrile",
 	chapter = "Chemistry2",
 	text = {
-		[[Hydrogen Cyanide you obtained a while ago is useful not only as a poison.
-In fact, it has an ability to mix with organic chemicals which are mostly inert to create some new materials. You mixed the acid with Acetylene and got a white-ish compound, which is probably very durable even though it's a fluid.
-You called the compound 'acrylonitrile'.]],
-		{trinium.draw_research_recipe("trinium:material_cell_acrylonitrile")},
+		S"research.text.acrylonitrile.1",
+		{trinium.draw_research_recipe"trinium:material_cell_acrylonitrile"},
 	},
 	requires_lens = {
 		requirement = true,
@@ -184,14 +178,13 @@ research.set_research_requirements("Acrylonitrile", {"HydrogenCyanide", "Hydroca
 
 research.register_research("HydrocarbonsChlorination", {
 	texture = "trinium:material_cell_chloroethane",
-	x = 5.5,
-	y = 3.5,
-	name = S("research.chlorination.advanced"),
+	x = 7,
+	y = 4,
+	name = S"research.chlorination.advanced",
 	chapter = "Chemistry2",
 	text = {
-		[[You were performing some chemical recipes with Chlorine on normal compounds. Now you have petrochemicals obtained from crack, and you think if it is possible to perform similar recipes on them?
-And after some deep research you were able to say yes! You found a way to chlorinate Ethylene with Hydrogen Chloride to obtain a somewhat poisonous fluid you've named Chloroethane. However, you needed a more complicated catalyst than you mostly use, but it did the trick.]],
-		{trinium.draw_research_recipe("trinium:material_cell_chloroethane")},
+		S"research.text.chlorination.advanced.1",
+		{trinium.draw_research_recipe"trinium:material_cell_chloroethane"},
 	},
 	requires_lens = {
 		requirement = true,
@@ -211,17 +204,13 @@ research.set_research_requirements("HydrocarbonsChlorination", {"HydrocarbonsCra
 
 research.register_research("Ethylbenzene", {
 	texture = "trinium:material_cell_ethylbenzene",
-	x = 5.5,
-	y = 4.5,
-	name = S("research.ethylbenzene"),
+	x = 7,
+	y = 7,
+	name = S"research.ethylbenzene",
 	chapter = "Chemistry2",
 	text = {
-		[[You found some notes considering the Chloroethane and you thought they might be useful.
-
-"Yeah, that Chloroethane is, obviously, a very interesting fluid. But it doesn't work.
-Really. It is absolutely useless, I didn't find a purpose for it before now. Seems that combining Chloroethane with Benzene with presence of catalyst - Aluminium Chloride - yields surprising results. The Hydrogen Chloride is returned to me, and also I get a product called Ethylbenzene which must lead me to new plastic.
-In fact, these two recipes use Hydrogen Chloride as a catalyst, and isn't it possible to simply combine Ethylene and Benzene for performing the recipe?.."]],
-		{trinium.draw_research_recipe("trinium:material_cell_ethylbenzene")},
+		S"research.text.ethylbenzene.1",
+		{trinium.draw_research_recipe"trinium:material_cell_ethylbenzene"},
 	},
 	requires_lens = {
 		requirement = true,
@@ -241,16 +230,13 @@ research.set_research_requirements("Ethylbenzene", {"HydrocarbonsChlorination"})
 
 research.register_research("ABSPC", {
 	texture = "trinium:material_cell_abs_plastic_compound",
-	x = 5.5,
-	y = 5.5,
-	name = S("research.abs_plastic"),
+	x = 7,
+	y = 9,
+	name = S"research.abs_plastic",
 	chapter = "Chemistry2",
 	text = {
-		[["I suddenly found the ideal proportions for this recipe... X of acrylonitrile, Y of butadiene and a lot of styrene..." - it is a page from old diary of chemist. Nothing more was saved from the destructive nature of world. Yeah, X and Y weren't saved, too.
-But it was enough for you, and after some trial and error you found these proportions, too.
-It is 8 parts of Styrene, 4 parts of Butadiene and 5 parts of Acrylonitrile.
-This compound will definitely be very useful in your further progressions.]],
-		{trinium.draw_research_recipe("trinium:material_cell_abs_plastic_compound")},
+		S"research.text.abs_plastic.1",
+		{trinium.draw_research_recipe"trinium:material_cell_abs_plastic_compound"},
 	},
 	requires_lens = {
 		requirement = true,

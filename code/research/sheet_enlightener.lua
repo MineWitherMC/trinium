@@ -59,11 +59,17 @@ minetest.register_node("trinium:machine_sheet_enlightener", {
 	end,
 	allow_metadata_inventory_put = function(pos, list, index, stack, player)
 		local name,size = stack:get_name(), stack:get_count()
-		return ((list == "parchment" and name == "trinium:material_sheet_parchment") or (list == "chapter_core" and minetest.get_item_group(name, "chapter_map") > 0) or
-			(list == "lens" and name == "trinium:research_lens") or (list == "catalysts" and ((index == 1 and name == "trinium:material_dust_stardust") or
-			(index == 2 and name == "trinium:material_dust_pyrocatalyst") or (index == 3 and name == "trinium:material_dust_bifrost") or
-			(index == 4 and name == "trinium:material_dust_experience_catalyst") or (index == 5 and name == "trinium:material_dust_imbued_forcirium") or
-			(index == 6 and name == "trinium:material_dust_endium")))) and size or 0
+		return ((list == "parchment" and name == "trinium:material_sheet_parchment") or 
+			(list == "chapter_core" and minetest.get_item_group(name, "chapter_map") > 0) or
+			(list == "lens" and name == "trinium:research_lens") or 
+			(list == "catalysts" and 
+				((index == 1 and name == "trinium:material_dust_stardust") or
+				(index == 2 and name == "trinium:material_dust_pyrocatalyst") or 
+				(index == 3 and name == "trinium:material_dust_bifrost") or
+				(index == 4 and name == "trinium:material_dust_experience_catalyst") or 
+				(index == 5 and name == "trinium:material_dust_imbued_forcirium") or
+				(index == 6 and name == "trinium:material_dust_endium"))
+			)) and size or 0
 	end,
 
 	on_receive_fields = function(pos, formname, fields, player)
@@ -94,7 +100,7 @@ minetest.register_node("trinium:machine_sheet_enlightener", {
 			return
 		end
 
-		local map_data = research.bound_to_maps[inv:get_stack("chapter_core", 1):get_name():split("___")[2]]
+		local map_data = research.bound_to_maps[inv:get_stack("chapter_core", 1):get_name():split"___"[2]]
 		if not map_data then return end
 
 		for i = 1, 6 do
@@ -106,10 +112,10 @@ minetest.register_node("trinium:machine_sheet_enlightener", {
 		local lens = inv:get_stack("lens", 1)
 		local lmeta = lens:get_meta()
 		local map_res = table.exists(map_data, function(x)
-			return 	(x.band_material or lmeta:get_string("metal")) == lmeta:get_string("metal") and
-					(x.lens_core or lmeta:get_string("gem")) == lmeta:get_string("gem") and
-					(x.band_tier or 0) <= lmeta:get_int("tier") and
-					(x.band_shape or lmeta:get_string("shape")) == lmeta:get_string("shape")
+			return 	(x.band_material or lmeta:get_string"metal") == lmeta:get_string"metal" and
+					(x.lens_core or lmeta:get_string"gem") == lmeta:get_string"gem" and
+					(x.band_tier or 0) <= lmeta:get_int"tier" and
+					(x.band_shape or lmeta:get_string"shape") == lmeta:get_string"shape"
 		end)
 		if not map_res then
 			cmsg.push_message_player(player, S"gui.info.enlightening_failed")

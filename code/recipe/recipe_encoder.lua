@@ -3,15 +3,15 @@ local S = trinium.S
 -- Recipe Pattern
 minetest.register_craftitem("trinium:recipe_pattern", {
 	inventory_image = "recipe_pattern.png",
-	description = S("item.pattern"),
+	description = S"item.pattern",
 })
 minetest.register_craftitem("trinium:recipe_pattern_encoded", {
 	inventory_image = "recipe_pattern_encoded.png",
-	description = S("item.pattern.invalid"),
+	description = S"item.pattern.invalid",
 	stack_max = 1,
 	groups = {hidden_from_irp = 1},
 	on_place = function(item, player, pointed_thing)
-		return ItemStack("trinium:recipe_pattern")
+		return ItemStack"trinium:recipe_pattern"
 	end,
 })
 
@@ -30,7 +30,7 @@ local encoder_formspec = ([=[
 
 minetest.register_node("trinium:recipe_encoder", {
 	stack_max = 1,
-	tiles = {"mn_terminal.png", "research_table_wall.png"},
+	tiles = {"recipe_encoder_top.png", "research_table_wall.png"},
 	description = S"node.machine.recipe_encoder",
 	groups = {harvested_by_pickaxe = 1},
 	after_place_node = function(pos, player)
@@ -43,7 +43,9 @@ minetest.register_node("trinium:recipe_encoder", {
 		return 0
 	end,
 	allow_metadata_inventory_put = function(pos, list, index, stack, player)
-		return (list == "recipe_components" or (list == "recipe_patterns" and stack:get_name() == "trinium:recipe_pattern")) and stack:get_count() or 0
+		return (list == "recipe_components" or 
+			(list == "recipe_patterns" and stack:get_name() == "trinium:recipe_pattern")
+		) and stack:get_count() or 0
 	end,
 
 	on_receive_fields = function(pos, formname, fields, player)
@@ -64,14 +66,16 @@ minetest.register_node("trinium:recipe_encoder", {
 		local s = inv:get_stack("recipe_patterns", 1)
 		s:take_item()
 		inv:set_stack("recipe_patterns", 1, s)
-		local pattern = ItemStack("trinium:recipe_pattern_encoded")
+		local pattern = ItemStack"trinium:recipe_pattern_encoded"
 		local pmeta = pattern:get_meta()
 		local cmp = inv:get_lists().recipe_components
 		table.walk(cmp, function(v, k)
 			cmp[k] = v:to_string()
 		end)
 		pmeta:set_string("inputs", minetest.serialize(cmp))
-		pmeta:set_string("description", S("item.pattern.encoded").."\n"..table.concat(table.filter(cmp, function(a) return a ~= "" end), "\n"))
+		pmeta:set_string("description", S"item.pattern.encoded".."\n"..table.concat(
+			table.filter(cmp, function(a) return a ~= "" end), "\n"
+		))
 		inv:set_stack("recipe_encoded", 1, pattern)
 	end,
 })

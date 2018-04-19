@@ -1,15 +1,22 @@
 # textdomain:trinium
 node.machine.chemreactor=Контроллер химического реактора
+node.machine.chemreactor.advanced=Контроллер продвинутого химического реактора
 node.machine.chemcracker=Контроллер крекинговой установки
 node.machine.polymerizer=Контроллер полимеризатора
+
 node.casing.chemical=Химически инертный корпус
 node.casing.corrosive=Коррозионно устойчивый корпус
 node.casing.heating.cupronickel=Константановое нагревательное кольцо
 node.casing.research1=Антрацитовый корпус
 node.casing.research2=Усовершенствованный антрацитовый корпус
+node.casing.pulsenet=Пульсирующий корпус
+node.casing.heat.1=Теплоупорный корпус механизма
+node.casing.heat.2=Теплоустойчивый корпус механизма
+
 node.hatch.catalyst=Шина для катализаторов
 node.hatch.input=Входная шина
 node.hatch.output=Выходная шина
+node.hatch.data=Шина для шаблонов
 node.machine.status_panel=Статусная панель
 
 node.cobble=Булыжник
@@ -23,6 +30,14 @@ node.dirt.grass=Земля с травой
 node.dirt.snow=Земля с заснеженной травой
 node.dirt.podzol=Земля с листвой
 node.dirt.savanna=Земля с засушенной травой
+node.clay=Блок глины
+
+node.woodlog.fir=Древесина пихты
+node.leaves.fir=Листва пихты
+node.woodlog.acacia=Древесина акации
+node.leaves.acacia=Листва акации
+node.woodlog.maple=Древесина клёна
+node.leaves.maple=Листва клёна
 
 node.reflector_glass=Отражательное стекло
 node.lamp.frame=Рамка лампы
@@ -41,3 +56,17 @@ node.fluid.water.source=Источник воды
 node.fluid.water.flowing=Текущая вода
 node.fluid.river_water.source=Источник речной воды
 node.fluid.river_water.flowing=Текущая речная вода
+
+node.machine.pulsenet_controller=Контроллер пульсирующей сети
+node.machine.pulsenet_storage_cell=Ячейка хранения пульсирующей сети
+node.machine.pulsenet_terminal=Терминал доступа пульсирующей сети
+
+node.rock=Камень
+node.stick=Палка
+
+node.tool_station=Верстак для инструментов
+
+node.herb.sprout @1=Росток @1
+node.herb.shoot @1=Побег @1
+node.herb.flower @1=Цветок @1
+node.herb.loremipsumgrass=травы Lorem Ipsum

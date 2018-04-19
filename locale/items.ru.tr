@@ -2,17 +2,38 @@
 item.pattern=Шаблон
 item.pattern.encoded=Кодированный шаблон
 item.pattern.invalid=Недействительный шаблон
-item.research_lens @1@2@3@4=Линза исследований@nМатериал ядра: @1@nМатериал оболочки: @2@nФорма: @3@nУровень: @4
-item.band_press @1@2@3@4=Пресс для линзы@nТребуется кристаллов: @1@nТребуется металла: @2@nФорма: @3@nУровень: @4
+
 item.research_charm1=Амулет знаний
 item.research_charm2=Амулет аспектов
 item.research_charm3=Фокусированный амулет аспектов
 item.research_abacus=Счёты
-item.research_lens=Линза исследований
-item.band_press=Пресс для линзы
 item.knowledge_crystal=Кристалл знаний
+
 item.lens_upgrade.1=Улучшение для линзы
 item.lens_upgrade.2=Продвинутое улучшение для линзы
+item.research_lens=Линза исследований
+item.band_press=Пресс для линзы
+item.research_lens @1@2@3@4=Линза исследований@nМатериал ядра: @1@nМатериал оболочки: @2@nФорма: @3@nУровень: @4
+item.band_press @1@2@3@4=Пресс для линзы@nТребуется кристаллов: @1@nТребуется металла: @2@nФорма: @3@nУровень: @4
+
 item.timesetter.dawn=Установщик времени: утро
 item.timesetter.day=Установщик времени: полдень
 item.timesetter.night=Установщик времени: полночь
+
+item.research_notes @1=Записи об исследовании "@1"
+item.research_chapter_map @1=Карта главы "@1"
+item.research_discovery @1=Открытие "@1"
+
+item.pulsenet.connector=Комбинатор пульсирующей сети
+
+item.rock=Камень
+item.stick=Палка
+
+item.module_power=Энергетический модуль
+item.module_wireless=Модуль беспроводной связи
+item.module_storage=Модуль хранения
+item.module_display=Дисплейный модуль
+
+item.bonemeal_wand=Жезл костяной муки
+item.seeds @1=Семена @1
+item.ingridient.loremipsum=Трава Lorem Ipsum

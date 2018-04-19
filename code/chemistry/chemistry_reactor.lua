@@ -9,8 +9,10 @@ local chemical_reactor_formspec = ([=[
 	bgcolor[#080808BB;true]
 	label[3,0;%s]
 	background[5,5;1,1;gui_formbg.png;true]
+	image[2,0.5;1,1;knowledge_crystal.png^[brighten]
 	list[context;knowledge_encoded;3,0.5;1,1;]
 	list[context;recipe_encoded;4,0.5;1,1;]
+	image[5,0.5;1,1;recipe_pattern_encoded.png^[brighten]
 	list[current_player;main;0,2.5;8,4;]
 ]=]):format(S"gui.machine.chemreactor")
 
@@ -32,7 +34,10 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 
 	allow_metadata_inventory_move = function() return 0 end,
 	allow_metadata_inventory_put = function(pos, list, index, stack, player)
-		return ((list == "knowledge_encoded" and stack:get_name() == "trinium:knowledge_crystal") or (list == "recipe_encoded" and stack:get_name() == "trinium:recipe_pattern_encoded")) and 1 or 0
+		local meta = minetest.get_meta(pos)
+		local inv = meta:get_inventory()
+		return ((list == "knowledge_encoded" and stack:get_name() == "trinium:knowledge_crystal" and inv:get_stack(list, 1):is_empty())
+				or (list == "recipe_encoded" and stack:get_name() == "trinium:recipe_pattern_encoded")) and 1 or 0
 	end,
 
 	allow_metadata_inventory_take = function(pos, list, index, stack, player)
@@ -50,7 +55,7 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 	
 	on_destruct = function(pos)
 		local meta = minetest.get_meta(pos)
-		local status = vector.destringify(meta:get_string("status_crd"))
+		local status = vector.destringify(meta:get_string"status_crd")
 		if not status.z then return end
 		trinium.recolor_facedir(status, 3)
 	end,
@@ -58,12 +63,12 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 	on_timer = function(pos, elapsed)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
-		local activity = meta:get_int("active")
+		local activity = meta:get_int"active"
 		local timer = minetest.get_node_timer(pos)
-		local status = vector.destringify(meta:get_string("status_crd"))
+		local status = vector.destringify(meta:get_string"status_crd")
 		if activity == 1 then
-			local items = meta:get_string("output"):split(";")
-			local output = vector.destringify(meta:get_string("output_crd"))
+			local items = meta:get_string"output":split";"
+			local output = vector.destringify(meta:get_string"output_crd")
 			local output_inv = minetest.get_meta(output):get_inventory()
 			table.walk(items, function(item)
 				if output_inv:room_for_item("output", item) then
@@ -85,7 +90,7 @@ minetest.register_node("trinium:machine_chemical_reactor", {
 				T(timer)
 				return
 			end
-			local catalyst = vector.destringify(meta:get_string("catalyst_crd"))
+			local catalyst = vector.destringify(meta:get_string"catalyst_crd")
 			local catalyst_inv = minetest.get_meta(catalyst):get_inventory()
 			local rec = trinium.valid_recipe(recipe, "trinium:chemical_reactor", {catalyst_inv = catalyst_inv}) -- done
 			if not rec then
@@ -178,7 +183,11 @@ local chemical_reactor_mb = {
 			return
 		end
 		
-		local input, output, catalyst, status = table.exists(region, function(r) return r.name == "trinium:machine_hatch_input" end), table.exists(region, function(r) return r.name == "trinium:machine_hatch_output" end), table.exists(region, function(r) return r.name == "trinium:machine_hatch_catalyst" end), table.exists(region, function(r) return r.name == "trinium:machine_status_panel" end)
+		local input, output, catalyst, status = 
+			table.exists(region, function(r) return r.name == "trinium:machine_hatch_input" end), 
+			table.exists(region, function(r) return r.name == "trinium:machine_hatch_output" end), 
+			table.exists(region, function(r) return r.name == "trinium:machine_hatch_catalyst" end), 
+			table.exists(region, function(r) return r.name == "trinium:machine_status_panel" end)
 		meta:set_string("input_crd", vector.stringify(region[input].actual_pos))
 		meta:set_string("output_crd", vector.stringify(region[output].actual_pos))
 		meta:set_string("catalyst_crd", vector.stringify(region[catalyst].actual_pos))

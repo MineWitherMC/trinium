@@ -1,5 +1,3 @@
-local default = ...
-
 if trinium.disable_oregen then
 	minetest.clear_registered_ores()
 end
@@ -9,18 +7,15 @@ local vein_breakpoints, registered_veins = {}, {}
 
 function trinium.register_vein(name, params)
 	assert(not registered_veins[name], "Vein "..name.." already exists!")
-	assert(trinium.validate(params, {min_height = "number", max_height = "number", ore_chances = "table", ore_list = "table", density = "number"}))
+	assert(trinium.validate(params, {
+		min_height = "number", max_height = "number", 
+		ore_chances = "table", ore_list = "table", density = "number"
+	}))
 	assert(params.min_height < params.max_height, "Min Height must be less than Max Height for "..name)
 	assert(params.density <= 1000 and params.density > 0, "Failed density check for "..name)
 	assert(#params.ore_chances == #params.ore_list, "Failed ores number check for "..name)
 	assert(params.min_height >= -31000 and params.min_height <= 31000, "Failed minheight check for "..name)
 	assert(params.max_height >= -31000 and params.max_height <= 31000, "Failed maxheight check for "..name)
-	local sum = 0
-	for i = 1, #params.ore_chances do
-		sum = sum + params.ore_chances[i]
-	end
-	local ocm = params.ore_chances_multiplier or 10
-	assert(sum == ocm, "Failed ore chances check for "..name)
 
 	for i = 1, #params.ore_list do
 		params.ore_list[i] = minetest.get_content_id(params.ore_list[i])
@@ -31,10 +26,10 @@ function trinium.register_vein(name, params)
 	vein_breakpoints[params.max_height] = vein_breakpoints[params.max_height] or 1
 	registered_veins[name] = params
 	registered_veins[name].name = name
-	registered_veins[name].ore_chances_multiplier = ocm
+	registered_veins[name].ore_chances_multiplier = table.sum(params.ore_chances)
 end
 
-local stone_cid = default and minetest.get_content_id("default:stone") or minetest.get_content_id("trinium:block_stone")
+local stone_cid = minetest.get_content_id"trinium:block_stone"
 minetest.register_on_generated(function(minp, maxp, seed)
 	local rand = PcgRandom(seed)
 	local vb, vbs, wb = veins_by_breakpoints, vein_breakpoints_s, vein_breakpoint_w
@@ -63,7 +58,10 @@ minetest.register_on_generated(function(minp, maxp, seed)
 
 	if rand:next(1, 1000000) / 1000000 > trinium.config.vein_probability then return end
 
-	local xs, ys, zs = rand:next(trinium.config.min_vein_size, trinium.config.max_vein_size), 9, rand:next(trinium.config.min_vein_size, trinium.config.max_vein_size)
+	local xs, ys, zs = 
+		rand:next(trinium.config.min_vein_size, trinium.config.max_vein_size), 
+		trinium.config.vein_height,
+		rand:next(trinium.config.min_vein_size, trinium.config.max_vein_size)
 	local xc, yc, zc = minp.x + rand:next(0, 80 - xs), minp.y + rand:next(0, 80 - ys), minp.z + rand:next(0, 80 - zs)
 	local j, veinname, weight, vein
 
@@ -90,7 +88,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local data, area, choice, x, y, w = vm:get_data(), VoxelArea:new{MinEdge=emin, MaxEdge=emax}
 
 	for i in area:iter(xc, yc, zc, xc + xs, yc + ys, zc + zs) do
-		if rand:next(1, 50) <= v.density then
+		if rand:next(1, 100) <= v.density then
 			x, y, w = 0, 0, v.ore_chances_multiplier
 			choice = rand:next(1, w)
 			while x < choice and y < #v.ore_chances do

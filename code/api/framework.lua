@@ -38,8 +38,12 @@ function table.exists(array, callable)
 	return false
 end
 
+function table.every(array, callable)
+	return not table.exists(array, function(v,k) return not callable(v,k) end)
+end
+
 function table.walk(array, callable, cond)
-	local cond = cond or function() return end
+	cond = cond or function() return end
 	for k,v in pairs(array) do
 		callable(v,k)
 		if cond() then break end
@@ -52,10 +56,6 @@ function table.map(array, callable)
 		array[k] = callable(v,k)
 	end
 	return array
-end
-
-function table.every(array, callable)
-	return not table.exists(array, function(v,k) return not callable(v,k) end)
 end
 
 function table.remap(array)
@@ -98,6 +98,24 @@ function table.sum(t)
 	return k
 end
 
+function table.fconcat(t, x)
+	x = x or ""
+	local str = ""
+	table.walk(t, function(v) str = str..x..v end)
+	return str:sub(x:len())
+end
+
+function table.tail(t)
+	local function helper(head, ...) return #{...} > 0 and {...} or nil end
+	return helper((table.unpack or unpack)(t))
+end
+
+function table.mtail(t, mult)
+	local k = t
+	for i = 1, mult do k = table.tail(k) end
+	return k
+end
+
 -- Basic functions
 function trinium.sortByParam(param)
 	return function(a, b)
@@ -112,9 +130,37 @@ function trinium.weighted_avg(t)
 	return table.sum(t1) / table.sum(t2)
 end
 
+function trinium.weighted_random(mas)
+    local j = table.sum(mas)
+    local k = math.random(1, j)
+    local i = 1
+    while k > mas[i] do
+        k = k - mas[i]
+        i = i + 1
+    end
+    return i
+end
+
+function trinium.roman_number(a)
+	local one = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"}
+	local ten = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"}
+	local hun = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"}
+	local k = a
+	local str = ""
+	while k >= 1000 do
+		k = k - 1000
+		str = str.."M"
+	end
+	
+	str = str..hun[(k - k % 100)/100 + 1]
+	str = str..ten[(k % 100 - k % 10)/10 + 1]
+	str = str..one[k % 10 + 1]
+	return str
+end
+
 function trinium.dump(...)
 	local string, add = ""
-	for _,x in pairs{...} do 
+	for _,x in ipairs{...} do 
 		if type(x) == type(nil) then
 			add = "nil"
 		elseif type(x) == "userdata" then
@@ -189,6 +235,10 @@ function trinium.lograndom(a1, b1) -- more similar to normal
 	return 2 + 0.33 * math.log(1 / math.random() - 1) / trinium.ln2
 end
 
+function trinium.formspec_restore(str)
+	return str:gsub("\\\\", "\\"):gsub("\\%[", "["):gsub("\\%]", "]"):gsub("\\,", ","):gsub("\\;", ";")
+end
+
 -- Data
 local datas = {}
 function trinium.get_data_pointer(player, file)
@@ -242,7 +292,7 @@ end)
 
 -- Fluid-Api
 function trinium.register_fluid(srcname, flname, srcdescr, fldescr, color, def)
-	local def = table.copy(def)
+	def = table.copy(def)
 	def.paramtype = "light"
 	def.walkable = false
 	def.pointable = false
@@ -325,19 +375,17 @@ end
 
 function trinium.register_recipe(method, inputs, outputs, data)
 	-- Assertions
-	local data = data or {}
+	data = data or {}
 	assert(type(method) == "string", "Incorrect method type: "..type(method))
 	local method_table = assert(trinium.recipes.craft_methods[method], "Method "..method.." not found!")
 
 	-- Processing inputs (e.g., MC method of creating workbench recipes)
-	local inputs = method_table.process_inputs(inputs)
-	local outputs = method_table.process_outputs(outputs)
-	local data = method_table.process_data(data)
+	inputs = method_table.process_inputs(inputs)
+	outputs = method_table.process_outputs(outputs)
+	data = method_table.process_data(data)
+	
+	if inputs == -1 or outputs == -1 or data == -1 then return end
 	assert(trinium.validate({input = inputs, output = outputs, data = data}, {input = "table", output = "table", data = "table"}))
-
-	assert(#inputs <= method_table.input_amount, "Too many inputs! Expected "..method_table.input_amount.." or less, got "..#inputs)
-	assert(#outputs <= method_table.output_amount, "Too many outputs! Expected "..method_table.output_amount.." or less, got "..#outputs)
-	assert(method_table.recipe_correct(data), "Recipe data incorrect!")
 
 	-- Redoing all the redirects
 	local redirects, method_string = {method = 1}
@@ -348,6 +396,10 @@ function trinium.register_recipe(method, inputs, outputs, data)
 		redirects[method] = 1
 		method_table = assert(trinium.recipes.craft_methods[method], "Method "..method.." not found!")
 	end
+
+	assert(#inputs <= method_table.input_amount, "Too many inputs! Expected "..method_table.input_amount.." or less, got "..#inputs)
+	assert(#outputs <= method_table.output_amount, "Too many outputs! Expected "..method_table.output_amount.." or less, got "..#outputs)
+	assert(method_table.recipe_correct(data), "Recipe data incorrect!")
 	
 	data.author_mod = minetest.get_current_modname() or "???"
 
@@ -362,16 +414,24 @@ function trinium.register_recipe(method, inputs, outputs, data)
 	}
 
 	local k
+	local cache = {}
 	if not data.secret_recipe and method_table.callback(inputs, outputs, data) then
-		for i,v in ipairs(inputs) do
+		for i,v in pairs(inputs) do
 			k = v:split(" ")[1]
-			trinium.recipes.usages[k] = trinium.recipes.usages[k] or {}
-			table.insert(trinium.recipes.usages[k], new_amount)
+			if not cache[k] then
+				cache[k] = 1
+				trinium.recipes.usages[k] = trinium.recipes.usages[k] or {}
+				table.insert(trinium.recipes.usages[k], new_amount)
+			end
 		end
-		for i,v in ipairs(outputs) do
+		cache = {}
+		for i,v in pairs(outputs) do
 			k = v:split(" ")[1]
-			trinium.recipes.recipes[k] = trinium.recipes.recipes[k] or {}
-			table.insert(trinium.recipes.recipes[k], new_amount)
+			if not cache[k] then
+				cache[k] = 1
+				trinium.recipes.recipes[k] = trinium.recipes.recipes[k] or {}
+				table.insert(trinium.recipes.recipes[k], new_amount)
+			end
 		end
 		table.insert(trinium.recipes.recipes_by_method[method], new_amount)
 	end
@@ -384,7 +444,6 @@ function trinium.register_recipe_handler(method, table)
 	trinium.recipes.craft_methods[method].recipe_correct = trinium.recipes.craft_methods[method].recipe_correct or function(data) return true end
 	trinium.recipes.craft_methods[method].process_inputs = trinium.recipes.craft_methods[method].process_inputs or function(inputs) return inputs end
 	trinium.recipes.craft_methods[method].process_outputs = trinium.recipes.craft_methods[method].process_outputs or function(outputs) return outputs end
-	trinium.recipes.craft_methods[method].callback_on_user = trinium.recipes.craft_methods[method].callback_on_user or function(user, recipe) return true end
 	trinium.recipes.craft_methods[method].process_data = trinium.recipes.craft_methods[method].process_data or function(data) return data end
 	trinium.recipes.craft_methods[method].formspec_begin = trinium.recipes.craft_methods[method].formspec_begin or function(data) return "" end
 	trinium.recipes.craft_methods[method].test = trinium.recipes.craft_methods[method].test or function(recipe_data, actual_data) return true end
@@ -464,7 +523,7 @@ function trinium.register_multiblock(name, def)
 		def.activator = function(reg) return reg(def.map) end
 	end
 
-	local def = assert(trinium.validate(def, {width = "number", height_d = "number", height_u = "number", depth_b = "number", depth_f = "number", activator = "function", controller = "string"}))
+	def = assert(trinium.validate(def, {width = "number", height_d = "number", height_u = "number", depth_b = "number", depth_f = "number", activator = "function", controller = "string"}))
 	if def.map and def.width < 7 and def.width > 0 and def.depth_b + def.depth_f < 13 and def.depth_b + def.depth_f > 1 then
 		for i = -def.height_d, def.height_u do
 			local newmap = table.filter(def.map, function(x) return x.y == i end)
@@ -556,14 +615,14 @@ end
 -- Various hacks
 local mt_register_item_old = minetest.register_item
 function minetest.register_item(name, def, ...)
-	def.stack_max = def.stack_max or 64
+	def.stack_max = def.stack_max or 72
 	if def.drop and def.drop ~= "" then
 		trinium.register_recipe("trinium:drop", {name},
 			type(def.drop) == "table" and def.drop.items or {def.drop}, 
-			{max_items = type(def.drop) == "table" and def.drop.max_items or 1}
+			{max_items = type(def.drop) == "table" and def.drop.max_items or 99}
 		)
 	end
-	if def.max_stack and def.stack_max == 64 then
+	if def.max_stack and def.stack_max == 72 then
 		def.stack_max = def.max_stack
 		def.max_stack = nil
 	end
@@ -575,6 +634,11 @@ function trinium.initialize_inventory(inv, def)
 	for k,v in pairs(def) do
 		inv:set_size(k,v)
 	end
+end
+
+function trinium.get_item_identifier(stack)
+	local s = stack:to_string():split(" ")
+	return s[1]..(s[4] and " "..table.concat(table.mtail(s, 3), " ") or "")
 end
 
 -- Palettes

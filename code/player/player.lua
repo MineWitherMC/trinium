@@ -74,7 +74,7 @@ end
 function trinium.player_set_textures(player, textures)
 	local name = player:get_player_name()
 	player_textures[name] = textures
-	player:set_properties({textures = textures,})
+	player:set_properties({textures = textures})
 end
 
 function trinium.player_set_animation(player, anim_name, speed)

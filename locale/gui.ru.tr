@@ -24,35 +24,41 @@ gui.info.no_patterns=Недостаточно шаблонов!
 gui.info.extract_pattern=Заберите закодированный шаблон для продолжения!
 
 gui.recipe_method.furnace=Плавка
-gui.furnace.time @1=@1 секунд
 gui.recipe_method.block_drop=Дроп с блоков
-gui.max_drop @1=@1 макс.
 gui.recipe_method.grinder=Дробитель
 gui.recipe_method.blast_furnace=Доменная печь
-gui.blast_furnace.temperature @1=Температура плавления: @1K
 gui.recipe_method.alloy_tower=Плавильная башня
-gui.alloy_tower.temperature @1=Температура: @1K
 gui.recipe_method.implosion=Взрывное сжатие
 gui.recipe_method.metal_former=Металлоформовщик
+gui.recipe_method.mixer=Миксер
+gui.recipe_method.reconstructor=Молекулярный перестройщик
+gui.recipe_method.chemreactor=Химический реактор
+gui.recipe_method.cracker=Крекинг
+gui.recipe_method.polymerizer=Полимеризация
+gui.recipe_method.crafting=Создание
+gui.recipe_method.precision_assembler=Точный сборщик
+gui.recipe_method.crude_compressor=Примитивный компрессор
+gui.recipe_method.crude_alloyer=Примитивная плавильня
+
+gui.time @1=@1 секунд
+gui.tier @1=Рецепт @1 уровня
+gui.pressure @1=Минимальное давление: @1 атм.
+gui.velocity @1=Минимальная скорость: @1 об/с
+gui.base_sg_t @1=Базовое потребление @1 SG/t
+
+gui.max_drop @1=@1 макс.
+gui.blast_furnace.temperature @1=Температура плавления: @1K
+gui.alloy_tower.temperature @1=Температура: @1K
 gui.metal_former.type @1=Метод: @1
 gui.metal_former_type.bending=Раскатка
 gui.metal_former_type.lathing=Заточка
 gui.metal_former_type.compressing=Сжатие
 gui.metal_former_type.hammering=Молот
-gui.recipe_method.mixer=Миксер
-gui.minimum_velocity @1=Минимальная скорость: @1 об/с
-gui.recipe_method.reconstructor=Молекулярный перестройщик
+gui.metal_former_type.extruding=Выдавливание
 gui.reconstructor.type @1=Метод: @1
 gui.reconstructor.type.melting=Плавка
 gui.reconstructor.type.compressing=Сжатие
-gui.base_sg_t @1=По умолчанию @1 SG/t
-gui.tier @1=Рецепт @1 уровня
-gui.recipe_method.chemreactor=Химический реактор
 gui.no_catalyst=Катализатор не нужен
-gui.chemreactor.time @1=@1 секунд
-gui.recipe_method.cracker=Крекинг
-gui.recipe_method.polymerizer=Полимеризация
-gui.recipe_method.crafting=Создание
 
 gui.lens_compressor.assemble=Собрать
 gui.info.no_resources=Недостаточно ресурсов!
@@ -70,6 +76,7 @@ gui.research_book.back=Назад
 gui.research_book.pagenum @1@2@3=@1 - страница @2 из @3
 gui.research_book.sub_research @1@2@3=@nАспект @1 - требуется @2, в наличии @3
 gui.inventory.research_book=Исследования
+gui.aspect_addition @1@2@3@4=@1 = @2 + @3@n@4
 gui.info.no_aspects=Недостаточно аспектов!
 gui.info.no_ink=Недостаточно чернил!
 gui.info.no_paper=Недостаточно бумаги!
@@ -108,3 +115,22 @@ gui.recipe_method.multiblock=Мультиблок
 gui.multiblock.height @1=Текущая высота: @1
 
 gui.info.time_set=Время успешно установлено!
+
+gui.basic_aspect @1@2=@1 - Базовый аспект@n@2
+gui.info.unknown_research=Неизвестное исследование!
+gui.info.unknown_chapter=Неизвестная глава!
+gui.info.granted @1@2=@2 выучил исследование "@1"
+gui.info.force_granted @1@2=@2 выучил исследование "@1"
+
+gui.info.current_types @1@2=Использовано @1/@2 типов
+gui.info.current_items @1@2=Содержит @1/@2 предметов
+gui.info.connector.connected=Инструмент успешно привязан к контроллеру!
+gui.info.connector.wrong_data=Комбинатор отключился от контроллера, переподключите его!
+gui.info.connector.slave_connected=Механизм успешно подключен!
+gui.info.connector.incorrect_target=Неверная цель!
+gui.info.connector.already_connected=Механизм уже подключен!
+gui.terminal.types @1@2=@1/@2 типов
+gui.terminal.items @1@2=@1/@2 предметов
+item.pulsenet.connector.desc @1@2@3=Привязан к контроллеру с координатами (@1, @2, @3)
+
+info.unknown=Неизвестный предмет

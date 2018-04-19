@@ -1,6 +1,9 @@
 materials.vanilla_elements = {}
 local V = materials.vanilla_elements
 
+materials.materials = {}
+local M = materials.materials
+
 -- Elements
 do
 	V.hydrogen = materials.register_element("hydrogen", {
@@ -33,10 +36,22 @@ do
 		color = {0, 60, 120},	
 	})
 
+	V.sodium = materials.register_element("sodium", {
+		formula = "Na",
+		melting_point = 370,
+		color = {0, 0, 150},
+	})
+
 	V.aluminium = materials.register_element("aluminium", {
 		formula = "Al",
 		melting_point = 933,
 		color = {128, 200, 240},
+	})
+
+	V.silicon = materials.register_element("silicon", {
+		formula = "Si",
+		melting_point = 1688,
+		color = {60, 60, 80},
 	})
 
 	V.phosphorus = materials.register_element("phosphorus", {
@@ -117,6 +132,12 @@ do
 		color = {220, 220, 255},	
 	})
 
+	V.tin = materials.register_element("tin", {
+		formula = "Sn",
+		melting_point = 504,
+		color = {220, 220, 220},	
+	})
+
 	V.caesium = materials.register_element("caesium", {
 		formula = "Cs",
 		melting_point = 301,
@@ -164,6 +185,19 @@ do
 		formula = {{"iron", 1}, {"extrium", 1}, {"caesium", 2}, {"rubidium", 1}},
 		types = {},
 	})
+
+	materials.new_material("fluixine_ring", {
+		formula = {{"carbon", 12}, {"hydrogen", 12}},
+		types = {},
+	})
+	materials.new_material("fluixine_ion", {
+		formula = {{"carbon", 12}, {"hydrogen", 11}},
+		types = {},
+	})
+	materials.new_material("fluixine2_ion", {
+		formula = {{"carbon", 12}, {"hydrogen", 10}},
+		types = {},
+	})
 end
 
 -- Items that are in materials namespace are also here
@@ -177,67 +211,84 @@ do
 		description = S"material.item.stardust"..minetest.colorize("#CCC", "\nHe2X"),
 		inventory_image = "(materials_dust.png^[colorize:#AAD200C0)^materials_dust_overlay.png"
 	})
+
+	minetest.register_craftitem("trinium:material_brick", {
+		description = S"material.item.brick",
+		inventory_image = "materials_ingot.png^[colorize:#483526C0"
+	})
+
+	minetest.register_craftitem("trinium:material_ball_clay", {
+		description = S"material.item.clay_ball",
+		inventory_image = "clay_ball.png"
+	})
 end
 
 -- Finally, materials W/ no formula
 do
-	materials.new_material("paper", {
+	M.paper = materials.new_material("paper", {
 		types = {"sheet"},
 		color = {224, 224, 224},
 		description = S"material.paper",
 	})
 
-	materials.new_material("carton", {
+	M.carton = materials.new_material("carton", {
 		types = {"sheet"},
 		color = {160, 112, 64},
 		description = S"material.carton",
 	})
 
-	materials.new_material("parchment", {
+	M.parchment = materials.new_material("parchment", {
 		types = {"sheet"},
 		color = {226, 190, 190},
 		description = S"material.parchment",
 	})
 
-	materials.new_material("ink", {
+	M.ink = materials.new_material("ink", {
 		types = {"cell"},
 		color = {0, 0, 0},
 		description = S"material.ink", 
 	})
 
-	materials.new_material("oil_raw", {
+	M.oil = materials.new_material("oil_raw", {
 		types = {"cell"},
 		color = {24, 24, 12},
 		description = S"material.oil.raw", 
 	})
 
-	materials.new_material("oil_desulfurized", {
+	M.desulf = materials.new_material("oil_desulfurized", {
 		types = {"cell"},
 		color = {12, 12, 12},
 		description = S"material.oil.desulf", 
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_oil_raw 14", "trinium:material_cell_m_hydrogen"}, {"trinium:material_cell_hydrogen_sulfide", "trinium:material_cell_oil_desulfurized 14"}, {time = 35, research = "OilDesulf"})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_oil_raw 14", "trinium:material_cell_m_hydrogen"}, 
+		{"trinium:material_cell_hydrogen_sulfide", "trinium:material_cell_oil_desulfurized 14"}, 
+		{time = 35, research = "OilDesulf"})
 	
-	materials.new_material("fraction_gas", {
+	M.gas = materials.new_material("fraction_gas", {
 		types = {"cell"},
 		color = {240, 250, 250},
 		description = S"material.oil.gas",
 	})
-	trinium.register_recipe("trinium:chemical_reactor", {"trinium:material_cell_oil_desulfurized 36"}, {"trinium:material_cell_fraction_gas 14", "trinium:material_cell_fraction_naphtha 12", "trinium:material_cell_fraction_kerosene 5", "trinium:material_cell_fraction_diesel 5"}, {time = 60, research = "OilDistillation"})
+	trinium.register_recipe("trinium:chemical_reactor", 
+		{"trinium:material_cell_oil_desulfurized 36"}, 
+		{"trinium:material_cell_fraction_gas 14", "trinium:material_cell_fraction_naphtha 12", 
+			"trinium:material_cell_fraction_kerosene 5", "trinium:material_cell_fraction_diesel 5"}, 
+		{time = 60, research = "OilDistillation"})
 	
-	materials.new_material("fraction_naphtha", {
+	M.naphtha = materials.new_material("fraction_naphtha", {
 		types = {"cell"},
 		color = {250, 250, 80},
 		description = S"material.oil.naphtha",
 	})
 	
-	materials.new_material("fraction_kerosene", {
+	M.kerosene = materials.new_material("fraction_kerosene", {
 		types = {"cell"},
 		color = {250, 250, 140},
 		description = S"material.oil.kerosene",
 	})
 	
-	materials.new_material("fraction_diesel", {
+	M.diesel = materials.new_material("fraction_diesel", {
 		types = {"cell"},
 		color = {128, 128, 64},
 		description = S"material.oil.diesel",

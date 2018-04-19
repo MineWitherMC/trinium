@@ -4,7 +4,7 @@ local S = trinium.S
 
 -- Crafting
 sfinv.register_page("trinium:default", {
-	title = S("gui.inventory.crafting"),
+	title = S"gui.inventory.crafting",
 	get = function(self, player, context)
 		local pn = player:get_player_name()
 		local inv2 = bi[pn]
@@ -29,7 +29,7 @@ sfinv.register_page("trinium:default", {
 		local pn = player:get_player_name()
 		local inv1, inv2 = player:get_inventory(), bi[pn]
 		for k,v in pairs(fields) do
-			local ksplit = k:split("~") -- Module, action, parameters
+			local ksplit = k:split"~" -- Module, action, parameters
 			if ksplit[1] == "inventory" then
 				local a = ksplit[2]
 				if a == "craft" then
@@ -56,7 +56,7 @@ sfinv.register_page("trinium:default", {
 function trinium.try_craft(player)
 	local pn = player:get_player_name()
 	local inv = bi[pn]
-	local list = inv:get_list("crafting")
+	local list = inv:get_list"crafting"
 	for i = 1, 9 do
 		list[i] = list[i]:get_name()
 	end
